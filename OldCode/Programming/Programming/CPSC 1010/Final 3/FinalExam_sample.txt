@@ -1,0 +1,5 @@
+Congratulations! You actually looked at the sample text to test your program!
+
+What is the best way to develop and work on this program? Be sure to incrementally develop. For example, can you read from a file and find the number of words, before moving on to the other code?
+
+For reference, this file contains 65 words, 106 vowels, 2 periods, and 2 question marks.

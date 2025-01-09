@@ -1,0 +1,39 @@
+[1mtrue.[0m
+
+['SDE1.pl'].
+
+
+[1mtrue.[0m
+
+gardenplan(4, List).
+
+
+snapdragons
+petunias
+daisies
+roses
+List = [snapdragons, petunias, daisies, roses] ;[1m;[0m
+poppy
+petunias
+daisies
+roses
+List = [poppy, petunias, daisies, roses] .[1m.[0m
+
+gardenplan(5, List).
+
+
+Error: N must be an even number.
+[1;31mfalse.[0m
+
+gardenplan(6, List).
+
+
+snapdragons
+begonias
+daffodils
+petunias
+daisies
+roses
+List = [snapdragons, begonias, daffodils, petunias, daisies, roses] .[1m.[0m
+
+Action (h for help) ? eexit (status 4)

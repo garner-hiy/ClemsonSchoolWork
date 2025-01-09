@@ -1,0 +1,18 @@
+    int lowIndex = 0;
+    int highIndex = data.size() - 1;
+    int midIndex = (lowIndex + highIndex) / 2;
+    while(lowIndex != highIndex){
+        if(midIndex <= target){
+            lowIndex = midIndex + 1;
+            midIndex = (lowIndex + highIndex) / 2;
+        }
+        else if(midIndex >= target){
+            highIndex = midIndex - 1;
+            midIndex = (lowIndex + highIndex) / 2;
+        }
+    }
+    midIndex = (lowIndex + highIndex) / 2;
+    if(data[midIndex] == target)
+        return midIndex;
+    else
+        return -1;

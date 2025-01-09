@@ -1,0 +1,131 @@
+Student answer document 
+	Long answers not required. 
+	Short answers are fine.
+	If a section has no work to do, just write "none" or "n/a" or "no work to do" or something like that.
+
+Lesson 1.1 Moving the cursor
+This lesson I was able to move the cursor around the code
+
+Lesson 1.2: Exiting VIM
+This lesson I learned how to be in normal mode, plus how to exit and return
+back to the code.
+
+Lesson 1.3: Text Editing – Deletion
+I deleted some repeating charaters in the sentence: 
+The cow jumped over the moon.
+
+Lesson 1.4: Text Editing – Insertion
+Inserted some characters and words in the sentence:
+There is some text missing from this line.
+
+Lesson 1.5: Text Editing – Appending
+Appended to the end of two sentences using the A key.
+
+Lesson 1.6: Editing A File
+Used the terminal to create a .txt file and edited it.
+
+Lesson 1 Summary
+None
+
+Lesson 2.1: Deletion Commands
+Deleted a, fun, and, paper from the sentence: There are a some words
+that don't belong in this sentence.
+
+Lesson 2.2: More Deletion Commands
+Used d$ to delete a repeat of: end of this line twice.
+
+Lesson 2.3: On operators and Motions
+None
+
+Lesson 2.4: Using a count for a Motion
+Moved the cursor around the sentence more effective then just using j and k.
+
+Lesson 2.5: Using a count to delete More
+Deleted upper cased words using d2w and dw to make the sentence:
+this line of words is cleaned up.
+
+Lesson 2.6: Operating on Lines
+Used dd and 2dd to delete multiple lines at once and a single line using dd.
+
+Lesson 2.7: The Undo Command
+Learned to use u and U to undo different commands and used ctrl-r to redo them.
+
+
+Lesson 2: Summary
+None
+
+Lesson 3.1: the Put Command
+Used dd to remove a line and used p to place it in a new place.
+
+Lesson 3.2: the Replace Command
+Replaced some characters in the sentence using r and the letter that is needed.
+
+Lesson 3.3: The Change Operator
+Used ce to change the remove the rest of the word depending on the character the cursor is on.
+
+Lesson 3.4: More changes Using C
+Used c$ to delete the rest of the line to correct the sentence.
+
+Lesson 3: Summary
+None
+
+Lesson 4.1: Cursor Location and File Status
+Moved around the file using ctrl-g and gg.
+
+Lesson 4.2: The Search Command
+Search around the file to find a phrase. For this it was errroor.
+
+Lesson 4.3: Matching Parentheses Search
+Searched for the matching parentheses using %.
+
+Lesson 4.4: The substitute Command
+Used :s/old/new/g to change thee to the in the sentence.
+
+Lesson 4: Summary
+None
+
+Lesson 5.1: How to Execute an External Command
+Used the :! command to type in ls to show the list of files.
+
+Lesson 5.2: More on Writing Files
+THis was over more on different ways to look and modify files.
+
+Lesson 5.3: Selecting Text to Write
+This lesson went over how to select tet to write to a file.
+
+Lesson 5.4: Retrieving and Merging Files
+Used to command :r to get files and merge them.
+
+Lesson 5: Summary
+None
+
+Lesson 6.1: The Open Command
+Used o and O to move the cursor above or below a line in insert mode.
+This will also add the line to be inserted.
+
+Lesson 6.2: the Append Command
+Moved the cursor to the end of a word and used the command a to append to the end of the word.
+
+Lesson 6.3: Another Way to Replace
+Used R to rplace on the cursor.
+
+Lesson 6.4: Copy and Paste Text
+Used v and y to select and copy text.
+
+Lesson 6.5: Set Option
+Used commands to set a case that vim will ignore.
+
+Lesson 6: Summary
+None
+
+Lesson 7.1: Getting Help
+This lesson shows how to use help in vim.
+
+Lesson 7.2: Create a Startup Script
+Created a start up script that will open the file contents.
+
+Lesson 7.3 Completion
+This shows how to start the name of a file and vim will complete the name.
+
+Lesson 7: Summary
+None

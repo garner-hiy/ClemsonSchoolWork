@@ -1,0 +1,63 @@
+(* first_duplicate helper *)
+let rec first_duplicate_helper seen = function
+  | [] -> -10000
+  | x :: xs -> 
+      let check = List.mem x seen in
+      if check then x else first_duplicate_helper (x :: seen) xs
+
+(* first_duplicate *)
+let first_duplicate lst = first_duplicate_helper [] lst
+
+(* first_nonrepeating helper *)
+let rec first_nonrepeating_helper seen = function
+  | [] -> -10000
+  | x :: xs ->
+      if List.mem x seen || List.mem x xs then first_nonrepeating_helper (x :: seen) xs
+      else x
+
+(* first_nonrepeating *)
+let first_nonrepeating lst = first_nonrepeating_helper [] lst
+
+(* sumOfTwo check helper *)
+let rec sumOfTwo_check a_val b v = match b with
+  | [] -> false
+  | y :: ys -> if a_val + y = v then true else sumOfTwo_check a_val ys v
+
+(* sumOfTwo helper *)
+let rec sumOfTwo_helper a b v = match a with
+  | [] -> false
+  | x :: xs -> if sumOfTwo_check x b v then true else sumOfTwo_helper xs b v
+
+(* sumOfTwo *)
+let sumOfTwo (a, b, v) = sumOfTwo_helper a b v
+
+(* take helper *)
+let rec take_helper n acc lst =
+  if n <= 0 || lst = [] then acc
+  else take_helper (n - 1) (List.append acc [List.hd lst]) (List.tl lst)
+
+(* take *)
+let take (n, lst) =
+  if n < 0 then [] else take_helper n [] lst
+
+(* drop helper *)
+let rec drop_helper n = function
+  | [] -> []
+  | x :: xs as list -> if n = 0 then list else drop_helper (n - 1) xs
+
+(* drop *)
+let drop (n, lst) =
+  if n < 0 then [] else drop_helper n lst
+
+(* powerset helper *)
+let rec powerset_helper x subsets =
+  match subsets with
+  | [] -> []
+  | subset :: rest -> (x :: subset) :: powerset_helper x rest
+
+(* powerset *)
+let rec powerset list =
+  match list with
+  | [] -> [[]]
+  | x :: xs ->
+    (powerset xs) @ powerset_helper x (powerset xs)
