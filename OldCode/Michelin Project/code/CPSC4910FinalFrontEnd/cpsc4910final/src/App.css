@@ -1,0 +1,315 @@
+
+/* 
+    CSS Cheat Sheet:
+    height: height of element (ex: 100px)
+    width: width of element (ex: 100px)
+    margin: space around element, outside of border (ex: 10px)
+    padding: space inside element, inside of border (ex: 10px)
+    font-family: font-type (ex: 'Palatino Linotype')
+    display: how element is shown (ex: flex)
+    font-size: font size (ex: 10px)
+    font-weight: boldness of text (ex: bold)
+    text-align: alignment of text inside element (ex: right)
+    background-color: background color of element (ex: #005B90)
+    top: if (top: 10px), will position element 10px from top of the container
+    z-index: the higher the number, the closer to front of screen (ex: 2) (like for overlays)
+    flex-direction: direction of items (ex: column)
+    overflow-y: how to manage extra content (ex: auto) (auto creates scrolling)
+    cursor: what cursor is displayed whil epointer over an element (ex: pointer)
+    color: color of text in element (ex: #D3D3D3)
+    border: Style, width, and color (ex: 1px solid #ccc)
+    border-radius: rounds corners (ex: 5px)
+    transition: transition effects (ex: background-color 0.3s, color 0.3s)
+    gap: space between items (ex: 10px)
+    margin-top: space above an element (ex: 10px)
+    bottom: distance between element and bottom of containers (ex: 10px)
+    flex-shrink: if item shrinks (ex: 1)
+    align-self: aligns each item (ex: flex-end)
+    white-space: white space (ex: pre-wrap)
+    word-wrap: word wrapping within element (ex: break-word)
+    max-width: max-width (ex: 100%)
+    flex: if item can flex (ex: 1)
+*/
+
+
+/* Basic set-up */
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    font-family: 'Palatino Linotype';
+}
+
+/* Set-up for main app */
+.App {
+    display: flex;
+    height: 100vh;
+    width: 100vw;
+}
+
+/* Query Group Title */
+QG-title {
+    font-size: 1.5em;
+    font-weight: bold;
+    text-align: center;
+    background-color: #005B90;
+    width: 100%;
+    padding: 10px 0;
+    top: 0;
+    z-index: 1;
+}
+
+/* Sets up sidebar on left side */
+.sidebar {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    width: 25%;
+    background-color: #003A5C;
+    height: 100vh;
+    padding: 10px;
+    overflow-y: auto;
+}
+
+/* Handles the list of chats within sidebar */
+.sidebar ul {
+    padding: 0;
+    margin: 0;
+}
+.sidebar li {
+    padding: 10px;
+    cursor: pointer;
+    color: #D3D3D3;
+}
+
+/* Handles Buttons within sidebar (New Query Group) */
+.sidebar button {
+    display: block;
+    width: 80%;
+    margin: 20px auto;
+    padding: 10px 20px;
+    font-size: 1em;
+    color: white;
+    background-color: #0A1E2D;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-align: center;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+/* Makes buttons lighter color if hovered over */
+.sidebar button:hover {
+    background-color: #005B90;
+    color: #D3D3D3;
+}
+
+/* Highlights the open chat */
+.sidebar li.active {
+    font-weight: bold;
+    background-color: #0A1E2D;
+    color: white;
+}
+
+/* Handles spacing for buttons */
+.sidebarButtons {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    margin-top: auto;
+}
+
+/* Handles right side of the screen */
+.rightSide {
+    display: flex;
+    flex-direction: column;
+    font-size: .8em;
+    align-items: center;
+    width: 75%;
+    background-color: #005B90;
+    color: white;
+    padding: 20px;
+    overflow-y: auto;
+}
+
+/* Handles common queries screen */
+.CommonQueries {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    padding: 10px;
+    overflow-y: auto;
+    background-color: #005B90;
+}
+
+/* Handles the section that will have the list */
+.CommonQueriesList {
+    width: 100%;
+    margin-top: 5px;
+}
+
+/* Handles common queries header */
+.CommonQueries h1 {
+    font-size: 1em;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+
+.CommonQueries ul {
+    padding: 10px;
+    margin: 0;
+    max-height: 300px;
+    width: 100%;
+    max-width: 600px;
+    overflow-y: auto;
+    background-color: #003A5C;
+    border-radius: 8px;
+}
+
+/* Handles the list of common queries */
+.CommonQueries li {
+    padding: 8px 12px;
+    margin: 5px 0;
+    background: #1e2a47;
+    color: #D3D3D3;
+    border-radius: 5px;
+    font-size: 1em;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+/* Makes background lighter if query from list is hovered over */
+.CommonQueries li:hover {
+    background-color: #005B90;
+    color: white;
+}
+
+/* Handles user input text box */
+.userInputBox {
+    flex-shrink: 0;
+    width: 75%;
+    margin-top: auto;
+    margin-bottom: 10px;
+    background-color: #D3D3D3;
+    border: 1px solid #ccc;
+    padding: 5px 15px;
+    font-size: 1.1em;
+    color: black;
+    border-radius: 20px;
+    bottom: 0;
+}
+
+/* Handles font for "Enter query here" */
+.userInputBox::placeholder {
+    font-size: 1em;
+    font-weight: normal;
+    color: black;
+}
+
+/* Handles overlay for creating a new query group */
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 2;
+}
+.overlayContent {
+    background: #005B90;
+    padding: 20px;
+    border-radius: 10px;
+    width: 300px;
+    height: 300px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+/* Handles input area on overlay for adding a new query group*/
+.overlayContent input {
+    width: 90%;
+    padding: 10px;
+    margin-top: 10px;
+    font-size: 1em;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+/* Handles buttons on overlay for adding a new query group */
+.overlayContent button {
+    margin-top: 15px;
+    padding: 8px 16px;
+    background-color: #003A5C;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1em;
+}
+
+/* Makes background lighter when button is hovered over */
+.overlayContent button:hover {
+    background-color: #005B90;
+}
+
+/* Handles appearance of bubbles in query group */
+.bubbles {
+    width: 100%;
+    max-width: 75%;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    overflow-y: auto;
+    padding: 8px;
+    box-sizing: border-box;
+    margin-bottom: 20px;
+    max-height: calc(100vh-100px);
+}
+
+/* Handles content of bubbles in query group */
+.bubble {
+    flex: 1;
+    background-color: #1e2a47;
+    color: white;
+    padding: 8px 12px;
+    margin: 8px 0;
+    border-radius: 10px;
+    font-size: 1.2em;
+    max-width: 100%;
+    word-wrap: break-word;
+    white-space: pre-wrap;
+    text-align: left;
+    flex-shrink: 0;
+}
+
+/* Takes away extra space at top and bottom
+of text in the bubble */
+.bubble p {
+    margin: 0;
+}
+
+/* Appearance of user bubbles*/
+.userBubble {
+    background-color: #1e2a47;
+    align-self: flex-end;
+}
+
+/* Appearance of computer bubbles */
+.autoBubble {
+    background-color: #0A1E2D;
+    align-self: flex-start;
+    color: white;
+}

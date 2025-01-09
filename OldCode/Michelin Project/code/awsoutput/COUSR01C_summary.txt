@@ -1,0 +1,27 @@
+This COBOL program, COUSR01C, appears to be a CICS (Customer Information Control System) COBOL program designed to add a new Regular/Admin user to a USRSEC file. 
+
+The program is part of the CardDemo application and is responsible for handling user input to add a new user to the USRSEC file. The program uses a series of screens to collect user information, including first name, last name, user ID, password, and user type. 
+
+The program checks for errors in the user input, such as empty fields, and displays an error message if any field is invalid. If the input is valid, the program writes the user information to the USRSEC file.
+
+The program also includes several other routines, including:
+
+* RETURN-TO-PREV-SCREEN: This routine returns control to the previous screen in the application.
+* SEND-USRADD-SCREEN: This routine sends the current screen to the user.
+* RECEIVE-USRADD-SCREEN: This routine receives input from the user and updates the screen accordingly.
+* POPULATE-HEADER-INFO: This routine populates the header information on the screen with the current date and time.
+* WRITE-USER-SEC-FILE: This routine writes the user information to the USRSEC file.
+* CLEAR-CURRENT-SCREEN: This routine clears the current screen.
+* INITIALIZE-ALL-FIELDS: This routine initializes all fields on the screen.
+
+The program references several other files, including:
+
+* COCOM01Y: This file is likely a copybook that contains common definitions and routines used throughout the application.
+* COUSR01: This file is likely a copybook that contains definitions and routines specific to user management.
+* COTTL01Y: This file is likely a copybook that contains definitions and routines related to terminal control.
+* CSDAT01Y: This file is likely a copybook that contains definitions and routines related to date and time.
+* CSMSG01Y: This file is likely a copybook that contains definitions and routines related to messages and error handling.
+* CSUSR01Y: This file is likely a copybook that contains definitions and routines related to user management.
+* DFHAID: This file is likely a copybook that contains definitions and routines related to CICS.
+* DFHBMSCA: This file is likely a copybook that contains definitions and routines related to CICS batch processing.
+* DFHATTR: This file

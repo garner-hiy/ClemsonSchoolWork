@@ -1,0 +1,6 @@
+username: cdcrock
+pword: V8SBUDL7XlzfBC6A
+
+pip install pymongo[srv]==3.6
+
+Connection String: mongodb+srv://cdcrock:V8SBUDL7XlzfBC6A@4910-michelin-capstone.zbtn1.mongodb.net/?retryWrites=true&w=majority&appName=4910-Michelin-Capstone

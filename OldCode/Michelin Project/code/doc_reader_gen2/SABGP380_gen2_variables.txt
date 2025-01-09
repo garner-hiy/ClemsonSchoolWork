@@ -1,0 +1,187 @@
+I've analyzed the COBOL code you provided, and I'll describe each section and its functionality. Here's a summary:
+
+**IDENTIFICATION DIVISION**
+
+* This section contains metadata about the program, such as its name, author, installation, and date written.
+
+**ENVIRONMENT DIVISION**
+
+* This section defines the environment for the program, including input/output sections and file control.
+
+**INPUT-OUTPUT SECTION**
+
+* This section defines input/output operations, such as reading from files and writing to the printer.
+
+**FILE-CONTROL SECTION**
+
+* This section controls the use of files and their organization.
+
+**IDMS-CONTROL SECTION**
+
+* This section controls the IDMS (Integrated Data Management System) protocol and records.
+
+**DATA DIVISION**
+
+* This section contains the data used by the program.
+
+**SCHEMA SECTION**
+
+* This section defines the schema for the data, including the structure of the records.
+
+**FILE SECTION**
+
+* This section defines the files used by the program.
+
+**WORKING-STORAGE SECTION**
+
+* This section contains temporary storage for variables and data.
+
+**01 WS-WORK-AREA**
+
+* This section contains variables for the program's working storage.
+
+**01 PREV-PROGRAM-NAME**
+
+* This section contains the previous program name.
+
+**01 WS-WORK-AREA**
+
+* This section contains variables for the program's working storage.
+
+**01 Y2K-WK-CUTOFF-YR-X**
+
+* This section contains a variable for the year cutoff for Y2K compliance.
+
+**01 Y2K-WK-DATE1-X**
+
+* This section contains a variable for the date.
+
+**01 Y2K-WK-DATE2-X**
+
+* This section contains a variable for the date.
+
+**01 PREV-PROGRAM-NAME**
+
+* This section contains the previous program name.
+
+**01 WS-WORK-AREA**
+
+* This section contains variables for the program's working storage.
+
+**01 WS-DROP-TO-ST-COUNTY**
+
+* This section contains a variable for the drop-to-state county.
+
+**01 WS-KIND-OF-TRANSACTION**
+
+* This section contains a variable for the transaction type.
+
+**01 WS-ORIG-INV-NBR**
+
+* This section contains a variable for the original invoice number.
+
+**01 WS-NEW-ORD-NBR**
+
+* This section contains a variable for the new order number.
+
+**01 WS-TEXT-KEY**
+
+* This section contains a variable for the text key.
+
+**01 WS-TEXT-HEADER**
+
+* This section contains a variable for the text header.
+
+**01 WS-TEXT-TAX-USING**
+
+* This section contains a variable for the tax using flag.
+
+**01 WS-TEXT-STATE-CODE**
+
+* This section contains a variable for the state code.
+
+**01 WS-TEXT-COUNTY-CODE**
+
+* This section contains a variable for the county code.
+
+**01 WS-TEXT-ZIP-CODE**
+
+* This section contains a variable for the zip code.
+
+**01 WS-TEXT-USER-ST**
+
+* This section contains a variable for the user's state.
+
+**01 WS-TEXT-DLR-ST**
+
+* This section contains a variable for the delivery state.
+
+**01 WS-TEXT-TRANS-TYPE**
+
+* This section contains a variable for the transaction type.
+
+**01 WS-TEXT-ST-CHANGE-FLAG**
+
+* This section contains a variable for the text change flag.
+
+**01 WS-TEXT-NEW-SHP-TO**
+
+* This section contains a variable for the new ship to.
+
+**05 ABORT-RC**
+
+* This section contains a variable for the abort code.
+
+**05 WS-JCL-LINE**
+
+* This section contains a variable for the JCL line.
+
+**05 WS-END-OF-JCL**
+
+* This section contains a variable for the end of JCL flag.
+
+**05 WS-CALC-DELIVERY-FEE**
+
+* This section contains a variable for the calculation delivery fee flag.
+
+**05 WK-COUNTRY**
+
+* This section contains a variable for the country.
+
+**05 WK-FORM-DATE**
+
+* This section contains a variable for the form date.
+
+**05 WK-FET-DATE**
+
+* This section contains a variable for the FET date.
+
+**05 WK-CUST-NBR**
+
+* This section contains a variable for the customer number.
+
+**05 WK-CITY-TAX-EXEMPT-IND**
+
+* This section contains a variable for the city tax exempt indicator.
+
+**05 WK-CITY**
+
+* This section contains a variable for the city.
+
+**05 AVP-STATE-NOT-FOUND-SW**
+
+* This section contains a variable for the state not found flag.
+
+**05 SUB1**
+
+* This section contains a variable for the sub item.
+
+**05 WS-SUB**
+
+* This section contains a variable for the sub item.
+
+**05 WS-HST-CUST**
+
+* This section contains a variable for the HST customer flag.
+
+**05 WS-HST-C

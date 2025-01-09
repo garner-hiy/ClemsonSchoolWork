@@ -1,0 +1,19 @@
+This COBOL file appears to be a batch program designed to calculate interest for a bank. Here is a 10 sentence summary of the file:
+
+The program is named CBACT04C and is part of the CardDemo application. It is designed to calculate interest for a bank. The program reads data from several files, including TCATBAL-FILE, XREF-FILE, DISCGRP-FILE, ACCOUNT-FILE, and TRANSACT-FILE. It uses these files to calculate the interest for each account and writes the results to the TRANSACT-FILE. The program uses a series of procedures to perform this task, including opening and closing files, reading and writing records, and calculating interest. The program also uses several copy files, including CVTRA01Y, CVACT03Y, CVTRA02Y, CVACT01Y, and CVTRA05Y. These copy files contain constants and macros used throughout the program. The program uses a timing mechanism to track the execution time of the program. The program also includes an ABEND routine to handle any errors that may occur during execution. The program is written in a style that is typical of older COBOL programs, with a focus on procedural programming and file handling.
+
+The program references the following files:
+
+* TCATBAL-FILE: a sequential file containing transaction category balance records
+* XREF-FILE: a random file containing cross-reference records
+* DISCGRP-FILE: a random file containing disclosure group records
+* ACCOUNT-FILE: an indexed file containing account records
+* TRANSACT-FILE: a sequential file containing transaction records
+
+The program uses several copy files, including:
+
+* CVTRA01Y: contains constants and macros for transaction category balance records
+* CVACT03Y: contains constants and macros for cross-reference records
+* CVTRA02Y: contains constants and macros for disclosure group records
+* CVACT01Y: contains constants and macros for account records
+* CVTRA05Y: contains constants and macros for transaction records

@@ -1,0 +1,72 @@
+I have summarized the provided COBOL code. 
+
+The code appears to be a WICS (Warehouse Integration and Control System) program written in COBOL. It performs various tasks such as:
+
+1. Initializing and binding database records
+2. Processing shipments and invoices
+3. Storing and retrieving data from various tables (e.g., WICSLOADS, MASTER-BOL, INVHDR-SHIP, etc.)
+4. Handling errors and aborting the program if necessary
+5. Sending messages to the internal reader and logging messages
+6. Performing calculations and data conversions
+7. Storing and retrieving data from various data structures (e.g., tables, lists, etc.)
+8. Updating and modifying data in various tables and data structures
+9. Checking and validating data
+10. Handling special cases and edge conditions
+
+The code is divided into several sections, including:
+
+1. Identification Division
+2. Configuration Section
+3. Data Division
+4. Working-Storage Section
+5. General Purpose Statement (GPS)
+6. Program Division
+7. Linkage Section
+8. Procedure Division
+9. Environment Division
+10. Configuration Section
+11. Data Division
+12. Working-Storage Section
+13. General Purpose Statement (GPS)
+14. Program Division
+15. Linkage Section
+16. Procedure Division
+17. Environment Division
+18. Configuration Section
+19. Data Division
+20. Working-Storage Section
+21. General Purpose Statement (GPS)
+22. Program Division
+23. Linkage Section
+24. Procedure Division
+25. Environment Division
+26. Configuration Section
+27. Data Division
+28. Working-Storage Section
+29. General Purpose Statement (GPS)
+30. Program Division
+31. Linkage Section
+32. Procedure Division
+33. Environment Division
+34. Configuration Section
+35. Data Division
+36. Working-Storage Section
+37. General Purpose Statement (GPS)
+38. Program Division
+39. Linkage Section
+40. Procedure Division
+41. Environment Division
+42. Configuration Section
+43. Data Division
+44. Working-Storage Section
+45. General Purpose Statement (GPS)
+46. Program Division
+47. Linkage Section
+48. Procedure Division
+49. Environment Division
+50. Configuration Section
+51. Data Division
+52. Working-Storage Section
+53. General Purpose Statement (GPS)
+54. Program Division
+55. Linkage Section

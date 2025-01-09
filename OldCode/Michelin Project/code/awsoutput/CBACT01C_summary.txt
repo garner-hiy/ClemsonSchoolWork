@@ -1,0 +1,29 @@
+This COBOL program, named CBACT01C, is a batch program designed to read and print account data from a file named ACCTFILE. The program is part of the CardDemo application and is written in COBOL.
+
+The program starts by opening the ACCTFILE file in input mode and checks if the file is opened successfully. If it is, the program enters a loop where it reads the file sequentially, displaying each record until the end of the file is reached.
+
+The program uses a procedure division to organize the code into sections, including the ENVIRONMENT DIVISION, DATA DIVISION, and PROCEDURE DIVISION. The WORKING-STORAGE SECTION defines variables such as APPL-RESULT, which is used to store the result of the program execution, and END-OF-FILE, which is used to track whether the end of the file has been reached.
+
+The program references several files and routines, including:
+
+* ACCTFILE-FILE: the input file containing the account data
+* CVACT01Y: a copy file that contains common definitions and routines
+* 0000-ACCTFILE-OPEN: a routine to open the ACCTFILE file
+* 1000-ACCTFILE-GET-NEXT: a routine to read the next record from the ACCTFILE file
+* 1100-DISPLAY-ACCT-RECORD: a routine to display the account record
+* 9000-ACCTFILE-CLOSE: a routine to close the ACCTFILE file
+* 9999-ABEND-PROGRAM: a routine to handle abnormal program termination
+* 9910-DISPLAY-IO-STATUS: a routine to display the file status
+
+The program uses several data structures, including:
+
+* FD-ACCTFILE-REC: a record definition for the ACCTFILE file
+* FD-ACCT-ID: a field definition for the account ID
+* FD-ACCT-DATA: a field definition for the account data
+* ACCTFILE-STATUS: a field definition for the file status
+* IO-STATUS: a field definition for the I/O status
+* TWO-BYTES-BINARY: a field definition for a two-byte binary value
+* APPL-RESULT: a field definition for the program result
+* END-OF-FILE: a field definition for the end-of-file indicator
+
+Overall, the program is designed to read and display account data from a file,

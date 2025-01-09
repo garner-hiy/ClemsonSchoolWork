@@ -1,0 +1,57 @@
+Here is a breakdown of the COBOL file into sections and what each section accomplishes:
+
+**Identification Division**
+
+* This section contains metadata about the program, including its name, author, and date written.
+
+**Environment Division**
+
+* This section defines the environment in which the program will run, including the IDMS control section and configuration section.
+
+**Data Division**
+
+* This section defines the data structures used in the program, including the WORK-FIELDS and EAI-PARAMS-AREA.
+
+**Working-Storage Section**
+
+* This section defines the working storage areas used in the program, including the DEBUGGING-PARAGRAPH, WORK-FIELDS, and EAI-PARAMS-AREA.
+
+**Procedure Division**
+
+* This section contains the main program logic, including the main program line (0000-MAIN-LINE), parameter check (0100-PARM-CHECK), and the main processing loop.
+
+**Parameter Check (0100-PARM-CHECK)**
+
+* This section checks the number of records passed to the program and sets the WRB-BAD-PARMS flag if the number is incorrect.
+
+**Main Processing Loop**
+
+* This section contains the main processing loop, which checks the function code and performs the corresponding action.
+
+**Get First Record (1000-GET-FIRST)**
+
+* This section checks if the first record has been retrieved and sets the WRB-BAD-RECORD-LENGTH flag if not.
+
+**Get Next Record (1100-GET-NEXT)**
+
+* This section checks if the next record has been retrieved and sets the WRB-BAD-SOURCE-ID flag if not.
+
+**Move Details (1200-MOVE-DETAILS)**
+
+* This section moves the detail fields from the WICSRECV-DETAIL record to the WRB record.
+
+**Move EAI Details (1250-MOVE-EAIDTLS)**
+
+* This section moves the detail fields from the EAIRECV-DETAIL record to the WRB record.
+
+**Finish (1300-FINISHED)**
+
+* This section marks the end of the program and performs any necessary cleanup.
+
+**DB-READY (8000-DB-READY)**
+
+* This section binds the WICS-SOURCE, WICSRECV-HEADER, and WICSRECV-DETAIL tables and sets the IDMS-READY-RET flag.
+
+**EAIDB-READY (8000-EAIDB-READY)**
+
+* This section binds the EAI-SOURCE, EAIRE

@@ -1,0 +1,417 @@
+       IDENTIFICATION DIVISION.                                                 
+       PROGRAM-ID.  SAORP019.                                                   
+       AUTHOR.  TERRY DEVITA.                                                   
+       DATE-WRITTEN. MAY 1994.                                                  
+       DATE-COMPILED.TODAY.                                                     
+      ******************************************************************        
+      *****************   THIS IS A DC PROGRAM                         *        
+      ******************************************************************        
+      *  REMARKS:                                                      *        
+      *                                                                *        
+      *  THIS PROGRAM LINKED TO BY OTHER ONLINE PROGRAMS.  IT WILL     *        
+      *  PASS BACK ALL OF THE FOLLOWING DETAILS: SHIPMENT-LEAD-TIME,   *        
+      *  SHIP-PLANT-CODE, AND CARRIER FOR THE SHIP-TO CUSTOMER PASSED. *        
+      *  BELOW IS AN OVERVIEW OF HOW THE HOW THE PROGRAM FLOWS.        *        
+      *                                                                *        
+      *  THIS IS A LINKED TO ROUTINE FROM OTHER ONLINE PROGRAMS. THE   *        
+      *  RUN-UNIT IS EXTENDED.  THIS ROUTINE DOES NOT READY ANY AREAS  *        
+      *  BUT BINDS RECORDS.  LISTED BELOW ARE THE AREAS THAT MUST BE   *        
+      *  READIED BEFORE THIS ROUTINE IS CALLED.  THEY NEED ONLY TO BE  *        
+      *  IN RETRIEVAL MODE.                                            *        
+      *                                                                *        
+      *  RECORDS USED IN THIS PROGRAM ARE:  ZIP-PLT-HDR, ZIP-PLT-DTL,  *        
+      *                               BUSINESS, ADDRSS-ID, AND ADDRSS  *        
+      *                                                                *        
+      *  AREAS USED IN THIS PROGRAM ARE:  MICH-ZIPPLT-AREA, CAS-BUS-   *        
+      *                                   AREA.                        *        
+      *                                                                *        
+      *  AFTER THE INITIALIZATION. THE ZIP CODE IS GOT FOR THE SHIP-TO *        
+      *  CUSTOMER PASSED THRU THE WORK RECORD ZIP-DEFAULT-DATA. ONCE   *        
+      *  THE ZIP CODE IS GOT THEN THE TABLE IS ACCESSED AS FOLLOWS:    *        
+      *  THE ZIP-PLT-HDR IS CALC'D TO USING...                         *        
+      *  1. FIRST 5-DIGIT ZIP CODE (US) / 7-DIGIT POSTAL CODE (CAN) &  *        
+      *     SHIP-TO CUSTOMER NUMBER. IF NOT FOUND...                   *        
+      *  2. FIRST 3-DIGIT ZIP CODE (US) / 3-DIGIT POSTAL CODE (CAN) &  *        
+      *     SHIP-TO CUSTOMER NUMBER. IF NOT FOUND...                   *        
+      *  3. FIRST 5-DIGIT ZIP CODE (US) / 7-DIGIT POSTAL CODE (CAN)    *        
+      *     WITHOUT SHIP-TO CUSTOMER NUMBER. IF NOT FOUND...           *        
+      *  4. FIRST 3-DIGIT ZIP CODE (US) / 3-DIGIT POSTAL CODE (CAN)    *        
+      *     WITHOUT SHIP-TO CUSTOMER NUMBER. THIS ENTRY WILL ALWAYS BE *        
+      *     IN THE TABLE.  NEXT THE DETAIL                             *        
+      *  NEXT THE DETAIL LINE IS FOUND USING THE PROD-BRAND AND PROD-  *        
+      *  CATEGORY PASSED. IF IT DOES NOT EXIST THEN THE PROD-CATEGORY  *        
+      *  IS SPACED OUT AND THE LINE IS OBTAINED AGAIN. IF IT IS STILL  *        
+      *  NOT FOUND THEN ONLY THE 1ST BYTE OF THE PROD-BRAND IS USED    *        
+      *  CONCATENATED WITH '00' AND THE PROD-CATEGORY IF THAT ALSO IS  *        
+      *  FOUND FOUND THEN THE PROD-CATEGORY IS SPACED OUT AND ANOTHER  *        
+      *  ATTEMPT IS MADE TO FIND A MATCH.  IF THERE IS STILL NO MATCH  *        
+      *  THEN BOTH THE PROD-BRAND AND THE PROD-CATEG ARE SPACED OUT AND*        
+      *  THE DEFAULT LINE IS FOUND.  THIS ENTRY WILL ALWAYS BE THERE.  *        
+      *  ONCE THE DETAIL LINE IS FOUND AT WHATEVER  LEVEL YOU MAY BE   *        
+      *  THE CORRESPONDING SHIPMENT-LEAD-TIME, SHIP-PLANT-CODE, AND THE*        
+      *  CARRIER FOR THAT DETAIL LINE ARE PASSED BACK THE TO THE       *        
+      *  CALLING PROGRAM.                                              *        
+      *                                                                *        
+      *  *** NOTE:   IF THE SHIP TO HAS A COUNTRY CODE OTHER THAN      *        
+      *  '000' OR '   ' (WHICH MEANS THE CUSOMTER IS NOT IN USA AND    *        
+      *  ZIP IS INVALID) THEN THE ZIP TO FOR THAT SHIP-TO IS MADE EQUAL*        
+      *  000. *                                                                 
+      ******************************************************************        
+      ***************        P T F   H I S T O R Y     *****************        
+      ******************************************************************        
+      ** PTF #     DATE   REP DESCRIPTION                             **        
+      ** C03084 DPCL 112596   MAKE BRAND 601 DEFAULT TO BLANK ENTRY   **        
+      ** P14996 DPCL 011197   USE ZIP-ADDRS-ID TO GET ADDRESS         **        
+RFS082** 2OR150 IMR  022599   THIS PROGRAM WILL BE USED FOR CANADA ALSO IM990304
+RFS082** RFS082                                                       * IM990304
+RFS253** 2OR260 IMR  041700   FOR SHIP PLANT OVERRIDES,MATCHING ENTRY * IM000415
+RFS253** RFS253               WILL BW TAKEN FROM UPDFLTDC.            * IM000415
+RFS253**                      CHANGES ARE TAGGED AS IM000415          * IM000415
+RFS228*  2OR260  IMR 041700   CHANGES MADE TO PROCESS DC FOR TUBES      IM000417
+RFS228*  RFS228               CHANGES TAGGED AS IM000417                IM000417
+RFS228*                                                                 IM000417
+      *  2XM904  CGI 112301   CHANGES MADE TO HANDLE END-OF-SET       * IM011123
+      *                       CONDITION.CHANGES TAGGED AS IM011123.   * IM011123
+      *  2OR560  CGI 113101   CHANGES MADE TO HANDLE THE EXPANSION    **CG011123
+      *                       OF ZIP-PLT-HDR.                         **CG011123
+      *                       CHANGES TAGGED AS CG021131.             **CG011123
+2XM963*  2XM963  CGI 112202   CHANGES MADE TO IMPLEMENT NEW RETRIEVAL **        
+2XM963*  RFS518               LOGIC FOR UPDFLTDC TABLE. OMS CHANGES   **        
+2XM963*                       DONE. CHANGES ARE TAGGED AS CG021122.   **        
+      *****************************************************************         
+       ENVIRONMENT DIVISION.                                                    
+       IDMS-CONTROL SECTION.                                                    
+       PROTOCOL.  MODE IS IDMS-DC-NONAUTO DEBUG                                 
+                  IDMS-RECORDS MANUAL.                                          
+       CONFIGURATION SECTION.                                                   
+       SOURCE-COMPUTER.  IBM-370.                                               
+       OBJECT-COMPUTER.  IBM-370.                                               
+       DATA DIVISION.                                                           
+       SCHEMA SECTION.                                                          
+       DB COES3SAL WITHIN CASSCHEM.                                             
+      *************************                                                 
+       WORKING-STORAGE SECTION.                                                 
+      *************************                                                 
+                                                                                
+       01  FILLER                           PIC X(32)  VALUE            CG020921
+           'BEGIN WORKING STORAGE : SAORP019'.                          CG020921
+                                                                                
+       01  WS-PLT-DTL-KEY.                                                      
+           05  WS-PROD-BRAND.                                                   
+               10  FIRST-BYTE          PIC X      VALUE SPACES.                 
+               10  TWO-BYTES           PIC XX     VALUE SPACES.                 
+           05  WS-PROD-CATEG           PIC X(03)  VALUE SPACES.                 
+                                                                                
+       01  WS-SAVE-PROGRAM-NAME        PIC X(8)   VALUE SPACES.                 
+       01  WS-SNAP-TITLE               PIC X(134) VALUE SPACES.                 
+       01  WS-PARA-NUM                 PIC X(04)  VALUE SPACES.                 
+RFS253 01  WS-MATCH-FLAG               PIC X(01)  VALUE SPACES.         IM000415
+       01  HOLD-PROD-BRAND             PIC X(03)  VALUE SPACES.          C03084 
+                                                                                
+       COPY IDMS ZIP-PLT-HDR.                                                   
+       COPY IDMS ZIP-PLT-DTL.                                                   
+       COPY IDMS BUSINESS.                                                      
+       COPY IDMS ADDRSS-ID.                                                     
+       COPY IDMS ADDRSS.                                                        
+       COPY IDMS SUBSCHEMA-NAMES.                                               
+                                                                                
+       01  FILLER                           PIC X(32)  VALUE            CG020921
+           'BEGIN WORKING STORAGE : SAORP019'.                          CG020921
+                                                                                
+      *****************                                                         
+       LINKAGE SECTION.                                                         
+      *****************                                                         
+                                                                                
+      *   WORK RECORD PASSED BETWEEN THIS PROGRAM ANS AOARD040.                 
+                                                                                
+       COPY IDMS ZIP-DEFAULT-DATA.                                              
+       COPY IDMS SUBSCHEMA-CTRL.                                                
+                                                                                
+      ********************************************                              
+       PROCEDURE DIVISION USING ZIP-DEFAULT-DATA                                
+                                SUBSCHEMA-CTRL.                                 
+       0000-MAINLINE.                                                           
+      *                                                                         
+           MOVE 'MAIN' TO WS-PARA-NUM.                                          
+      *                                                                         
+           MOVE PROGRAM-NAME TO WS-SAVE-PROGRAM-NAME.                           
+           MOVE 'SAORP019' TO PROGRAM-NAME.                                     
+                                                                                
+      *  SET STATUS TO PASS BACK AS OKAY.                                       
+                                                                                
+           MOVE '00' TO DFLT-STATUS-CODE.                                       
+           PERFORM 0500-INITIALIZE.                                             
+           IF DFLT-STATUS-CODE = '00'                                           
+             PERFORM 1000-GET-ZIP-CODE.                                         
+           MOVE WS-SAVE-PROGRAM-NAME TO PROGRAM-NAME.                           
+           MOVE '0000' TO ERROR-STATUS.                                         
+           GOBACK.                                                              
+                                                                                
+      *****************************                                             
+       0500-INITIALIZE SECTION.                                                 
+      *****************************                                             
+      *                                                                         
+           MOVE '0500' TO WS-PARA-NUM.                                          
+      *                                                                         
+           BIND ZIP-PLT-HDR.                                                    
+           PERFORM IDMS-STATUS.                                                 
+           BIND ZIP-PLT-DTL.                                                    
+           PERFORM IDMS-STATUS.                                                 
+           BIND BUSINESS.                                                       
+           PERFORM IDMS-STATUS.                                                 
+           BIND ADDRSS-ID.                                                      
+           PERFORM IDMS-STATUS.                                                 
+           BIND ADDRSS.                                                         
+           PERFORM IDMS-STATUS.                                                 
+                                                                                
+      *  GET SHIP TO ZIP CODE                                                   
+                                                                                
+           INITIALIZE BUSINESS.                                                 
+           MOVE DFLT-SHIP-TO-BUSINESS TO BUSINESS-NUMBER-5050.                  
+           FIND CALC BUSINESS.                                                  
+           IF DB-REC-NOT-FOUND                                                  
+             MOVE '77' TO DFLT-STATUS-CODE                                      
+           ELSE                                                                 
+             PERFORM IDMS-STATUS                                                
+                                                                         P14996 
+      *  TRY TO FIND USING SPECIFIC ADDRESS ID                                  
+             IF DFLT-ZIP-ADDRS-ID NOT = SPACES                           P14996 
+                MOVE DFLT-ZIP-ADDRS-ID TO ADDR-ID-5005                   P14996 
+                FIND ADDRSS-ID WITHIN BUS-ADDRID USING ADDR-ID-5005      P14996 
+                IF DB-REC-NOT-FOUND                                      P14996 
+                   NEXT SENTENCE                                         P14996 
+                ELSE                                                     P14996 
+                   PERFORM IDMS-STATUS                                   P14996 
+                END-IF                                                   P14996 
+             END-IF                                                      P14996 
+      *  TRY TO FIND DEFAULT ADDRESS ID "A"                                     
+             IF (DB-REC-NOT-FOUND AND DFLT-ZIP-ADDRS-ID NOT = SPACES)    P14996 
+                OR DFLT-ZIP-ADDRS-ID = SPACES                            P14996 
+                  MOVE 'A' TO ADDR-ID-5005                               P14996 
+                  FIND ADDRSS-ID WITHIN BUS-ADDRID                       P14996 
+                            USING ADDR-ID-5005                           P14996 
+                  IF DB-REC-NOT-FOUND                                    P14996 
+                     MOVE '77' TO DFLT-STATUS-CODE                       P14996 
+                  ELSE                                                   P14996 
+                     PERFORM IDMS-STATUS                                 P14996 
+                  END-IF                                                 P14996 
+             END-IF                                                      P14996 
+             IF DB-STATUS-OK                                             P14996 
+                OBTAIN OWNER WITHIN ADDR-ADDRID                                 
+                PERFORM IDMS-STATUS                                             
+      *  IF COUNTRY NE TO '000' OR '   ' THEN THE COUNTRY IS NO USA AND THE     
+      *  ZIP IS THEREFORE NOT VALID SO USE '000' AS THE ZIP.  THIS WAS AGREED   
+      *  UPON BY THE USERS.                                                     
+                IF COUNTRY-CODE-5004 (1) = '000' OR '   ' OR                    
+RFS082             (COUNTRY-CODE-5004 (1) = '999' AND                   IM990304
+RFS082              DFLT-SHIP-TO-BUSINESS(1:1) = '0')                           
+2XM963            MOVE ZIP-CODE-5004 TO DFLT-ZIP-PLT-KEY-OLD                    
+                ELSE                                                            
+2XM963            MOVE '000' TO DFLT-ZIP-PLT-KEY-OLD.                           
+                                                                                
+      *****************************                                             
+       1000-GET-ZIP-CODE SECTION.                                               
+      *****************************                                             
+      *                                                                         
+           MOVE '1000' TO WS-PARA-NUM.                                          
+      *                                                                         
+           MOVE SPACES TO ZIP-PLT-HDR.                                          
+2XM963     IF (COUNTRY-CODE-5004 (1) = '999' AND                                
+2XM963         DFLT-SHIP-TO-BUSINESS(1:1) = '0')                                
+2XM963        MOVE DFLT-ZIP-CODE(1:7) TO ZIP-PLT-KEY-OLD-8550                   
+2XM963     ELSE                                                                 
+2XM963        MOVE DFLT-ZIP-FIRST-5   TO ZIP-PLT-KEY-OLD-8550                   
+2XM963     END-IF.                                                              
+MANIS*     MOVE DFLT-SHIP-TO-BUSINESS TO SHIP-TO-BUSINESS-8550.         CG021131
+2XM963     PERFORM 1500-GET-HEADER                                              
+2XM963     IF DFLT-STATUS-CODE = '22'                                           
+2XM963        MOVE SPACES     TO ZIP-PLT-KEY-OLD-8550                           
+2XM963        MOVE SPACES     TO SHIP-TO-BUSINESS-8550                          
+2XM963        IF (COUNTRY-CODE-5004 (1) = '999' AND                             
+2XM963            DFLT-SHIP-TO-BUSINESS(1:1) = '0')                             
+2XM963           MOVE DFLT-ZIP-CODE(1:7) TO ZIP-PLT-KEY-OLD-8550                
+2XM963        ELSE                                                              
+2XM963           MOVE DFLT-ZIP-FIRST-5   TO ZIP-PLT-KEY-OLD-8550                
+2XM963        END-IF                                                            
+2XM963        PERFORM 1500-GET-HEADER                                           
+2XM963     END-IF.                                                              
+                                                                                
+           IF DFLT-STATUS-CODE = '00'                                           
+             PERFORM 2000-GET-DETAILS                                           
+2XM963     END-IF.                                                              
+                                                                                
+2XM963************************************                                      
+2XM963 1500-GET-HEADER  SECTION.                                                
+2XM963************************************                                      
+2XM963                                                                          
+2XM963     MOVE '00' TO DFLT-STATUS-CODE.                                       
+2XM963     FIND CALC ZIP-PLT-HDR.                                               
+2XM963     IF DB-REC-NOT-FOUND                                                  
+2XM963        MOVE SPACES TO ZIP-PLT-KEY-OLD-8550                               
+2XM963        MOVE DFLT-ZIP-FIRST-3   TO   ZIP-FIRST-3-8550                     
+2XM963        FIND CALC ZIP-PLT-HDR                                             
+2XM963        IF DB-REC-NOT-FOUND                                               
+2XM963           MOVE '22'  TO  DFLT-STATUS-CODE                                
+2XM963        ELSE                                                              
+2XM963           PERFORM IDMS-STATUS                                            
+2XM963        END-IF                                                            
+2XM963     ELSE                                                                 
+2XM963        PERFORM IDMS-STATUS                                               
+2XM963     END-IF.                                                              
+2XM963                                                                          
+      ************************************                                      
+       2000-GET-DETAILS SECTION.                                                
+      ************************************                                      
+      *                                                                         
+           MOVE '2000' TO WS-PARA-NUM.                                          
+      *                                                                         
+           INITIALIZE ZIP-PLT-DTL.                                              
+           MOVE DFLT-PLT-DTL-KEY TO PLT-DTL-KEY-8551.                   RIKEN   
+           OBTAIN ZIP-PLT-DTL WITHIN ZIP-PLT-INFO USING                 RIKEN   
+                        PLT-DTL-KEY-8551.                               RIKEN   
+           IF DB-REC-NOT-FOUND                                          RIKEN   
+RFS228        IF DFLT-PROD-CATEG-CODE = '009'                           IM000417
+2XM963           PERFORM 2250-GET-TUBEDC                                IM000417
+RFS228           MOVE DFLT-PLT-DTL-KEY TO PLT-DTL-KEY-8551              IM000417
+RFS228           OBTAIN ZIP-PLT-DTL WITHIN ZIP-PLT-INFO USING           IM000417
+RFS228                                     PLT-DTL-KEY-8551             IM000417
+RFS228        END-IF                                                    IM000417
+RFS228        IF DB-REC-NOT-FOUND                                       IM000417
+                 MOVE SPACES TO PROD-CATEG-CODE-8551                    RIKEN   
+                 OBTAIN ZIP-PLT-DTL WITHIN ZIP-PLT-INFO USING           RIKEN   
+                                           PLT-DTL-KEY-8551             RIKEN   
+                 IF DB-REC-NOT-FOUND                                    RIKEN   
+                    MOVE DFLT-PLT-DTL-KEY TO WS-PLT-DTL-KEY                     
+                    MOVE WS-PROD-BRAND TO HOLD-PROD-BRAND                    C03
+                    MOVE '00' TO TWO-BYTES                                      
+                    MOVE WS-PLT-DTL-KEY TO PLT-DTL-KEY-8551                     
+                    OBTAIN ZIP-PLT-DTL WITHIN ZIP-PLT-INFO USING                
+                                              PLT-DTL-KEY-8551                  
+                    IF DB-REC-NOT-FOUND                                         
+                       MOVE SPACES TO PROD-CATEG-CODE-8551                      
+                       OBTAIN ZIP-PLT-DTL WITHIN ZIP-PLT-INFO USING             
+                                                 PLT-DTL-KEY-8551               
+                       IF DB-REC-NOT-FOUND                                      
+                          FIND CURRENT ZIP-PLT-HDR                              
+                          PERFORM IDMS-STATUS                                   
+                          OBTAIN FIRST ZIP-PLT-DTL WITHIN ZIP-PLT-INFO          
+XM904                     IF DB-END-OF-SET                              IM011123
+                             MOVE '88' TO DFLT-STATUS-CODE                      
+                          ELSE                                                  
+                             PERFORM IDMS-STATUS                                
+                          END-IF                                                
+                       ELSE                                                     
+                          PERFORM IDMS-STATUS                                   
+                       END-IF                                                   
+                    ELSE                                                        
+                       PERFORM IDMS-STATUS                                      
+                    END-IF                                                      
+                 ELSE                                                           
+                    PERFORM IDMS-STATUS                                         
+                 END-IF                                                         
+              ELSE                                                              
+                 PERFORM IDMS-STATUS                                            
+2XM963        END-IF                                                            
+2XM963     ELSE                                                                 
+2XM963        PERFORM IDMS-STATUS                                               
+           END-IF.                                                              
+                                                                                
+      *                                                                   C03084
+      *  THE CODE BELOW IS TO GET THE BRAND FOR 601 FROM THE BLANK BRAND  C03084
+      *  ENTRY.  I AM GOING TO OVERLAY WHAT WAS DONE IN THE ABOVE IF STMT.C03084
+      *  I DID NOT MAKE THIS CHANGE IN THE ABOVE IF BECAUSE IT WAS TOO    C03084
+      *  CONFUSING.  WHEN BRAND GOES FROM 601 TO 201, THIS CODE CAN       C03084
+      *  SIMPLY BE REMOVED WITHOUT AFFECTING THE IF ABOVE.                C03084
+      *                                                                   C03084
+           IF HOLD-PROD-BRAND = '601'                                     C03084
+              FIND CURRENT ZIP-PLT-HDR                                    C03084
+              INITIALIZE ZIP-PLT-DTL                                      C03084
+              MOVE SPACES TO PLT-DTL-KEY-8551                             C03084
+              OBTAIN ZIP-PLT-DTL WITHIN ZIP-PLT-INFO USING                C03084
+                                        PLT-DTL-KEY-8551                  C03084
+              IF DB-REC-NOT-FOUND                                         C03084
+                 MOVE '88' TO DFLT-STATUS-CODE                            C03084
+              ELSE                                                        C03084
+                PERFORM IDMS-STATUS.                                      C03084
+                                                                                
+           IF DFLT-STATUS-CODE = '00'                                           
+RFS253        IF DFLT-DC-OVRD-FLAG = 'Y'                                IM000415
+RFS253           IF SHIP-PLANT-CODE-8551 NOT EQUAL                      IM000415
+RFS253                     TO DFLT-SHIP-PLANT-CODE                      IM000415
+RFS253               FIND OWNER WITHIN ZIP-PLT-INFO                             
+RFS253               OBTAIN FIRST ZIP-PLT-DTL WITHIN ZIP-PLT-INFO       IM000415
+RFS253               PERFORM 2500-GET-OVRD-DETAILS                      IM000415
+RFS253               THRU 2500-EXIT UNTIL                               IM000415
+RFS253                    (WS-MATCH-FLAG = 'Y' OR DB-END-OF-SET)        IM000415
+RFS253               IF WS-MATCH-FLAG NOT EQUAL TO 'Y'                  IM000415
+RFS253                  OBTAIN FIRST ZIP-PLT-DTL WITHIN ZIP-PLT-INFO    IM000415
+RFS253               END-IF                                             IM000415
+RFS253           END-IF                                                 IM000415
+RFS253        END-IF                                                    IM000415
+RFS253       MOVE SPACES TO WS-MATCH-FLAG                               IM000415
+             MOVE SHIP-PLANT-CODE-8551 TO DFLT-SHIP-PLANT-CODE                  
+             MOVE SHIPMENT-LEAD-TIME-8551 TO DFLT-SHIPMENT-LEAD-TIME            
+             MOVE STD-CARR-ALPHA-CODE-8551 TO DFLT-STD-CARR-ALPHA-CODE          
+RFS253     END-IF.                                                      IM000415
+                                                                                
+2XM963 2250-GET-TUBEDC SECTION.                                         IM000417
+RFS228       EVALUATE DFLT-PROD-GENL-APPL-CODE                          IM000417
+RFS228            WHEN  '551'                                           IM000417
+RFS228            WHEN  '563'                                           IM000417
+RFS228                MOVE '008'            TO DFLT-PROD-CATEG-CODE     IM000417
+RFS228                                                                  IM000417
+RFS228            WHEN  '554'                                           IM000417
+RFS228                 MOVE '001'           TO DFLT-PROD-CATEG-CODE     IM000417
+RFS228                                                                  IM000417
+RFS228            WHEN  '555'                                           IM000417
+RFS228            WHEN  '556'                                           IM000417
+RFS228                 MOVE '002'           TO DFLT-PROD-CATEG-CODE     IM000417
+RFS228                                                                  IM000417
+RFS228            WHEN   '557'                                          IM000417
+RFS228                 MOVE '003'           TO DFLT-PROD-CATEG-CODE     IM000417
+RFS228                                                                  IM000417
+RFS228            WHEN   '558'                                          IM000417
+RFS228                 MOVE '018'           TO DFLT-PROD-CATEG-CODE     IM000417
+RFS228                                                                  IM000417
+RFS228            WHEN    '559'                                         IM000417
+RFS228                 MOVE '007'           TO DFLT-PROD-CATEG-CODE     IM000417
+RFS228                                                                  IM000417
+RFS228            WHEN    '560'                                         IM000417
+RFS228                 MOVE '005'           TO DFLT-PROD-CATEG-CODE     IM000417
+RFS228                                                                  IM000417
+RFS228            WHEN    '561'                                         IM000417
+RFS228                 MOVE '016'           TO DFLT-PROD-CATEG-CODE     IM000417
+RFS228                                                                  IM000417
+RFS228                                                                  IM000417
+RFS228            WHEN    '562'                                         IM000417
+RFS228            WHEN    '564'                                         IM000417
+RFS228            WHEN    '565'                                         IM000417
+RFS228                 MOVE '006'           TO DFLT-PROD-CATEG-CODE     IM000417
+RFS228                                                                  IM000417
+RFS228            WHEN     SPACES                                       IM000417
+RFS228                 MOVE SPACES          TO DFLT-PROD-CATEG-CODE     IM000417
+RFS228       END-EVALUATE.                                              IM000417
+                                                                                
+2XM963 2500-GET-OVRD-DETAILS SECTION.                                   IM000415
+2XM963     PERFORM IDMS-STATUS.                                                 
+RFS253     IF DFLT-SHIP-PLANT-CODE EQUAL TO SHIP-PLANT-CODE-8551        IM000415
+RFS253        MOVE 'Y' TO WS-MATCH-FLAG                                 IM000415
+2XM963     ELSE                                                                 
+RFS253        OBTAIN NEXT ZIP-PLT-DTL WITHIN ZIP-PLT-INFO               IM000415
+RFS253     END-IF.                                                      IM000415
+                                                                                
+RFS253 2500-EXIT.                                                       IM000415
+RFS253     EXIT.                                                        IM000415
+                                                                                
+       COPY IDMS IDMS-STATUS.                                                   
+       IDMS-ABORT SECTION.                                                      
+           MOVE ERROR-STATUS TO SSC-ERRSTAT-SAVE.                               
+           MOVE DML-SEQUENCE TO SSC-DMLSEQ-SAVE.                                
+           MOVE                                                                 
+            '  SAORP019 ABORTED FROM *IDMS-ROUTINE* IN PARA: ' TO               
+            WS-SNAP-TITLE.                                                      
+           SNAP TITLE IS WS-SNAP-TITLE FROM                                     
+                                      WS-PARA-NUM LENGTH 4.                     
+           MOVE SSC-ERRSTAT-SAVE TO ERROR-STATUS.                               
+           MOVE SSC-DMLSEQ-SAVE TO DML-SEQUENCE.                                
+       IDMS-ABORT-EXIT. EXIT.                                                   

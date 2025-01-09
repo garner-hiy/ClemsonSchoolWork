@@ -1,0 +1,52 @@
+Here is the revised version of the COBOL code with the requested summary:
+
+**Filename:** SABGP380
+
+**Summary:** This COBOL program is used to create invoices for sales orders. It checks for tax exemptions and calculates tax amounts based on the sales order line and customer information.
+
+**Main Program:** SABGP380
+
+**Purpose:** Create invoices for sales orders.
+
+**Installation:** MICHELIN AMERICA'S SERVICES.
+
+**Date Written:** 19 March 1993.
+
+**Date Compiled:** Today.
+
+**Environment Division:** Input-Output Section.
+
+**File-Control:** IDMS-CONTROL Section.
+
+**Schema Section:** DB SSBGU008 WITHIN CASSCHEM.
+
+**File Section:** EJECT.
+
+**Working-Storage Section:** WS-WORK-AREA.
+
+**Variables:**
+
+* WS-WORK-AREA: stores the working storage area.
+* Y2K-WK-CUTOFF-YR-X: stores the Y2K cutoff year.
+* Y2K-WK-DATE1-X: stores the Y2K date 1.
+* Y2K-WK-DATE2-X: stores the Y2K date 2.
+* PREV-PROGRAM-NAME: stores the previous program name.
+* WS-WORK-AREA: stores the working storage area.
+* WS-TEXT-KEY: stores the text key.
+* WS-TEXT-HEADER: stores the text header.
+* WS-CALC-DELIVERY-FEE: stores the calculate delivery fee flag.
+* WS-UNIT-PRICE: stores the unit price.
+* WS-DATE: stores the date.
+* WS-SALES-TAX-AMT: stores the sales tax amount.
+* WS-DELIVERY-FEE-LC-TAX: stores the delivery fee LC tax.
+* WS-SALES-ORD-AMT: stores the sales order amount.
+* WS-QC-TAXDATE: stores the QC tax date.
+* WS-MRT-PRODUCT: stores the MTP product.
+* WS-MTP-PRODUCT: stores the MTP product.
+* WS-INSTANT-PRINT: stores the instant print flag.
+* WS-ORG-ID: stores the organization ID.
+* WS-EDIT-CODE: stores the edit code.
+* WS-SEAT-DESC: stores the seat description.
+* WS-FET-CALC-IND: stores the FET calculate flag.
+* WS-CONV-DTLS: stores the convert data.
+*

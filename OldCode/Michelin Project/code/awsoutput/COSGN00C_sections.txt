@@ -1,0 +1,29 @@
+The COBOL program can be broken down into the following sections:
+
+1. **Identification Division**: This section identifies the program, its author, and its purpose. It includes the program name, application name, type, and function.
+
+2. **Environment Division**: This section specifies the configuration settings for the program, including the configuration section.
+
+3. **Data Division**: This section defines the data used by the program, including working storage, file definitions, and linkage sections.
+
+4. **Working Storage Section**: This section defines the variables used by the program, including WS-VARIABLES, which contains various fields such as WS-PGMNAME, WS-TRANID, WS-MESSAGE, and others.
+
+5. **Linkage Section**: This section defines the data that is passed between the program and the operating system, including the DFHCOMMAREA.
+
+6. **Procedure Division**: This section contains the main program logic, including the MAIN-PARA paragraph, which is the entry point of the program.
+
+7. **MAIN-PARA**: This paragraph is the main program logic, which includes checking the EIBCALEN value to determine whether the program should process the signon screen or return to the calling program.
+
+8. **PROCESS-ENTER-KEY**: This paragraph is called when the ENTER key is pressed, and it processes the user's input, including checking for valid user ID and password.
+
+9. **SEND-SIGNON-SCREEN**: This paragraph sends the signon screen to the user, including the message and any other required information.
+
+10. **SEND-PLAIN-TEXT**: This paragraph sends a plain text message to the user.
+
+11. **POPULATE-HEADER-INFO**: This paragraph populates the header information for the signon screen, including the title, date, and time.
+
+12. **READ-USER-SEC-FILE**: This paragraph reads the user security file and checks the user's credentials.
+
+13. **XCTL**: This paragraph calls another program, either COADM01C or COMEN01C, based on the user's type.
+
+The program's purpose is to handle the signon process for the CardDemo application, including prompting the user for a user ID and password, checking the user's credentials, and calling the appropriate program based on the user's type.

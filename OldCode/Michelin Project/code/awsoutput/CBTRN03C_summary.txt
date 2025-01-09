@@ -1,0 +1,13 @@
+This COBOL program is designed to print a transaction detail report. It appears to be a batch program that reads data from several files, including a transaction file, a cross-reference file, a transaction type file, a transaction category file, and a date parameter file. The program then writes the report to a report file.
+
+The program starts by opening the input files and reading the date parameter file to determine the reporting period. It then reads the transaction file and performs various lookups in the cross-reference, transaction type, and transaction category files to gather additional data.
+
+The program writes the report to the report file in a paginated format, with each page containing a header, a list of transactions, and a footer. The program also calculates and displays the total account balance and grand total for each page.
+
+The program uses several copy files, including CVTRA05Y, CVACT03Y, CVTRA03Y, CVTRA04Y, and CVTRA07Y, which are likely library files containing common code and constants used by the program.
+
+The program has several error handling routines, including 9910-DISPLAY-IO-STATUS, which displays the file status, and 9999-ABEND-PROGRAM, which abends the program if an error occurs.
+
+The program is written in a procedural style, with each routine performing a specific task, such as opening a file, reading a record, or writing a report.
+
+Overall, this program appears to be a complex batch program that requires careful planning and execution to produce the desired output.

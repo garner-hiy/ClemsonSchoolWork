@@ -1,0 +1,29 @@
+The COBOL program provided is a complex application that performs various tasks, including:
+
+1.  Identification of the program and its author.
+2.  The purpose of the program, which is to create invoices.
+3.  A list of modifications made to the program over time, including changes to tax calculations, delivery fees, and currency conversion.
+4.  The main program, which is divided into several sections:
+    a.  Initialization of working storage and IDMS records.
+    b.  A link to the SABGP390 program to create the invoice header.
+    c.  A link to the SABGP011 program to calculate waste tax.
+    d.  A link to the SABGP310 program to calculate tax.
+    e.  A link to the SABGP380 program to create the invoice lines.
+    f.  A link to the SABGP080 program to create the invoice header.
+    g.  A link to the SABGP390 program to create the invoice header.
+    h.  A link to the SABGP380 program to create the invoice lines.
+    i.  A link to the SABGP080 program to create the invoice header.
+    j.  A link to the SABGP390 program to create the invoice header.
+    k.  A link to the SABGP380 program to create the invoice lines.
+    l.  A link to the SABGP080 program to create the invoice header.
+    m.  A link to the SABGP390 program to create the invoice header.
+    n.  A link to the SABGP380 program to create the invoice lines.
+    o.  A link to the SABGP080 program to create the invoice header.
+    p.  A link to the SABGP390 program to create the invoice header.
+    q.  A link to the SABGP380 program to create the invoice lines.
+    r.  A link to the SABGP080 program to create the invoice header.
+    s.  A link to the SABGP390 program to create the invoice header.
+    t.  A link to the SABGP380 program to create the invoice lines.
+    u.  A link to the SABGP080 program to create the invoice header.
+    v.  A link to the SABGP390 program to create the invoice header.
+    w.  A link to

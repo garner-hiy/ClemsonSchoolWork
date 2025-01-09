@@ -1,0 +1,476 @@
+PROCESS NOOPT                                                                   
+       IDENTIFICATION DIVISION.                                                 
+       PROGRAM-ID.  DNWXP261.                                                   
+       AUTHOR.  PAT ROEHL.                                                      
+       DATE-WRITTEN.  APRIL 1993.                                               
+      *                                                                         
+      *----------------------------------------------------------------         
+      *                         HISTORY LOG                                     
+      *          RELEASE/                                                       
+      *   DATE   TIVOLI #  PGMR  EXPLANATION                                    
+      * -------  --------  ----  --------------------------------------         
+      * 31AUG02  2SP350    CGI   REMOVE CHECK FOR EAIDCS                        
+      *----------------------------------------------------------------         
+       EJECT                                                                    
+       ENVIRONMENT DIVISION.                                                    
+       IDMS-CONTROL SECTION.                                                    
+       PROTOCOL.  MODE IS IDMS-DC-NONAUTO DEBUG                                 
+                  IDMS-RECORDS MANUAL.                                          
+       CONFIGURATION SECTION.                                                   
+*******SOURCE-COMPUTER.  IBM-370 WITH DEBUGGING MODE.                           
+       OBJECT-COMPUTER.  IBM-370.                                               
+       DATA DIVISION.                                                           
+       SCHEMA SECTION.                                                          
+       DB  WICSUBSC WITHIN WICSCHEM.                                            
+       EJECT                                                                    
+       WORKING-STORAGE SECTION.                                                 
+      D01  DEBUGGING-PARAGRAPH         PIC X(32).                               
+       01  WORK-FIELDS.                                                         
+           03 WK-DATA-LENGTH           PIC S9(8) COMP.                          
+           03 WK-ERROR-STATUS          PIC X(5).                                
+           03 WK-TABLE-NAME            PIC X(9).                                
+           03 WK-CURRENT-ENTRY         PIC BZZZZZZ9.                            
+           03 WK-MAXIMUM-ENTRIES       PIC BZZZZZZ9.                            
+           03 WK-HIGH-ENTRY            PIC BZZZZZZ9.                            
+           03 WK-KEY-LENGTH            PIC BZZZZZZ9.                            
+3LO020     03 WK-SRC-EAI               PIC X(03) VALUE SPACES.                  
+3LO020     03 WK-QUALIFY-EAI           PIC X(01) VALUE SPACES.                  
+3LO020        88 EAIDC-YES             VALUE 'Y'.                               
+3LO020 01  EAI-PARAMS-AREA             PIC X(07) VALUE 'EAIPARM'.               
+       01  WK-PARMS-BLOCK.                                                      
+           03 WK-RECORDS-PASSED        PIC S9(4) COMP.                          
+           03 FILLER                   PIC X(74).                               
+                                                                                
+       COPY IDMS SUBSCHEMA-NAMES.                                               
+                                                                                
+       COPY IDMS WICSTRAN-FUNCTION-VALUES.                                      
+                                                                                
+       COPY IDMS WICSRECV-HEADER.                                               
+                                                                                
+       COPY IDMS WICSRECV-DETAIL.                                               
+                                                                                
+       COPY IDMS WICS-SOURCE.                                                   
+                                                                                
+3LO020 COPY IDMS EAIRECV-HEADER.                                                
+                                                                                
+3LO020 COPY IDMS EAIRECV-DETAIL.                                                
+                                                                                
+3LO020 COPY IDMS EAI-SOURCE.                                                    
+                                                                                
+       01  RECORDS-BIND-STATUS         PIC X     VALUE 'N'.                     
+           88 RECORDS-NEED-BINDING               VALUE 'N'.                     
+           88 RECORDS-BOUND                      VALUE 'Y'.                     
+                                                                                
+       COPY WICSGR.                                                             
+                                                                                
+       EJECT                                                                    
+       LINKAGE SECTION.                                                         
+       01  COPY IDMS WICSTRAN-REQUEST-BLOCK.                                    
+              05 COPY IDMS RECORD SUBSCHEMA-CTRL                                
+                 REDEFINES WRB-WORK-AREA.                                       
+***********      BEGIN 32 CHARACTER WORK AREA                                   
+                 07 WK-EYECATCH        PIC X(4).                                
+                 07 WK-SOURCE-ID       PIC X(4).                                
+                 07 PREV-FUNCTION      PIC X(4).                                
+                 07 WK-FUNCTION-COUNT  PIC S9(8) COMP.                          
+                 07 IDMS-CONDITION     PIC X.                                   
+                    88 IDMS-NOT-READY            VALUE SPACE, LOW-VALUE.        
+                    88 IDMS-READY                VALUE 'R', 'U'.                
+                    88 IDMS-READY-RET            VALUE 'R'.                     
+                    88 IDMS-READY-UPD            VALUE 'U'.                     
+      **         WK-GROUP-ID and subordinate '88 levels' should match           
+      **         exactly with the WGR-GROUP-ID definition.                      
+                 07 WK-GROUP-ID.                                                
+                    09 FILLER          PIC XX.                                  
+                    09 FILLER          PIC X.                                   
+                       88 WK-PRODUCTION-CV       VALUE 'P'.                     
+                       88 WK-TEST-CV             VALUE 'T'.                     
+                       88 WK-QA-CV               VALUE 'Q'.                     
+                    09 FILLER          PIC X.                                   
+                 07 FILLER             PIC X(11).                               
+                                                                                
+       01  DATA-RECORD                 PIC X(9999).                             
+3LO020 01  EAI-PARAMS.                                                          
+3LO020     05 EAI-DC-REC.                                                       
+3LO020        10 EAI-DC-COUNT          PIC 9(02) VALUE ZEROES.                  
+3LO020        10 EAI-DC-DET            PIC X(96) VALUE SPACES.                  
+3LO020        10 EAI-DC-TABLE                                                   
+3LO020           REDEFINES EAI-DC-DET                                           
+3LO020           OCCURS 32 TIMES                                                
+3LO020           INDEXED BY EAI-DC-SUB.                                         
+3LO020           15 EAI-INDCS          PIC X(03).                               
+3LO020        10 EAI-DUMMY             PIC X(02) VALUE SPACES.                  
+3LO020        10 EAI-TRN-COUNT         PIC 9(02) VALUE ZEROES.                  
+3LO020        10 EAI-TRN-DET           PIC X(840) VALUE SPACES.                 
+3LO020        10 EAI-TRN-TABLE                                                  
+3LO020           REDEFINES EAI-TRN-DET                                          
+3LO020           OCCURS 30 TIMES                                                
+3LO020           INDEXED BY EAI-TRN-SUB.                                        
+3LO020           15 EAI-TRANS-ID       PIC X(08).                               
+3LO020           15 EAI-TRANS-NAME     PIC X(20).                               
+3LO020     05 EAI-PARAMS-END           PIC X(01) VALUE SPACE.                   
+                                                                                
+       EJECT                                                                    
+       PROCEDURE DIVISION USING WICSTRAN-REQUEST-BLOCK,                         
+                                DATA-RECORD.                                    
+       0000-MAIN-LINE.                                                          
+                                                                                
+           MOVE 'DNWXP261' TO PROGRAM-NAME.                                     
+           PERFORM 0100-PARM-CHECK THRU 0100-EXIT.                              
+           IF WRB-STATUS-OK                                                     
+               EVALUATE WRB-FUNCTION                                            
+                  WHEN WFV-GET-FIRST-RECORD                                     
+                       PERFORM 1000-GET-FIRST THRU 1000-EXIT                    
+                  WHEN WFV-GET-NEXT-RECORD                                      
+                       PERFORM 1100-GET-NEXT THRU 1100-EXIT                     
+                  WHEN WFV-FINISHED                                             
+                       PERFORM 1300-FINISHED                                    
+                  WHEN OTHER                                                    
+                       SET WRB-BAD-FUNCTION TO TRUE                             
+               END-EVALUATE.                                                    
+                                                                                
+      *    If not a production CV, issue a completion message                   
+           IF NOT WK-PRODUCTION-CV                                              
+               MOVE WRB-PROGRAM-ID    TO WFV-WK-PROGRAM-ID(2:)                  
+               MOVE WRB-FUNCTION      TO WFV-WK-FUNCTION(2:)                    
+               MOVE WRB-ERROR-STATUS  TO WK-ERROR-STATUS(2:)                    
+               MOVE WK-FUNCTION-COUNT TO WK-CURRENT-ENTRY                       
+               WRITE LOG MESSAGE ID 9050110                                     
+                     PARMS FROM WFV-WK-PROGRAM-ID LENGTH 9                      
+                           FROM WFV-WK-FUNCTION   LENGTH 5                      
+                           FROM WK-ERROR-STATUS   LENGTH 5                      
+                           FROM WK-CURRENT-ENTRY  LENGTH 8                      
+               PERFORM IDMS-STATUS                                              
+           END-IF.                                                              
+                                                                                
+           GOBACK.                                                              
+                                                                                
+                                                                                
+       0100-PARM-CHECK.                                                         
+                                                                                
+      **   Check how many records we were passed                                
+           CALL 'DNWXP272' USING WK-PARMS-BLOCK.                                
+           EVALUATE WK-RECORDS-PASSED                                           
+              WHEN 2                                                            
+                   CONTINUE                                                     
+              WHEN ZERO                                                         
+                   ABEND CODE 'NPRM'                                            
+              WHEN OTHER                                                        
+                   SET WRB-BAD-PARMS TO TRUE                                    
+                   GO TO 0100-EXIT                                              
+           END-EVALUATE.                                                        
+                                                                                
+      **   See if our part of request-block has been corrupted                  
+           SET WRB-STATUS-OK TO TRUE.                                           
+           IF WK-EYECATCH = SPACES OR LOW-VALUES                                
+               MOVE '$WIX' TO WK-EYECATCH                                       
+      **       Determine this CV's WICS-GROUP-ID                                
+               MOVE ZERO TO WGR-CV-ID                                           
+               TRANSFER 'DNWXP051' RETURN USING WICS-GROUP-RECORD;              
+               PERFORM IDMS-STATUS                                              
+               MOVE WGR-GROUP-ID TO WK-GROUP-ID                                 
+           ELSE                                                                 
+              IF WK-EYECATCH NOT = '$WIX'                                       
+                  SET WRB-BAD-PARMS TO TRUE                                     
+                  GO TO 0100-EXIT.                                              
+                                                                                
+           IF WRB-FUNCTION NOT = PREV-FUNCTION                                  
+               MOVE WRB-FUNCTION TO PREV-FUNCTION                               
+               MOVE 1            TO WK-FUNCTION-COUNT                           
+3LO020         PERFORM 0500-EAI-CHECK                                           
+3LO020                           THRU 0500-EXIT                                 
+           ELSE                                                                 
+3LO020         MOVE WRB-APPLICATION-METHOD-TYPE                                 
+3LO020                           TO WK-QUALIFY-EAI                              
+               ADD  1            TO WK-FUNCTION-COUNT.                          
+                                                                                
+       0100-EXIT.                                                               
+           EXIT.                                                                
+       EJECT                                                                    
+                                                                                
+3LO020 0500-EAI-CHECK.                                                          
+3LO020     GET STORAGE FOR EAI-PARAMS TO EAI-PARAMS-END                         
+3LO020         WAIT KEEP LONG SHARED                                            
+3LO020         STGID EAI-PARAMS-AREA                                            
+3LO020         LOCATION IS ANY.                                                 
+3LO020     IF DC-NEW-STORAGE THEN                                               
+3LO020         FREE STORAGE STGID EAI-PARAMS-AREA ;                             
+3LO020     ELSE                                                                 
+3LO020         PERFORM IDMS-STATUS                                              
+3LO030     END-IF.                                                              
+3LO030                                                                          
+2SP350     MOVE 'Y'         TO WK-QUALIFY-EAI                                   
+3LO020                         WRB-APPLICATION-METHOD-TYPE                      
+3LO020     MOVE WRB-SOURCE-ID TO WK-SRC-EAI                                     
+3LO020     SET EAI-DC-SUB TO 1                                                  
+3LO020     SEARCH EAI-DC-TABLE                                                  
+3LO020        AT END                                                            
+3LO020           CONTINUE                                                       
+3LO020        WHEN EAI-INDCS(EAI-DC-SUB) = WK-SRC-EAI                           
+3LO020           MOVE 'Y'   TO WK-QUALIFY-EAI                                   
+3LO020                         WRB-APPLICATION-METHOD-TYPE                      
+3LO020     END-SEARCH.                                                          
+3LO020 0500-EXIT.                                                               
+3LO020     EXIT.                                                                
+                                                                                
+       1000-GET-FIRST.                                                          
+           IF WRB-RECORD-LENGTH < 1                                             
+               SET WRB-BAD-RECORD-LENGTH TO TRUE                                
+               GO TO 1000-EXIT.                                                 
+                                                                                
+           IF NOT IDMS-READY-RET                                                
+3LO020        IF NOT EAIDC-YES                                                  
+3LO020           PERFORM 8000-DB-READY                                          
+3LO020        ELSE                                                              
+3LO020           PERFORM 8000-EAIDB-READY                                       
+3LO020        END-IF                                                            
+3LO020     END-IF.                                                              
+                                                                                
+           IF RECORDS-NEED-BINDING                                              
+3LO020        IF NOT EAIDC-YES                                                  
+3LO020           PERFORM 8100-RECORD-BINDS                                      
+3LO020        ELSE                                                              
+3LO020           PERFORM 8100-EAIREC-BINDS                                      
+3LO020        END-IF                                                            
+3LO020     END-IF.                                                              
+                                                                                
+3LO020     IF NOT EAIDC-YES                                                     
+3LO020        PERFORM 3000-WXSDCS-FIRST THRU 3000-EXIT                          
+3LO020     ELSE                                                                 
+3LO020        PERFORM 3500-EAIDCS-FIRST THRU 3500-EXIT                          
+3LO020     END-IF.                                                              
+       1000-EXIT.                                                               
+           EXIT.                                                                
+                                                                                
+3LO020 3000-WXSDCS-FIRST.                                                       
+3LO020*    Verify WICS source                                                   
+3LO020     MOVE WRB-SOURCE-ID TO SOURCE-ID-8537.                                
+3LO020     OBTAIN CALC WICS-SOURCE.                                             
+3LO020     IF DB-REC-NOT-FOUND                                                  
+3LO020         SET WRB-BAD-SOURCE-ID TO TRUE                                    
+3LO020         GO TO 3000-EXIT.                                                 
+3LO020     PERFORM IDMS-STATUS.                                                 
+3LO020     MOVE WRB-SOURCE-ID TO WK-SOURCE-ID.                                  
+3LO020                                                                          
+3LO020*    Get HEADER information                                               
+3LO020     MOVE WRB-SOURCE-ID TO SOURCE-ID-8535.                                
+3LO020     MOVE WRB-SERIAL    TO SERIAL-8535.                                   
+3LO020     OBTAIN CALC WICSRECV-HEADER.                                         
+3LO020     IF DB-REC-NOT-FOUND                                                  
+3LO020         SET WRB-UNKNOWN-SERIAL TO TRUE                                   
+3LO020         GO TO 3000-EXIT.                                                 
+3LO020     PERFORM IDMS-STATUS.                                                 
+3LO020                                                                          
+3LO020*    Move HEADER information to WICSTRAN-REQUEST-BLOCK                    
+3LO020     MOVE DETAIL-COUNT-8535   TO WRB-DETAIL-COUNT.                        
+3LO020     MOVE ATTEMPT-COUNT-8535  TO WRB-ATTEMPT-COUNT.                       
+3LO020     MOVE TRANS-ID-8535       TO WRB-TRANS-ID.                            
+3LO020     MOVE DATE-CREATED-8535   TO WRB-DATE-CREATED.                        
+3LO020     MOVE TIME-CREATED-8535   TO WRB-TIME-CREATED.                        
+3LO020     MOVE FIRST-ATTEMPT-8535  TO WRB-FIRST-ATTEMPT.                       
+3LO020     MOVE RECENT-ATTEMPT-8535 TO WRB-RECENT-ATTEMPT.                      
+3LO020     MOVE TRANS-STATUS-8535   TO WRB-TRANS-STATUS.                        
+3LO020     MOVE FORMAT-VERS-8535    TO WRB-FORMAT-VERS.                         
+3LO020                                                                          
+3LO020     OBTAIN FIRST WICSRECV-DETAIL WITHIN WICS-RECV-DATA.                  
+3LO020     PERFORM IDMS-STATUS.                                                 
+3LO020                                                                          
+3LO020     PERFORM 1200-MOVE-DETAILS.                                           
+3LO020                                                                          
+3LO020 3000-EXIT.                                                               
+3LO020     EXIT.                                                                
+                                                                                
+3LO020 3500-EAIDCS-FIRST.                                                       
+3LO020*    Verify EAI source                                                    
+3LO020     MOVE WRB-SOURCE-ID TO SOURCE-ID-8547.                                
+3LO020     OBTAIN CALC EAI-SOURCE.                                              
+3LO020     IF DB-REC-NOT-FOUND                                                  
+3LO020         SET WRB-BAD-SOURCE-ID TO TRUE                                    
+3LO020         GO TO 3500-EXIT.                                                 
+3LO020     PERFORM IDMS-STATUS.                                                 
+3LO020     MOVE WRB-SOURCE-ID TO WK-SOURCE-ID.                                  
+3LO020                                                                          
+3LO020*    Get HEADER information                                               
+3LO020     MOVE WRB-SOURCE-ID TO SOURCE-ID-8545.                                
+3LO020     MOVE WRB-SERIAL    TO SERIAL-8545.                                   
+3LO020     OBTAIN CALC EAIRECV-HEADER.                                          
+3LO020     IF DB-REC-NOT-FOUND                                                  
+3LO020         SET WRB-UNKNOWN-SERIAL TO TRUE                                   
+3LO020         GO TO 3500-EXIT.                                                 
+3LO020     PERFORM IDMS-STATUS.                                                 
+3LO020                                                                          
+3LO020*    Move HEADER information to WICSTRAN-REQUEST-BLOCK                    
+3LO020     MOVE DETAIL-COUNT-8545   TO WRB-DETAIL-COUNT.                        
+3LO020     MOVE ATTEMPT-COUNT-8545  TO WRB-ATTEMPT-COUNT.                       
+3LO020     MOVE TRANS-ID-8545       TO WRB-TRANS-ID.                            
+3LO020     MOVE DATE-CREATED-8545   TO WRB-DATE-CREATED.                        
+3LO020     MOVE TIME-CREATED-8545   TO WRB-TIME-CREATED.                        
+3LO020     MOVE FIRST-ATTEMPT-8545  TO WRB-FIRST-ATTEMPT.                       
+3LO020     MOVE RECENT-ATTEMPT-8545 TO WRB-RECENT-ATTEMPT.                      
+3LO020     MOVE TRANS-STATUS-8545   TO WRB-TRANS-STATUS.                        
+3LO020     MOVE FORMAT-VERS-8545    TO WRB-FORMAT-VERS.                         
+3LO020                                                                          
+3LO020     OBTAIN FIRST EAIRECV-DETAIL WITHIN EAI-RECV-DATA.                    
+3LO020     PERFORM IDMS-STATUS.                                                 
+3LO020                                                                          
+3LO020     PERFORM 1250-MOVE-EAIDTLS.                                           
+3LO020                                                                          
+3LO020 3500-EXIT.                                                               
+3LO020     EXIT.                                                                
+                                                                                
+       1100-GET-NEXT.                                                           
+                                                                                
+     **    Check to ensure that WRB-SOURCE-ID hasn't changed since              
+     **    getting WICS/EAIRECV-HEADER                                          
+           IF WRB-SOURCE-ID NOT = WK-SOURCE-ID                                  
+               SET WRB-BAD-SOURCE-ID TO TRUE                                    
+               GO TO 1100-EXIT.                                                 
+                                                                                
+           IF RECORDS-NEED-BINDING                                              
+3LO020        IF NOT EAIDC-YES                                                  
+3LO020           PERFORM 8100-RECORD-BINDS                                      
+3LO020        ELSE                                                              
+3LO020           PERFORM 8100-EAIREC-BINDS                                      
+3LO020        END-IF                                                            
+3LO020     END-IF.                                                              
+                                                                                
+3LO020     IF NOT EAIDC-YES                                                     
+3LO020        OBTAIN NEXT WICSRECV-DETAIL WITHIN                                
+3LO020                                    WICS-RECV-DATA                        
+3LO020        IF DB-END-OF-SET                                                  
+3LO020           SET WRB-END-OF-DATA TO TRUE                                    
+3LO020           GO TO 1100-EXIT                                                
+3LO020        END-IF                                                            
+3LO020        PERFORM IDMS-STATUS                                               
+3LO020        PERFORM 1200-MOVE-DETAILS                                         
+3LO020     ELSE                                                                 
+3LO020        OBTAIN NEXT EAIRECV-DETAIL WITHIN                                 
+3LO020                                   EAI-RECV-DATA                          
+3LO020        IF DB-END-OF-SET                                                  
+3LO020           SET WRB-END-OF-DATA TO TRUE                                    
+3LO020           GO TO 1100-EXIT                                                
+3LO020        END-IF                                                            
+3LO020        PERFORM IDMS-STATUS                                               
+3LO020        PERFORM 1250-MOVE-EAIDTLS                                         
+3LO020     END-IF.                                                              
+                                                                                
+       1100-EXIT.                                                               
+           EXIT.                                                                
+                                                                                
+                                                                                
+       1200-MOVE-DETAILS.                                                       
+                                                                                
+     **    Build detail fields from WICSRECV-DETAIL record                      
+           MOVE SEQUENCE-8536   TO WRB-SEQUENCE.                                
+           MOVE TRANS-TYPE-8536 TO WRB-TRANS-TYPE.                              
+           IF TRANS-DATA-LENGTH-8536 > WRB-RECORD-LENGTH                        
+               SET  WRB-DATA-TRUNCATED TO TRUE                                  
+               MOVE WRB-RECORD-LENGTH  TO WK-DATA-LENGTH                        
+           ELSE                                                                 
+               MOVE TRANS-DATA-LENGTH-8536 TO WK-DATA-LENGTH.                   
+           MOVE TRANS-DATA-8536 TO DATA-RECORD(1:WK-DATA-LENGTH).               
+                                                                                
+                                                                                
+3LO020 1250-MOVE-EAIDTLS.                                                       
+3LO020*    Build detail fields from EAIRECV-DETAIL record                       
+3LO020     MOVE SEQUENCE-8546   TO WRB-SEQUENCE.                                
+3LO020     MOVE TRANS-TYPE-8546 TO WRB-TRANS-TYPE.                              
+3LO020     IF TRANS-DATA-LENGTH-8546 > WRB-RECORD-LENGTH                        
+3LO020         SET  WRB-DATA-TRUNCATED TO TRUE                                  
+3LO020         MOVE WRB-RECORD-LENGTH  TO WK-DATA-LENGTH                        
+3LO020     ELSE                                                                 
+3LO020         MOVE TRANS-DATA-LENGTH-8546 TO WK-DATA-LENGTH.                   
+3LO020     MOVE TRANS-DATA-8546 TO DATA-RECORD(1:WK-DATA-LENGTH).               
+                                                                                
+       1300-FINISHED.                                                           
+                                                                                
+           FINISH.                                                              
+           PERFORM IDMS-STATUS.                                                 
+           SET IDMS-NOT-READY TO TRUE.                                          
+       EJECT                                                                    
+       8000-DB-READY.                                                           
+                                                                                
+           BIND RUN-UNIT                                                        
+                DBNAME 'WICSDATA'.                                              
+           PERFORM IDMS-STATUS.                                                 
+                                                                                
+           PERFORM 8100-RECORD-BINDS.                                           
+                                                                                
+           READY WICS-TRANS-AREA USAGE-MODE RETRIEVAL.                          
+           PERFORM IDMS-STATUS.                                                 
+           SET IDMS-READY-RET TO TRUE.                                          
+                                                                                
+3LO020 8000-EAIDB-READY.                                                        
+3LO020     BIND RUN-UNIT                                                        
+3LO020          DBNAME 'WICSDATA'.                                              
+3LO020     PERFORM IDMS-STATUS.                                                 
+3LO020     PERFORM 8100-EAIREC-BINDS.                                           
+3LO020     READY MICH-EAITRN-AREA USAGE-MODE RETRIEVAL.                         
+3LO020     PERFORM IDMS-STATUS.                                                 
+3LO020     SET IDMS-READY-RET TO TRUE.                                          
+                                                                                
+       8100-RECORD-BINDS.                                                       
+                                                                                
+           BIND WICS-SOURCE.                                                    
+           PERFORM IDMS-STATUS.                                                 
+                                                                                
+           BIND WICSRECV-HEADER.                                                
+           PERFORM IDMS-STATUS.                                                 
+                                                                                
+           BIND WICSRECV-DETAIL.                                                
+           PERFORM IDMS-STATUS.                                                 
+                                                                                
+           SET RECORDS-BOUND TO TRUE.                                           
+3LO020 8100-EAIREC-BINDS.                                                       
+3LO020     BIND EAI-SOURCE.                                                     
+3LO020     PERFORM IDMS-STATUS.                                                 
+3LO020     BIND EAIRECV-HEADER.                                                 
+3LO020     PERFORM IDMS-STATUS.                                                 
+3LO020     BIND EAIRECV-DETAIL.                                                 
+3LO020     PERFORM IDMS-STATUS.                                                 
+3LO020     SET RECORDS-BOUND TO TRUE.                                           
+                                                                                
+       EJECT                                                                    
+       COPY IDMS WICSTRAN-STATUS.                                               
+                                                                                
+       WICSTRAN-ABORT   SECTION.                                                
+       WICSTRAN-ABORT-EXIT.                                                     
+       EJECT                                                                    
+      * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *         
+      *                                                               *         
+      *  Special IDMS-STATUS Module.  If ERROR-STATUS is not zero,    *         
+      *  diagnostic information is moved into the WRB record, a       *         
+      *  snap of the SUBSCHEMA-CTRL block is taken, a ROLLBACK is     *         
+      *  performed, a snap of the WICSTRAN-REQUEST-BLOCK is taken,    *         
+      *  the IDMS-ERROR flag is set, and finally, this program is     *         
+      *  exited.                                                      *         
+      *                                                               *         
+      *  DO NOT USE THIS LOGIC WITH AUTO-STATUS IN EFFECT AS AUTO-    *         
+      *  STATUS WOULD GENERATE CODE THAT MAY GO INTO A LOOP.          *         
+      *                                                               *         
+      * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *         
+       IDMS-STATUS                                              SECTION.        
+       IDMS-STATUS-PARAGRAPH.                                                   
+           IF NOT DB-STATUS-OK                                                  
+               PERFORM IDMS-ABORT                                               
+               MOVE ERROR-STATUS TO SSC-ERRSTAT-SAVE                            
+                                    WRB-IDMS-STATUS                             
+               MOVE DML-SEQUENCE TO SSC-DMLSEQ-SAVE                             
+                                    WRB-IDMS-DML-SEQ                            
+               MOVE '  DNWXP261 SUBSCHEMA-CTRL' TO WFV-SNAP-TITLE               
+               SNAP TITLE IS WFV-SNAP-TITLE                                     
+                    FROM SUBSCHEMA-CTRL TO SUBSCHEMA-CTRL-END                   
+               ROLLBACK                                                         
+               MOVE '  WICSTRAN-REQUEST-BLOCK' TO WFV-SNAP-TITLE                
+               MOVE LENGTH OF WICSTRAN-REQUEST-BLOCK TO WFV-WK-LENGTH           
+               SNAP TITLE IS WFV-SNAP-TITLE                                     
+                    FROM WICSTRAN-REQUEST-BLOCK LENGTH WFV-WK-LENGTH            
+               SET WRB-IDMS-ERROR TO TRUE                                       
+               MOVE '  DNWXP261 TASK SNAP' TO WFV-SNAP-TITLE                    
+               SNAP TITLE IS WFV-SNAP-TITLE                                     
+                    TASK                                                        
+               GOBACK.                                                          
+       ISABEX.                                                                  
+           EXIT.                                                                
+                                                                                
+       IDMS-ABORT SECTION.                                                      

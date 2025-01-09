@@ -1,0 +1,52 @@
+The COBOL file is divided into several sections:
+ 
+ Section 1: Identification
+ This section provides information about the program, including its name, application, type, and function. It also includes copyright and licensing information.
+
+ Section 2: Environment Division
+ This section specifies the environment in which the program will run. It includes configuration settings and data definitions.
+
+ Section 3: Data Division
+ This section defines the data structures used in the program, including working storage, files, and tables.
+
+ Section 4: Working Storage Section
+ This section defines the variables used in the program, including input/output buffers, file pointers, and error flags.
+
+ Section 5: Linkage Section
+ This section defines the linkage between the program and other programs or files.
+
+ Section 6: Procedure Division
+ This section contains the main program logic, including the entry point, processing, and error handling.
+
+ Section 7: Procedure Division - MAIN-PARA
+ This section is the entry point of the program and performs the initial setup and processing.
+
+ Section 8: Procedure Division - PROCESS-ENTER-KEY
+ This section handles the processing of the ENTER key and performs the necessary actions, including reading the account data file and checking for errors.
+
+ Section 9: Procedure Division - GET-CURRENT-TIMESTAMP
+ This section retrieves the current timestamp and formats it for use in the program.
+
+ Section 10: Procedure Division - RETURN-TO-PREV-SCREEN
+ This section returns control to the previous screen and performs the necessary cleanup.
+
+ Section 11: Procedure Division - SEND-BILLPAY-SCREEN
+ This section sends the bill pay screen to the user and performs the necessary error handling.
+
+ Section 12: Procedure Division - RECEIVE-BILLPAY-SCREEN
+ This section receives input from the user and performs the necessary error handling.
+
+ Section 13: Procedure Division - POPULATE-HEADER-INFO
+ This section populates the header information on the screen, including the title, date, and time.
+
+ Section 14: Procedure Division - READ-ACCTDAT-FILE
+ This section reads the account data file and performs the necessary error handling.
+
+ Section 15: Procedure Division - UPDATE-ACCTDAT-FILE
+ This section updates the account data file and performs the necessary error handling.
+
+ Section 16: Procedure Division - READ-CXACAIX-FILE
+ This section reads the CXACAIX file and performs the necessary error handling.
+
+ Section 17: Procedure Division - STARTBR-TRANSACT-FILE
+ This section

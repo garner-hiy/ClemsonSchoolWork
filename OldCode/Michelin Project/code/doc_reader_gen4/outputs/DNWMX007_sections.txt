@@ -1,0 +1,55 @@
+IDENTIFICATION DIVISION.
+Division: This is the main division of the COBOL program, which contains the program's identification information.
+ 
+PROGRAM-ID. DNWMX007.
+Program: This is the program ID, which is a unique identifier for the program.
+
+AUTHOR. CGI.
+Author: The author of the program is CGI.
+
+DATE-WRITTEN. 14-FEB-2003.
+Date: The program was written on February 14, 2003.
+
+REMARKS.
+* PURPOSE : THIS PROGRAM DOES THE CURRENCY CONVERSION FOR THE    *        
+*           FREIGHT AMOUNT PASSED FROM DNWMX830 AND RETURNS BACK *        
+*           THE CONVERTED FREIGHT AMT.                        *        
+* DESCRIPTION : THIS PROGRAM GETS THE BILL-TO BUSINESS CURRENCY  *        
+*           FACTOR FOR THE PASSED SHIP-TO AND CONVERTS THE       *        
+*           FREIGHT AMOUNT BASED ON THAT.                        *        
+*                                                                *        
+*            RECORD NAME         RECD EXTN   RETRIEVAL / UPDATE  *        
+*            -----------         ---------   ------------------  *        
+* RECORDS :  LOAD                            RETRIEVAL           *        
+*            BUSINESS                        RETRIEVAL           *        
+*            CUSTOMER                        RETRIEVAL           *        
+*            CURRENCY-CONV                   RETRIEVAL           *        
+*            CURRENCY-FACTOR                 RETRIEVAL           *        
+*                                                                *        
+*                                                                         
+*                         HISTORY LOG                                     
+*          RELEASE/                                                       
+*   DATE   TIVOLI #  PGMR  EXPLANATION                                    
+* -------  --------  ----  ---------------------------------------        
+* 18FEB03  3LO041    CGI   NEW                                            
+*-----------------------------------------------------------------        
+This section contains remarks about the program's purpose, description, and history.
+
+ENVIRONMENT DIVISION.
+Division: This division contains environment settings for the program.
+
+IDMS-CONTROL SECTION.
+Section: This section contains IDMS control settings.
+
+PROTOCOL.      MODE IS IDMS-DC DEBUG                                     
+              IDMS-RECORDS MANUAL.
+Protocol: The program uses IDMS-DC debug mode and manual records.
+
+DATA DIVISION.
+Division: This division contains data definitions for the program.
+
+SCHEMA SECTION.
+Section: This section defines the schema for the program.
+
+DB CPRS3POS WITHIN CASSCHEM.
+Schema: The schema is CPRS3POS

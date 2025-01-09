@@ -1,0 +1,35 @@
+<|header_file|>
+
+The COBOL file is divided into several sections:
+
+1. **Identification Division**: This section contains information about the program, including its name, author, and type.
+2. **Environment Division**: This section contains configuration information for the program.
+3. **Data Division**: This section defines the data structures and variables used by the program.
+4. **Working-Storage Section**: This section defines the working storage variables used by the program.
+5. **Linkage Section**: This section defines the linkage information for the program.
+6. **Procedure Division**: This section contains the main logic of the program.
+
+The program appears to be a CICS (Customer Information Control System) COBOL program that provides a menu-driven interface for users. It uses a series of menus to allow users to select options and perform actions.
+
+The main sections of the program are:
+
+1. **Main-PARA**: This is the main entry point of the program.
+2. **PROCESS-ENTER-KEY**: This section processes the user's input when they press the Enter key.
+3. **RETURN-TO-SIGNON-SCREEN**: This section returns the user to the sign-on screen.
+4. **SEND-MENU-SCREEN**: This section sends the menu screen to the user.
+5. **RECEIVE-MENU-SCREEN**: This section receives input from the user when they select an option.
+6. **POPULATE-HEADER-INFO**: This section populates the header information on the menu screen.
+7. **BUILD-MENU-OPTIONS**: This section builds the menu options for the user.
+
+The program uses a series of variables and data structures to store and manipulate data, including:
+
+1. **WS-VARIABLES**: This section defines the working storage variables used by the program.
+2. **CDEMO-MENU-OPT-TXT**: This section defines the menu option text.
+3. **CDEMO-MENU-OPT-NUM**: This section defines the menu option numbers.
+4. **CDEMO-MENU-OPT-NAME**: This section defines the menu option names.
+5. **CDEMO-MENU-OPT-PGMNAME**: This section defines the program names for each menu option.
+6. **CDEMO-MENU-OPT-USRTYPE**: This section defines the user types for each menu option.
+
+The program uses several COBOL statements and commands, including:
+
+1. **SET**: This statement sets the value

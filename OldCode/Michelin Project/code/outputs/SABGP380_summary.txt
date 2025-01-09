@@ -1,0 +1,23 @@
+The COBOL program SABGP380 is a complex invoice processing program that performs various tasks such as creating invoice lines, calculating taxes, and updating the database. It uses several IDMS records and subroutines to perform these tasks.
+
+The program starts by initializing various working storage variables and performing some housekeeping tasks. It then calls the HSEKPG01 section, which binds several IDMS records and initializes some variables.
+
+The program then calls the ADDHDR10 section, which adds an invoice header record to the database. This section performs several tasks, including obtaining the customer and order information, calculating the invoice amount, and updating the database.
+
+The program then calls the ADDLNE20 section, which adds an invoice line record to the database. This section performs several tasks, including obtaining the product information, calculating the unit price, and updating the database.
+
+The program then calls the TAXNEX40 section, which determines the tax nexus for the ship-to state. This section performs several tasks, including obtaining the customer and order information, calculating the tax nexus, and updating the database.
+
+The program then calls the CLCTAX45 section, which calculates the tax for an invoice line. This section performs several tasks, including obtaining the tax rates and amounts, calculating the tax, and updating the database.
+
+The program then calls the CLCWST48 section, which sets up and links to the waste tax program. This section performs several tasks, including obtaining the customer and order information, calculating the waste tax, and updating the database.
+
+The program then calls the CLCDSC50 section, which gets the discount and calculates the discount amount. This section performs several tasks, including obtaining the discount information, calculating the discount amount, and updating the database.
+
+The program then calls the GETTRM51 section, which gets the customer terms record. This section performs several tasks, including obtaining the customer and order information, calculating the terms, and updating the database.
+
+The program then calls the GETMKT52 section, which gets the marketing part/plant record. This section performs several tasks, including obtaining the product information, calculating the price, and updating the database.
+
+The program then calls the GETCAO53 section, which gets the customer address options record. This section performs several tasks, including obtaining the customer and order information, calculating the address options, and updating the database.
+
+The program then calls the GETSTA54 section, which gets the ship-to address record. This section performs several tasks,

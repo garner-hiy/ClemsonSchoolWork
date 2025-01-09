@@ -1,0 +1,3 @@
+DNWMX007
+
+This COBOL program performs currency conversion for a freight amount passed from DNWMX830 and returns the converted freight amount based on the order type. It retrieves the bill-to business currency factor and uses it to convert the freight amount. The program also handles errors and returns an error message if the currency conversion fails.

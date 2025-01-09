@@ -1,0 +1,32 @@
+Section 1: Identification Division
+         This section identifies the program, application, type, and function. It also includes copyright information and licensing details.
+
+         Section 2: Environment Division
+         This section defines the input/output sections, file control, and data structures for the program. It includes the file names, organization, access mode, and record keys.
+
+         Section 3: Data Division
+         This section defines the file sections, which include the file layouts and record structures for the various files used in the program.
+
+         Section 4: Working-Storage Section
+         This section defines the working storage areas for the program, including counters, flags, and status variables.
+
+         Section 5: Procedure Division
+         This section contains the main program logic, which includes the following sections:
+         - 0000-DALYTRAN-OPEN: Opens the daily transaction file.
+         - 0100-TRANFILE-OPEN: Opens the transaction file.
+         - 0200-XREFFILE-OPEN: Opens the cross-reference file.
+         - 0300-DALYREJS-OPEN: Opens the daily rejects file.
+         - 0400-ACCTFILE-OPEN: Opens the account file.
+         - 0500-TCATBALF-OPEN: Opens the transaction balance file.
+         - 1000-DALYTRAN-GET-NEXT: Reads the next record from the daily transaction file.
+         - 1500-VALIDATE-TRAN: Validates the transaction by checking the cross-reference file and account file.
+         - 2000-POST-TRANSACTION: Posts the transaction by updating the transaction balance file and account file.
+         - 2500-WRITE-REJECT-REC: Writes the rejected transaction to the daily rejects file.
+         - 2700-UPDATE-TCATBAL: Updates the transaction balance file.
+         - 2800-UPDATE-ACCOUNT-REC: Updates the account record.
+         - 2900-WRITE-TRANSACTION-FILE: Writes the transaction to the transaction file.
+         - 9000-DALYTRAN-CLOSE: Closes the daily transaction file.
+         - 9100-TRANFILE-CLOSE: Closes the transaction file.
+         - 9200-XREFFILE-CLOSE: Closes the cross-reference file.
+         - 9300-DALYREJS-CLOSE: Closes the daily rejects file.
+         - 9400-ACCT

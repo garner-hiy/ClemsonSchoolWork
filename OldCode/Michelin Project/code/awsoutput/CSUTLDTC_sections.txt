@@ -1,0 +1,36 @@
+Here is a breakdown of the COBOL code into sections and what each section accomplishes:
+
+**Section 1: Header and Copyright Notice**
+This section contains the header and copyright notice of the program, including the program name, author, and license information.
+
+**Section 2: Identification Division**
+This section contains the program identification information, including the program name (CSUTLDTC) and the identification division.
+
+**Section 3: Data Division**
+This section contains the data definitions for the program, including:
+
+* **Working-Storage Section**: This section contains the variables used by the program, including:
+	+ `WS-DATE-TO-TEST`: a variable to hold the date to be passed to the CEEDAYS API
+	+ `WS-DATE-FORMAT`: a variable to hold the date format to be passed to the CEEDAYS API
+	+ `OUTPUT-LILLIAN`: a variable to hold the output from the CEEDAYS API
+	+ `WS-MESSAGE`: a variable to hold the program's message
+* **CEEDAYS API Feedback Code**: This section defines the feedback codes returned by the CEEDAYS API, including:
+	+ `FEEDBACK-CODE`: a variable to hold the feedback code returned by the CEEDAYS API
+	+ `CASE-1-CONDITION-ID`, `CASE-2-CONDITION-ID`, and `CASE-SEV-CTL`: variables to hold the condition ID, class code, and facility ID for each feedback code
+	+ `I-S-INFO`: a variable to hold information about the feedback code
+
+**Section 4: Linkage Section**
+This section contains the linkage information for the program, including:
+* `LS-DATE`: a variable to hold the date to be passed to the CEEDAYS API
+* `LS-DATE-FORMAT`: a variable to hold the date format to be passed to the CEEDAYS API
+* `LS-RESULT`: a variable to hold the program's result
+
+**Section 5: Procedure Division**
+This section contains the program logic, including:
+* `A000-MAIN`: the main program logic
+* `A000-MAIN-EXIT`: the exit point for the program
+
+**Section 6: Program Logic**
+This section contains the program logic, including:
+* `INITIALIZE WS-MESSAGE`: initializes the `WS-MESSAGE` variable
+* `MOVE SPACES TO WS-DATE`: clears the `WS

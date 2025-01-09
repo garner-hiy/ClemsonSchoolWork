@@ -1,0 +1,46 @@
+*       SECTION.                                                
+      ***********************************************************************   
+      *  LINKAGE SECTION.                                                    
+      ***********************************************************************   
+                                                                                
+       LINKAGE SECTION.                                                        
+                                                                                
+      *************************************************                         
+      *  L  I  N  K  A  G  E      S  E  C  T  I  O  N                           
+      *************************************************                         
+                                                                                
+           COPY IDMS SUBSCHEMA-CTRL.                                                
+                                                                                
+           COPY IDMS RECORD AOBGW380.                                       P84943  
+           COPY IDMS RECORD ADDRSS.                                                 
+           COPY IDMS RECORD ADDRSS-ID.                                              
+           COPY IDMS RECORD AR-INVOICE-HDR.                                         
+           COPY IDMS RECORD BUSINESS.                                               
+           COPY IDMS RECORD CAS-DEFINITION.                                         
+           COPY IDMS RECORD COE-DEFINITION.                                         
+           COPY IDMS RECORD COE-PLT-CONTROL.                                        
+           COPY IDMS RECORD CUSTOMER.                                               
+           COPY IDMS RECORD CUSTOMER-TERMS.                                         
+           COPY IDMS RECORD DISC-BY-REMISE.                                         
+           COPY IDMS RECORD LOAD.                                           SDUUD111
+           COPY IDMS RECORD MESSAGE-DATA.                                           
+           COPY IDMS RECORD MESSAGE-TYPE.                                           
+           COPY IDMS RECORD MKT-PART.                                               
+           COPY IDMS RECORD MKT-PLANT.                                              
+           COPY IDMS RECORD NUMBER-MASK.                                            
+           COPY IDMS RECORD ORDER-HEADER.                                           
+           COPY IDMS RECORD PREFIX-MASK.                                            
+           COPY IDMS RECORD SALES-ORDER.                                            
+           COPY IDMS RECORD SALES-ORDER-LINE.                                       
+           COPY IDMS RECORD SHIPMENT-HEADER.                                        
+           COPY IDMS RECORD SHIPMENT-LINE.                                          
+           COPY IDMS RECORD SOHEXT.                                                 
+           COPY IDMS RECORD SOLEXT.                                          P70878  
+           COPY IDMS RECORD SO-LINE-SCHEDULE.                               SDUUD111
+           COPY IDMS RECORD STBDNAR.                                        C00003  
+           COPY IDMS RECORD TEXT-HEADER.                                    RGRPENH 
+           COPY IDMS RECORD TEXT-LINE.                                      RGRPENH 
+           COPY IDMS RECORD UOM-FACTOR.                                             
+           COPY IDMS RECORD UOM-OOAK.                                               
+           COPY IDMS RECORD VALID-UOM.                                              
+           COPY IDMS RECORD TABLE-HDR.                                      CG

@@ -1,0 +1,59 @@
+This COBOL program is divided into several sections:
+
+1. **Identification Division**: This section contains information about the program, such as its name, date written, and date compiled.
+
+2. **Environment Division**: This section defines the environment in which the program will run, including the input/output section.
+
+3. **Data Division**: This section defines the data used by the program, including working storage, file records, and data structures.
+
+4. **Working-Storage Section**: This section contains variables and data that are used by the program during its execution.
+
+5. **Procedure Division**: This section contains the logic of the program, including the main program, procedures, and function calls.
+
+**Main Program**
+
+The main program is the entry point of the program. It is responsible for handling the program's flow of control and performing the necessary tasks.
+
+**PFKey Storage**
+
+The program stores the PFKey in a common area using the `CSSTRPFY` copybook.
+
+**Screen Initialization**
+
+The program initializes the screen using the `CACTVWAO` mapset and map. It sets up the screen title, date, and time.
+
+**Setup Screen Variables**
+
+The program sets up the screen variables, including the account filter and customer filter. It also sets up the search criteria and error messages.
+
+**Setup Screen Attributes**
+
+The program sets up the screen attributes, including the cursor position, color, and protection.
+
+**Send Screen**
+
+The program sends the screen to the terminal using the `EXEC CICS SEND` statement.
+
+**Receive Map**
+
+The program receives the map from the terminal using the `EXEC CICS RECEIVE` statement.
+
+**Edit Map Inputs**
+
+The program edits the map inputs, including the account ID and customer ID. It checks for errors and sets the return code and message accordingly.
+
+**Read Account Data**
+
+The program reads the account data from the `ACCTDAT` file using the `EXEC CICS READ` statement.
+
+**Read Customer Data**
+
+The program reads the customer data from the `CUSTDAT` file using the `EXEC CICS READ` statement.
+
+**Error Handling**
+
+The program handles errors that occur during the execution of the program, including file errors and invalid inputs.
+
+**Return**
+
+The program returns to the calling program using the `EXEC CICS RETURN` statement.

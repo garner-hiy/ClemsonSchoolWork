@@ -1,0 +1,33 @@
+Here is the breakdown of the COBOL program into sections and their functions:
+
+**Identification Section**
+This section contains metadata about the program, including its name, author, and purpose.
+
+**Environment Section**
+This section defines the input/output parameters for the program, including file selection, organization, access mode, and record key.
+
+**File Section**
+This section defines the record layouts for the four files used in the program: TRNX-FILE, XREF-FILE, CUST-FILE, and ACCT-FILE. Each file has a record layout with various fields.
+
+**Working-Storage Section**
+This section defines the storage areas for the program, including status variables for each file and a linkage area for communication with the calling program.
+
+**Linkage Section**
+This section defines the linkage area that is passed between the program and the calling program. It includes fields for the DD statement, operation code, return code, key, and a buffer for file data.
+
+**Procedure Division**
+This section contains the main logic of the program, which is divided into several procedures:
+
+* 0000-START: The main entry point of the program, which evaluates the operation code in the linkage area and calls the corresponding procedure.
+* 1000-TRNXFILE-PROC: Handles file operations for TRNX-FILE, including opening, reading, and closing.
+* 2000-XREFFILE-PROC: Handles file operations for XREF-FILE, including opening, reading, and closing.
+* 3000-CUSTFILE-PROC: Handles file operations for CUST-FILE, including opening, reading, and closing.
+* 4000-ACCTFILE-PROC: Handles file operations for ACCT-FILE, including opening, reading, and closing.
+
+Each procedure performs the following tasks:
+
+* Opening and closing files
+* Reading and writing records
+* Setting file status variables
+
+The program uses a simple state machine to determine which procedure to call based on the operation code in the linkage area.

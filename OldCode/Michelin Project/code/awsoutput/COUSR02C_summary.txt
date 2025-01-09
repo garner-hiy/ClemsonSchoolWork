@@ -1,0 +1,27 @@
+This COBOL file, COUSR02C.CBL, appears to be a CICS COBOL program that updates a user in the USRSEC file. 
+
+The program is designed to interact with a user through a screen-based interface, using the COUSR2A mapset. The program receives input from the user, updates the user's information in the USRSEC file, and then sends the updated information back to the user.
+
+The program has several procedures:
+
+1. `MAIN-PARA`: The main program procedure that initializes variables and starts the program flow.
+2. `PROCESS-ENTER-KEY`: This procedure handles the Enter key press from the user, which is used to submit the user's input.
+3. `UPDATE-USER-INFO`: This procedure updates the user's information in the USRSEC file.
+4. `RETURN-TO-PREV-SCREEN`: This procedure returns to the previous screen.
+5. `SEND-USRUPD-SCREEN`: This procedure sends the user's updated information to the screen.
+6. `RECEIVE-USRUPD-SCREEN`: This procedure receives the user's input from the screen.
+7. `POPULATE-HEADER-INFO`: This procedure populates the header information on the screen.
+8. `READ-USER-SEC-FILE`: This procedure reads the user's information from the USRSEC file.
+9. `UPDATE-USER-SEC-FILE`: This procedure updates the user's information in the USRSEC file.
+10. `CLEAR-CURRENT-SCREEN`: This procedure clears the current screen.
+11. `INITIALIZE-ALL-FIELDS`: This procedure initializes all fields on the screen.
+
+The program references several other files:
+
+1. `COCOM01Y`: This file contains a copybook for the CDEMO-CU02-INFO group.
+2. `COUSR02`: This file contains a copybook for the COUSR2AI and COUSR2AO groups.
+3. `COTTL01Y`: This file contains a copybook for the COTTL01Y group.
+4. `CSDAT01Y`: This file contains a copybook for the CSDAT01Y group.
+5. `CSMSG01Y`: This file contains a copybook for the CSMSG01Y group.
+6. `CSUSR01Y`: This file contains a copybook for the CSUSR01Y group.
+7. `DFHAID`:

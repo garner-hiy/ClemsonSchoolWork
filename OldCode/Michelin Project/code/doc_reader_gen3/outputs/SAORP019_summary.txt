@@ -1,0 +1,2 @@
+FILENAME: SAORP019
+Summary: This COBOL program is designed to retrieve shipment lead time, ship plant code, and carrier information for a specific shipment to a customer based on a provided ZIP code. It uses the IDMS database to perform the lookup and returns the results to the calling program. The program handles different scenarios, such as when the ZIP code is not found, when the country code is not '000' or'  ', and when the brand code is not found in the database.

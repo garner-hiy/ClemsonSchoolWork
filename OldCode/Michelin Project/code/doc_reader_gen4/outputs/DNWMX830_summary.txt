@@ -1,0 +1,25 @@
+The program is a COBOL program that appears to be a part of a larger system used for processing shipments and invoices. The program interacts with various database tables and performs various tasks such as storing data, updating records, and calling other programs.
+
+The program starts by initializing various variables and performing a bind operation to bind the necessary database tables. It then enters a loop where it processes each record received from the WICS program, which is called WSC-DATA-RECORD. The program uses a switch statement to determine the type of record being processed and performs the corresponding actions.
+
+The program has several sections that process different types of records, including:
+
+1. Type 01: This section processes a shipment confirmation transaction set and calls the DNWXP261 program to get a detail record.
+2. Type 02: This section processes a shipment confirmation transaction set and calls the DNWXP261 program to get a detail record.
+3. Type 03: This section processes a shipment confirmation transaction set and calls the DNWXP261 program to get a detail record.
+4. Type 04: This section processes a shipment confirmation transaction set and calls the DNWXP261 program to get a detail record.
+
+The program also has several routines that perform various tasks, such as:
+
+1. 1110000-PROCESS-LOAD: This routine processes a shipment confirmation transaction set and stores a load record.
+2. 1120000-PROCESS-BOL: This routine processes a shipment confirmation transaction set and stores a bill of lading record.
+3. 1130000-PROCESS-SHIP-HDR: This routine processes a shipment confirmation transaction set and stores a shipment header record.
+4. 1140000-PROCESS-LINE: This routine processes a shipment confirmation transaction set and stores a shipment line record.
+
+The program also has several subroutines that perform specific tasks, such as:
+
+1. 1135000-GET-SHIP-NUMBER: This subroutine gets the shipment number for a sales order.
+2. 1136000-CALCULATE-IRD-ETA: This subroutine calculates the IRD and ETA dates for a shipment.
+3. 1137000-CALL-NDR-ROUTINE: This subroutine calls a routine to calculate the date using a known date.
+4. 1144000-LOGICAL-STOCK: This subroutine processes a shipment line and updates the logical stock records.
+5. 1145000-CONSIGNMENT: This subroutine adds the

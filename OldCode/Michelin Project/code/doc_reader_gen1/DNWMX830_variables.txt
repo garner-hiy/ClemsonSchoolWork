@@ -1,0 +1,42 @@
+This is a batch script, likely used in an IDMS (Integrated Data Management System) environment. Here's a breakdown of the code:
+
+**Error Handling**
+
+The script starts by attempting to store a TMS (Transaction Management System) line in the `WCR-ERROR-CODE` field with the value '-STORING TMS SHPCAN LINE: '. If this operation fails, it will try to write a log message ID 9050100.
+
+**Looping**
+
+The script loops several times, starting from 3. Each loop increments a counter variable `WS-LOOP-1205`. The code within the loop is:
+
+1. Checks if `WS-LOOP-1205` is less than 10. If it is, it adds 1 to the counter.
+2. Initializes a debug snapshot with the string "ENCOUNTERED DUPLICATE IN TMS :".
+3. Rolls out database updates (performed by IDMS) and an error message is sent back to DNWXP261 along with the finish function. The `LOGMSG-STATUS` parameter indicates that the log entry was successful.
+4. Updates the `DEBUG-SNAP` field.
+
+**Conditional Logic**
+
+The script has several conditional statements:
+
+1. If `WS-LOOP-1205` is less than 10, it increments the counter variable to 11 and adds a message "MOVE '113' TO WCR-ERROR-CODE".
+2. The code moves the value '113' into the `WCR-ERROR-CODE` field.
+3. Checks if `WS-LOOP-1205` is less than 10 again. If it is, it increments the counter variable to 11 and performs a PERFORM statement that attempts to abort the database update process (performed by IDMS) with the exit code 9999999.
+
+**Exit Conditions**
+
+The script has several exit conditions:
+
+1. The first loop exits when `WS-LOOP-1205` is equal to 10.
+2. The second loop exits when `WS-LOOP-1205` equals any value between 11 and 20 (inclusive).
+3. The third loop exits after rolling out the database updates, which can be reached by a successful IDMS ABORT process.
+
+**Miscellaneous**
+
+The script uses several utility functions and macros:
+
+1. `MOVE`: Moves data into or out of a field.
+2. `STRING`: Converts a value to a string representation.
+3. `TMS-ORDER-NUMBER`, `TMS-SO-LINE-NBR`, `TMS-SO-LINE-SCHED`: Retrieve TMS-related values from a database table.
+4. `DEBUG-SNAP`, `WCR-ERROR-CODE`: Retrieve or update debug snapshot and error code fields in the `WCR-ERROR-CODE` field.
+
+Overall, this script appears to be responsible for updating a database related to transaction management systems (TMS), handling an abort process that rolls out database updates, sending log messages and error information to various targets.
+

@@ -1,0 +1,60 @@
+This is a large block of code, and I'll try to break it down into sections and explain each part.
+
+**Section 1: Get the Currency Code for the Bill-to Business**
+
+```objectivec
+3000-GET-CURRENCY-CODE
+```
+
+This section retrieves the currency code from the customer number in the `CALC BUSINESS` database. The currency code is stored under the key `'XBRD SHIP-TO BUSINESS NOT FOUND'`.
+
+Here's what happens:
+
+1. Find the next customer with a record that doesn't exist in the `CALC BUSINESS` database.
+2. Check if the found customer has a valid business address (in this case, it should be an XBRD ship-to business).
+3. If no match is found, display an error message `'XBRD SHIP-TO BUSINESS NOT FOUND'`.
+4. Repeat steps 1-3 for each customer in the `CALC BUSINESS` database.
+
+**Section 2: Get the Currency Code from the Bill-to Business**
+
+```objectivec
+3000-EXIT
+EJECT
+```
+
+If no match is found, exit the program and terminate any ongoing operations.
+
+**Section 3: Check if a Currency-Converting Factor Record Exists**
+
+This section retrieves the currency-converting factor record from the database and checks if its effective date is less than or equal to the current date. If so, proceed to Section 4.
+
+Here's what happens:
+
+1. Find the next `CURRENCY-CONV` record that doesn't exist in the `CALC CURRENCY-CONV` database.
+2. Check if any matching records are found.
+3. If a match is found, copy the current date into the `WS-EFF-DATE` variable and check if it's less than or equal to the effective date of the record.
+
+**Section 4: Get the Currency Factor from the Record**
+
+If a valid currency-converting factor record is found, proceed to Section 5. Otherwise, exit the program.
+
+Here's what happens:
+
+1. Extract the current date from the `WS-EFF-DATE` variable.
+2. Check if the effective date of any matching records is less than or equal to the current date using a `SELECT CASE...END IF` statement.
+3. If no match is found, exit the program and terminate any ongoing operations.
+
+**Section 5: Process the Currency Factor**
+
+This section updates the currency-converting factor in the `WS-CURRENCY-CONV-FACTOR` database record. Here's what happens:
+
+1. Extract the current date from the `WS-EFF-DATE` variable.
+2. Check if a valid effective date for any matching records is less than or equal to the current date using another `SELECT CASE...END IF` statement.
+3. If no match is found, set the flag `SW-CONV-FACTOR-FOUND` to 1 and update the record with the new value.
+
+**Section 6: Exit the Program**
+
+Finally, exit the program at the end of Section 5 if a valid currency-converting factor was updated.
+
+That's a summary of this code block. Let me know if you'd like more information on any specific section!
+

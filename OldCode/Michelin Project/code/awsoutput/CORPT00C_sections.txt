@@ -1,0 +1,36 @@
+Here is a summary of the COBOL file in sections and what each section accomplishes:
+
+**Section 1: Identification and Environment Division**
+This section identifies the program, application, and function of the COBOL program. It also specifies the environment division, which includes the configuration section.
+
+**Section 2: Data Division**
+This section defines the data structures used in the program, including:
+
+* Working storage section: defines the variables used in the program, such as `WS-VARIABLES`, which includes fields like `WS-PGMNAME`, `WS-TRANID`, and `WS-MESSAGE`.
+* Job data section: defines the job data structure, which includes a 1000-entry array of strings called `JOB-LINES`.
+* CSUTLDTC-PARM section: defines a structure for passing parameters to the CSUTLDTC program.
+
+**Section 3: Linkage Section**
+This section defines the linkage section, which includes the DFHCOMMAREA structure, which is used to pass data between programs.
+
+**Section 4: Procedure Division**
+This section defines the main program logic, which includes:
+
+* The `MAIN-PARA` paragraph, which initializes variables and checks for errors.
+* The `PROCESS-ENTER-KEY` paragraph, which processes the enter key press and determines which report type to print.
+* The `SUBMIT-JOB-TO-INTRDR` paragraph, which submits a job to the intruder.
+* The `WIRTE-JOBSUB-TDQ` paragraph, which writes the job to the TDQ.
+* The `RETURN-TO-PREV-SCREEN` paragraph, which returns to the previous screen.
+* The `SEND-TRNRPT-SCREEN` paragraph, which sends the transaction report screen.
+* The `RECEIVE-TRNRPT-SCREEN` paragraph, which receives the transaction report screen.
+* The `POPULATE-HEADER-INFO` paragraph, which populates the header information.
+* The `INITIALIZE-ALL-FIELDS` paragraph, which initializes all fields.
+
+**Section 5: Copybooks**
+The program includes several copybooks, which are included files that contain common code and data structures. These copybooks are:
+
+* COCOM01Y: defines the CICS communication area.
+* CORPT00: defines the report header information.
+* COTTL01Y: defines the report title.
+* CSDAT01Y: defines the report date information.
+* CSMSG

@@ -1,0 +1,34 @@
+This is a database query written in Oracle PL/SQL (Procedural Language/View Query). Here's a breakdown of what it does:
+
+**Section 1: RFS253**
+
+* This section seems to be part of a larger process or procedure.
+* It sets up the parameters for two procedures:
+	+ `2250-GET-TUBEDC`: retrieves data from a database table named `TUBEDC`.
+	+ `2500-GET-OVRD-DETAILS`: retrieves data from a database table named `OVRD`.
+* The section evaluates conditions based on values in the `SHIP-PLANT-CODE` column. When it finds matching records, it sets specific values for the `PROD-CATEG-CODE` column.
+
+**Section 2: RFS228**
+
+* This section is also part of a larger process or procedure.
+* It performs the following actions:
+	1. Evaluates conditions based on values in the `SHIP-PLANT-CODE` column and sets specific values for the `PROD-CATEG-CODE` column when a match is found.
+	2. Finds the next row with matching values in the `ZIP-PLT-DTL` table within the `ZIP-PLT-INFO` table.
+* If no matches are found, it skips to the end of the section.
+
+**Section 3: RFS253 (2500)**
+
+* This section copies data from a predefined source (`IDMS IDMS-STATUS`) into an Oracle session (`SSC-ERRSTAT-SAVE`, `SSC-DMLSEQ-Save`).
+* It writes error status and DML sequence information to the error log.
+
+**Section 4: IDMS-ABORT SECTION**
+
+* This section appears to be related to database aborting procedures.
+* It sets up an error status variable (`ERROR-STATUS`) with a specific value based on `SCC-ERRSTAT-SAVE`.
+* It sets the DML sequence variable (`SSC-DMLSEQ-Save`) with a specific value from the previous step.
+
+**Section 5: IDMS-ABORT-EXIT**
+
+* This section marks the end of the database aborting procedures.
+* It writes error status and DML sequence information to the error log.
+

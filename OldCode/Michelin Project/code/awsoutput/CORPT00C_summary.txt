@@ -1,0 +1,24 @@
+This COBOL program, named CORPT00C, appears to be a CICS (Customer Information Control System) program that allows users to submit a report for printing. The program is designed to interact with the user through a screen, prompting them to select a report type and confirm the submission.
+
+The program has several procedures, including:
+
+1. PROCESS-ENTER-KEY: This procedure handles the user's input when they press the Enter key. It checks the user's selection and performs the corresponding actions, such as submitting a job to the intruder (a system that handles job submissions).
+2. SUBMIT-JOB-TO-INTRDR: This procedure submits a job to the intruder, which handles the job submission process.
+3. RETURN-TO-PREV-SCREEN: This procedure returns the user to the previous screen, allowing them to make a new selection.
+4. SEND-TRNRPT-SCREEN: This procedure sends the report screen to the user, displaying the report title, transaction name, and program name.
+5. RECEIVE-TRNRPT-SCREEN: This procedure receives input from the user, allowing them to select a report type and confirm the submission.
+6. POPULATE-HEADER-INFO: This procedure populates the report header with the current date and time.
+7. INITIALIZE-ALL-FIELDS: This procedure initializes all the fields in the report screen.
+
+The program uses several files and procedures, including:
+
+1. COCOM01Y: This is a copybook that contains common COBOL definitions.
+2. CORPT00: This is a copybook that contains definitions specific to the CORPT00C program.
+3. COTTL01Y: This is a copybook that contains definitions for the transaction title and trailer.
+4. CSDAT01Y: This is a copybook that contains definitions for the date and time.
+5. CSMSG01Y: This is a copybook that contains definitions for error messages.
+6. CVTRA05Y: This is a copybook that contains definitions for the transaction report.
+7. DFHAID: This is a copybook that contains definitions for the CICS interface.
+8. DFHBMSCA: This is a copybook that contains definitions for the CICS batch message.
+9. JOB-DATA: This is a working storage section that contains the JCL (Job Control Language) for the job submission process.
+10. CSUTLDTC-PARM: This is

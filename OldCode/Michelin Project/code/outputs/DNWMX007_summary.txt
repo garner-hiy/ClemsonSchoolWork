@@ -1,0 +1,27 @@
+This COBOL program is designed to perform currency conversion for freight amounts. It appears to be a legacy system, written in COBOL, and is likely used in a mainframe environment.
+
+The program is named DNWMX007 and was written by CGI on February 14, 2003. It is part of a larger system, as it references several other programs and files, including DNWMX830, which is likely the program that passes the freight amount to be converted.
+
+The program's purpose is to retrieve the bill-to business currency factor for the ship-to customer and use it to convert the freight amount. It does this by first retrieving the load record, then the business record, and finally the currency conversion record. It then uses the currency conversion factor to convert the freight amount.
+
+The program has several sections:
+
+1. The ENVIRONMENT DIVISION sets the IDMS protocol and record mode.
+2. The DATA DIVISION defines the working storage and schema sections.
+3. The WORKING-STORAGE SECTION defines variables used throughout the program, including the currency conversion factor and error messages.
+4. The SCHEMA SECTION defines the schema for the IDMS database, including the load, business, and currency conversion records.
+5. The LINKAGE SECTION defines the linkage between the program and other programs, including the load, business, and currency conversion records.
+6. The PROCEDURE DIVISION is the main logic of the program, which includes several paragraphs:
+	* 0000-MAIN-PARA: The main entry point of the program, which calls the other paragraphs.
+	* 1300-BIND-READY-DB: Binds and reads the required areas of the database.
+	* 2000-PROCESS-PARA: Performs the currency conversion for the freight amount.
+	* 3000-GET-CURRENCY-CODE: Retrieves the currency code for the bill-to business.
+	* 3100-GET-CURRENCY-FACTOR: Retrieves the currency conversion factor record.
+	* 3200-PROCESS-CONV-FACTOR: Retrieves the currency factor from the record with an effective date less than or equal to the current date.
+
+The program uses several files and records, including:
+
+* LOAD: The load record, which contains the freight amount to be converted.
+* BUSINESS: The business record, which contains the bill-to business information.
+* CURRENCY-CONV: The currency conversion record, which contains the currency conversion factor.
+* CURRENCY-FA

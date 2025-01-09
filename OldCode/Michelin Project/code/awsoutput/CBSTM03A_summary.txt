@@ -1,0 +1,31 @@
+The COBOL file is a batch program designed to print account statements from transaction data in two formats: plain text and HTML. 
+
+The program starts by checking the unit control blocks and displaying the job name and step number. It then opens the input files (TRNXFILE, XREFFILE, CUSTFILE, and ACCTFILE) and reads the records from these files.
+
+The program uses a main loop to process the records from the files. For each record, it checks if the record is a new customer and if so, it reads the customer's information from the CUSTFILE. It then reads the account information from the ACCTFILE and creates a statement for the customer.
+
+The program writes the statement to both the plain text file (STMT-FILE) and the HTML file (HTML-FILE). The statement includes the customer's name, address, account ID, current balance, FICO score, and a list of transactions.
+
+The program also includes error handling for file operations and record reading. If an error occurs, it displays an error message and abends the program.
+
+The program references the following files:
+
+* TRNXFILE: the transaction file
+* XREFFILE: the cross-reference file
+* CUSTFILE: the customer file
+* ACCTFILE: the account file
+* STMT-FILE: the plain text statement file
+* HTML-FILE: the HTML statement file
+
+The program uses the following subroutines:
+
+* CBSTM03B: a subroutine to read and write records to the files
+* CEE3ABD: a subroutine to abend the program
+
+The program uses the following data structures:
+
+* WORKING-STORAGE SECTION: to store the program's working data
+* FILE SECTION: to define the file structures
+* PROCEDURE DIVISION: to define the program's logic
+
+The program is designed to run in a batch environment and uses COBOL's batch processing features, such as file control blocks and GO TO statements.

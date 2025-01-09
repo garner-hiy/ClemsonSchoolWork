@@ -1,0 +1,29 @@
+This COBOL program is an application that performs the following tasks:
+
+1.  It reads data from a card file and an account master file based on the input account ID.
+2.  It performs various edits on the data, including checking for valid account numbers, credit limits, and dates.
+3.  It displays the data on a screen and allows the user to edit it.
+4.  It checks the user's input for errors and validates the data.
+5.  If the user confirms the changes, it updates the account and customer records in the database.
+
+The program is divided into several sections:
+
+1.  Identification Division: This section contains information about the program, such as its name, date written, and date compiled.
+2.  Environment Division: This section defines the environment in which the program will run.
+3.  Data Division: This section defines the data structures used by the program, including the working storage section, which contains variables used by the program.
+4.  Procedure Division: This section contains the main logic of the program, including the main program, which is labeled as "0000-MAIN".
+5.  Common routines: The program includes several common routines, such as date routines and error handling routines.
+
+The program uses several data structures, including:
+
+1.  WS-MISC-STORAGE: This working storage section contains miscellaneous variables used by the program.
+2.  WS-COMMAREA: This working storage section contains the communication area used by the program.
+3.  WS-THIS-PROGCOMMAREA: This working storage section contains the communication area used by the program.
+4.  CACTUPAO: This data structure represents the screen data.
+5.  ACUP-NEW-DETAILS: This data structure represents the new account details.
+6.  ACUP-OLD-DETAILS: This data structure represents the old account details.
+7.  WS-NON-KEY-FLAGS: This working storage section contains flags used to indicate whether certain fields have been edited.
+8.  WS-FILE-READ-FLAGS: This working storage section contains flags used to indicate whether certain files have been read.
+9.  WS-FILE-ERROR-MESSAGE: This working storage section contains the error message for file-related errors.
+10. WS-RETURN-MSG: This working storage section contains the return message.
+11. WS-RETURN-FLAG: This working storage section contains a flag used to indicate whether the return

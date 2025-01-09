@@ -1,0 +1,15 @@
+This COBOL file appears to be a program written in COBOL for the IBM CICS (Customer Information Control System) environment. The program is called COCRDSLC and is designed to accept and process credit card detail requests.
+
+The program starts by checking the AID (Application Identification) to determine the context in which it is being called. If the AID is valid, it checks the PF keys (Program Function keys) to determine what action to take. If the F3 key is pressed, the program exits. If the Enter key is pressed, it continues to the next step.
+
+The program then checks the input data to determine what action to take. If the input data is valid, it reads the credit card data from a file based on the account ID and card number. If the data is not found, it sets an error flag and returns an error message.
+
+The program uses several other files and copybooks, including CVCRD01Y, COCOM01Y, DFHBMSCA, DFHAID, COTTL01Y, COCRDSL, CSDAT01Y, CSMSG01Y, CSMSG02Y, CSUSR01Y, CVACT01Y, CVACT02Y, CVACT03Y, and CVCUS01Y. These files appear to contain common code, data layouts, and error messages.
+
+The program also uses several working storage variables, including WS-MISC-STORAGE, WS-CICS-PROCESSNG-VARS, WS-INPUT-FLAG, WS-EDIT-ACCT-FLAG, WS-EDIT-CARD-FLAG, WS-RETURN-FLAG, and WS-PFK-FLAG. These variables appear to be used to store the status of the input data and the program's processing.
+
+The program's main logic is contained in the PROCEDURE DIVISION, which is divided into several sections, including 0000-MAIN, 1000-SEND-MAP, 2000-PROCESS-INPUTS, 9000-READ-DATA, and 9150-GETCARD-BYACCT. Each section appears to perform a specific function, such as sending the screen, processing the input data, reading the credit card data, and displaying error messages.
+
+The program also includes several copybooks and common code, including CSSTRPFY, which appears to be a common code for storing PF keys.
+
+Overall, the program appears to be designed to provide a user interface for viewing credit

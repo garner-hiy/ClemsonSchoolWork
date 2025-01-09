@@ -1,0 +1,24 @@
+The COBOL file is divided into several sections, each with a specific purpose:
+
+**1. Identification Division**: This section contains metadata about the program, including the program ID, author, and date written.
+
+**2. Environment Division**: This section defines the environment in which the program will run, including the protocol and record structure.
+
+**3. Data Division**: This section defines the data structures used by the program, including working storage and schema sections.
+
+**4. Procedure Division**: This section contains the program logic, including the main processing logic, binding and reading of required areas, currency conversion, and error handling.
+
+**5. Linkage Section**: This section defines the linkage between the program and other programs or data structures.
+
+**6. Copy Sections**: These sections contain pre-defined code that is included in the program, including IDMS-STATUS, IDMS-ABORT, and other sections.
+
+**7. Record Sections**: These sections define the structure of the records used in the program, including the LOAD, BUSINESS, CUSTOMER, CURRENCY-CONV, and CURRENCY-FACTOR records.
+
+**8. Main Processing Logic**: This section contains the main logic of the program, which performs the following tasks:
+	* Binds and reads the required areas.
+	* Performs currency conversion based on the order type.
+	* Gets the currency code for the bill-to business.
+	* Gets the currency-conversion record for the bill-to business.
+	* Gets the currency-factor record for the bill-to business.
+
+The program appears to be designed to perform currency conversion for freight amounts based on the order type and the bill-to business currency factor. It uses a combination of database records and pre-defined code to perform the conversion.

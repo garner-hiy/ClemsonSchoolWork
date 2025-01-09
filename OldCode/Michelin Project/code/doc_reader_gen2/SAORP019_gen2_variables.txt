@@ -1,0 +1,69 @@
+IDENTIFICATION DIVISION.                                                 
+ Purpose: Defines the program's identification information.
+
+ PROGRAM-ID.  SAORP019.                                                   
+ Author: Terry Devita. 
+ Date-Written: May 1994.                                                  
+ Date-Compiled: Today.                                                     
+
+******************************************************************
+ THIS IS A DC PROGRAM                         *
+ ******************************************************************
+ REMARKS:                                                      *
+  THIS PROGRAM LINKED TO BY OTHER ONLINE PROGRAMS.  IT WILL     *
+  PASS BACK ALL OF THE FOLLOWING DETAILS: SHIPMENT-LEAD-TIME,   *
+  SHIP-PLANT-CODE, AND CARRIER FOR THE SHIP-TO CUSTOMER PASSED. *
+
+******************************************************************
+ THIS IS A LINKED TO ROUTINE FROM OTHER ONLINE PROGRAMS. THE   *
+ ROUTINE DOES NOT READY ANY AREAS  BUT BINDS RECORDS.  LISTED BELOW ARE THE AREAS THAT MUST BE   *
+ READIED BEFORE THIS ROUTINE IS CALLED.  THEY NEED ONLY TO BE  *
+ IN RETRIEVAL MODE.                                            *
+
+ RECORDS USED IN THIS PROGRAM ARE:  ZIP-PLT-HDR, ZIP-PLT-DTL,  *
+                               BUSINESS, ADDRSS-ID, AND ADDRSS  *
+
+ AREAS USED IN THIS PROGRAM ARE:  MICH-ZIPPLT-AREA, CAS-BUS-   *
+                                   AREA.                        *
+
+ AFTER THE INITIALIZATION. THE ZIP CODE IS GOT FOR THE SHIP-TO * *
+ CUSTOMER PASSED THRU THE WORK RECORD ZIP-DEFAULT-DATA. ONCE   *
+ THE ZIP CODE IS GOT THEN THE TABLE IS ACCESSED AS FOLLOWS:    *
+ THE ZIP-PLT-HDR IS CALC'D TO USING...                         *
+ 1. FIRST 5-DIGIT ZIP CODE (US) / 7-DIGIT POSTAL CODE (CAN) &  *
+     SHIP-TO CUSTOMER NUMBER. IF NOT FOUND...                   *
+ 2. FIRST 3-DIGIT ZIP CODE (US) / 3-DIGIT POSTAL CODE (CAN) &  *
+     SHIP-TO CUSTOMER NUMBER. IF NOT FOUND...                   *
+ 3. FIRST 5-DIGIT ZIP CODE (US) / 7-DIGIT POSTAL CODE (CAN)    *
+     WITHOUT SHIP-TO CUSTOMER NUMBER. IF NOT FOUND...           *
+ 4. FIRST 3-DIGIT ZIP CODE (US) / 3-DIGIT POSTAL CODE (CAN)    *
+     WITHOUT SHIP-TO CUSTOMER NUMBER. THIS ENTRY WILL ALWAYS BE * *
+     IN THE TABLE.  NEXT THE DETAIL                             *
+ NEXT THE DETAIL LINE IS FOUND USING THE PROD-BRAND AND PROD-  *
+  CATEGORY PASSED. IF IT DOES NOT EXIST THEN THE PROD-CATEGORY  *
+  IS SPACED OUT AND THE LINE IS OBTAINED AGAIN. IF IT IS STILL  *
+  NOT FOUND THEN ONLY THE 1ST BYTE OF THE PROD-BRAND IS USED    *
+  CONCATENATED WITH '00' AND THE PROD-CATEGORY IF THAT ALSO IS  *
+  FOUND FOUND THEN THE PROD-CATEGORY IS SPACED OUT AND ANOTHER  *
+  ATTEMPT IS MADE TO FIND A MATCH.  IF THERE IS STILL NO MATCH  *
+  THEN BOTH THE PROD-BRAND AND THE PROD-CATEGORY ARE SPACED OUT AND*
+  THE DEFAULT LINE IS FOUND.  THIS ENTRY WILL ALWAYS BE THERE.  * *
+  ONCE THE DETAIL LINE IS FOUND AT WHATEVER  LEVEL YOU MAY BE   *
+  THE CORRESPONDING SHIPMENT-LEAD-TIME, SHIP-PLANT-CODE, AND THE* *
+  CARRIER FOR THAT DETAIL LINE ARE PASSED BACK THE TO THE       * *
+  CALLING PROGRAM.                                              *
+
+ NOTE:   IF THE SHIP TO HAS A COUNTRY CODE OTHER THAN      * *
+  '000' OR' '(WHICH MEANS THE CUSOMTER IS NOT IN USA AND    * *
+  ZIP IS INVALID) THEN THE ZIP TO FOR THAT SHIP-TO IS MADE EQUAL* *
+  '000'. *                                                                 
+
+******************************************************************
+ ***************        P T F   H I S T O R Y     ***************        
+ ******************************************************************        
+ ** PTF #     DATE   REP DESCRIPTION                             **        
+ ** C03084 DPCL 112596   MAKE BRAND 601 DEFAULT TO BLANK ENTRY   **        
+ ** P14996 DPCL 011197   USE ZIP-ADDRS-ID TO GET ADDRESS         **        
+RFS082** 2OR150 IMR  022599   THIS PROGRAM WILL BE USED FOR CANADA ALSO IM990304
+RFS082** RFS082                                                       * IM990304
+RFS253** 2OR260 IMR 041700   FOR SHIP PLANT OVERRIDES,MATCHING ENTRY

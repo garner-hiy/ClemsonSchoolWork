@@ -1,0 +1,19 @@
+This COBOL program, named SAORP019, appears to be a data retrieval program that is linked to other online programs. Its primary function is to retrieve shipment lead time, ship plant code, and carrier information for a given shipment based on the ship-to customer's zip code and product details.
+
+The program uses a series of nested FIND statements to search for the required information in various tables, such as ZIP-PLT-HDR, ZIP-PLT-DTL, BUSINESS, ADDRSS-ID, and ADDRSS. The search process involves multiple iterations and conditional checks to handle different scenarios, including:
+
+1.  Retrieving the ship-to zip code from the WORK record.
+2.  Searching the ZIP-PLT-HDR table using the 5-digit zip code and ship-to customer number. If not found, it tries to find a match using the 3-digit zip code and ship-to customer number. If still not found, it searches using the 5-digit zip code without the ship-to customer number.
+3.  Once a match is found, it retrieves the corresponding detail line from the ZIP-PLT-DTL table.
+4.  If the product brand and category are not found, it attempts to find a match using the first byte of the product brand concatenated with '00' and the product category. If still not found, it uses the default product category.
+5.  It then retrieves the shipment lead time, ship plant code, and carrier information from the detail line.
+
+The program also includes several conditional checks and error handling mechanisms to handle various scenarios, such as:
+
+*   Handling invalid zip codes or ship-to customer numbers.
+*   Dealing with country codes other than '000' or' '(indicating non-USA customers).
+*   Retrieving information for product categories with specific application codes.
+
+The program has undergone several revisions and updates, as indicated by the PTF (Program Temporary Fix) and IM (Implementation) records at the end of the file. These updates have addressed various issues, such as handling end-of-set conditions, retrieving information for tubedc products, and improving the search logic.
+
+Overall, the SAORP019 program appears to be a complex data retrieval program designed to provide accurate and efficient access to shipment lead time, ship plant code, and carrier information for various products and customers.

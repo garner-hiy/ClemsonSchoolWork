@@ -1,0 +1,5 @@
+Here is a 10 sentence summary of the COBOL file:
+
+The COBOL file is a CICS program named COTRN02C that adds a new transaction to the TRANSACT file. The program uses the CCXREF and CXACAIX files to validate account and card numbers. The program receives input from the user through the COTRN2A screen and validates the input fields for errors. The program uses the CSUTLDTC function to validate the date fields. The program checks for errors in the input fields, including account and card numbers, transaction amount, and dates. If errors are found, the program displays an error message and returns to the previous screen. If the input is valid, the program adds a new transaction to the TRANSACT file and displays a success message. The program uses the DFHCOMMAREA to store the input data from the user. The program uses the CICS commands to start and end the transaction, read and write to the files, and send and receive screens. The program also uses the EXEC CICS XCTL command to call other programs. 
+
+The file references several other COBOL files, including COCOM01Y, COTRN02, COTTL01Y, CSDAT01Y, CSMSG01Y, CVTRA05Y, CVACT01Y, and CVACT03Y.

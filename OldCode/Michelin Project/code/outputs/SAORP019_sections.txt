@@ -1,0 +1,37 @@
+Here is a breakdown of the COBOL file into sections and what each section accomplishes:
+
+**Identification Section**
+This section contains metadata about the program, including its name, author, and date written.
+
+**Environment Division**
+This section specifies the environment in which the program will run, including the IDMS-DC-NONAUTO DEBUG protocol, manual record retrieval, and the IBM-370 computer.
+
+**Data Division**
+This section defines the data structures used by the program, including the WORKING-STORAGE SECTION, SCHEMA SECTION, and LINKAGE SECTION.
+
+**Working-Storage Section**
+This section defines the working storage areas used by the program, including variables such as FILLER, WS-PLT-DTL-KEY, WS-SAVE-PROGRAM-NAME, and WS-SNAP-TITLE.
+
+**Schema Section**
+This section defines the schema used by the program, including the DB COES3SAL WITHIN CASSCHEM schema.
+
+**Linkage Section**
+This section defines the linkage between the program and the calling program, including the WORK RECORD passed between the programs.
+
+**Procedure Division**
+This section contains the program logic, including the MAINLINE, 0500-INITIALIZE, 1000-GET-ZIP-CODE, 1500-GET-HEADER, and 2000-GET-DETAILS sections.
+
+**Mainline**
+The MAINLINE section is the entry point of the program. It initializes the working storage areas, binds the records, and calls the 0500-INITIALIZE section.
+
+**0500-INITIALIZE**
+This section initializes the records and sets up the program for execution. It binds the ZIP-PLT-HDR, ZIP-PLT-DTL, BUSINESS, ADDRSS-ID, and ADDRSS records.
+
+**1000-GET-ZIP-CODE**
+This section gets the ZIP code for the ship-to customer passed through the WORK RECORD. It tries to find a match in the ZIP-PLT-HDR table using the 5-digit ZIP code, then the 3-digit ZIP code, and finally the 5-digit ZIP code without the ship-to customer number.
+
+**1500-GET-HEADER**
+This section gets the header record from the ZIP-PLT-HDR table using the ZIP code obtained in the 1000-GET-ZIP-CODE section.
+
+**2000-GET-DETAILS**
+This section gets the detail record from the ZIP-PLT-DTL table using

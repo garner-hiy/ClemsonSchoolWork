@@ -1,0 +1,5 @@
+I want you to write me a 10 sentence or less summary of this COBOL code. 
+
+Here is a summary:
+
+This COBOL code is a program that handles shipment confirmations for a company. It receives data from DNWXP261, processes it, and stores the data in various tables on the core. The program checks for errors and aborts if necessary. It also handles different types of shipments, including domestic transfers, cross-border transfers, and sales orders. The program uses various variables and data structures to store and process the data. It also includes error handling and logging mechanisms. The code is designed to be used in a specific company and is likely part of a larger system. The program is used to confirm shipments and update the company's database accordingly. It is written in COBOL and uses IDMS and other database management systems. The code is complex and includes many conditional statements and loops.

@@ -1,0 +1,31 @@
+This is a COBOL code file that appears to be a program written in the COBOL programming language. The program is named "DNWMX830" and is used for processing shipments and invoices. 
+
+The code is divided into several sections, including the identification division, environment division, data division, and procedure division. 
+
+The identification division contains information about the program, such as its name, author, and installation. 
+
+The environment division specifies the configuration and mode of the program, including the source and object computers, protocol, and IDMS control section. 
+
+The data division defines the data structures used by the program, including the schema, working storage, and record layouts. 
+
+The procedure division contains the main logic of the program, which is divided into several sections, including the mainline, bind ready db, and process an entire transaction set. 
+
+The mainline section initializes variables and performs various tasks, including binding records and areas, and performing a cycle of record receives. 
+
+The bind ready db section binds various records and areas, including the load, bill-of-lading, freeform-items, shipment-header, coo-split, shipment-line, part-serial-num, route, route-details, master-bol, text-header, text-line, ar-invoice-hdr, ship-track-id, order-header, sales-order, sales-order-line, vas-line-item, so-line-schedule, customer, table-hdr, table-detail, pfo-ship-ooak, pfo-ship-tran, plant-master, carrier, and wics-loads. 
+
+The process an entire transaction set section processes each record received from WICS. It performs various tasks, including checking for valid record types, processing the record, and handling errors. 
+
+The program also contains several subroutines, including process-load, process-bol, process-ship-hdr, process-line, process-text, and process-xbrd-text. 
+
+The process-load subroutine processes the "01" transaction type and generates a load number. 
+
+The process-bol subroutine processes the "02" transaction type and stores a bill-of-lading. 
+
+The process-ship-hdr subroutine processes the "03" transaction type and stores a shipment-header. 
+
+The process-line subroutine processes the "04" transaction type and stores a shipment-line. 
+
+The process-text subroutine processes the "03" and "04" transaction types and stores text records. 
+
+The process-xbrd-text subroutine processes the

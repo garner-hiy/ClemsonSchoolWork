@@ -1,0 +1,50 @@
+DNWXP261
+       IDMS-CONTROL SECTION.
+ 
+       IDMS-CONTROL SECTION. 
+       IDMS-CONTROL SECTION is used to specify the environment and configuration of the IDMS environment. The IDMS-CONTROL SECTION is used to define the protocol, configuration, and other environment settings for the program.
+
+ 
+       IDMS-CONTROL SECTION.
+ 
+       IDMS-CONTROL SECTION is used to specify the environment and configuration of the IDMS environment. The IDMS-CONTROL SECTION is used to define the protocol, configuration, and other environment settings for the program.
+
+ 
+       IDMS-CONTROL SECTION.
+ 
+       IDMS-CONTROL SECTION is used to specify the environment and configuration of the IDMS environment. The IDMS-CONTROL SECTION is used to define the protocol, configuration, and other environment settings for the program.
+
+ 
+       IDMS-CONTROL SECTION.
+ 
+       IDMS-CONTROL SECTION is used to specify the environment and configuration of the IDMS environment. The IDMS-CONTROL SECTION is used to define the protocol, configuration, and other environment settings for the program.
+
+ 
+       IDMS-CONTROL SECTION.
+ 
+       IDMS-CONTROL SECTION is used to specify the environment and configuration of the IDMS environment. The IDMS-CONTROL SECTION is used to define the protocol, configuration, and other environment settings for the program.
+
+ 
+       IDMS-CONTROL SECTION.
+ 
+       IDMS-CONTROL SECTION is used to specify the environment and configuration of the IDMS environment. The IDMS-CONTROL SECTION is used to define the protocol, configuration, and other environment settings for the program.
+
+ 
+       IDMS-CONTROL SECTION.
+ 
+       IDMS-CONTROL SECTION is used to specify the environment and configuration of the IDMS environment. The IDMS-CONTROL SECTION is used to define the protocol, configuration, and other environment settings for the program.
+
+ 
+       IDMS-CONTROL SECTION.
+ 
+       IDMS-CONTROL SECTION is used to specify the environment and configuration of the IDMS environment. The IDMS-CONTROL SECTION is used to define the protocol, configuration, and other environment settings for the program.
+
+ 
+       IDMS-CONTROL SECTION.
+ 
+       IDMS-CONTROL SECTION is used to specify the environment and configuration of the IDMS environment. The IDMS-CONTROL SECTION is used to define the protocol, configuration, and other environment settings for the program.
+
+ 
+       IDMS-CONTROL SECTION.
+ 
+       IDMS-CONTROL SECTION is used to specify the

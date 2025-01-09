@@ -1,0 +1,26 @@
+This COBOL program is designed to list credit cards. It appears to be a CICS (Customer Information Control System) program, which is a mainframe transaction processing system. 
+
+The program's main function is to list credit cards based on user input. If the user is an admin, it lists all credit cards. If the user is not an admin, it lists only the credit cards associated with the account number passed in the COMMAREA.
+
+The program uses a COMMAREA to store data passed from the calling program. It also uses various COBOL copybooks to access and manipulate data.
+
+The program has several sections:
+
+1. Identification: This section identifies the program and its author.
+2. Environment: This section defines the environment in which the program will run.
+3. Data: This section defines the data structures used by the program, including the COMMAREA and various working storage areas.
+4. Procedure: This section contains the main logic of the program, which is divided into several sections:
+   a. Main: This section is the entry point of the program.
+   b. Send-MAP: This section sends the screen to the user.
+   c. Receive-MAP: This section receives input from the user.
+   d. Edit-INPUTS: This section edits the user's input.
+   e. Read-FORWARD: This section reads credit card records from the file.
+   f. Filter-RECORDS: This section filters the credit card records based on the user's input.
+   g. Read-BACKWARDS: This section reads credit card records from the file in reverse order.
+   h. Exit: This section exits the program.
+
+The program uses various COBOL statements, such as MOVE, IF, PERFORM, and EVALUATE, to manipulate data and control the flow of the program.
+
+The program also uses several COBOL copybooks, such as COCOM01Y, CVCRD01Y, and CSMSG01Y, to access and manipulate data.
+
+Overall, this program is designed to provide a user interface for listing credit cards based on user input.

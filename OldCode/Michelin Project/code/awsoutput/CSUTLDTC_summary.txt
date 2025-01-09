@@ -1,0 +1,18 @@
+This is a COBOL program named CSUTLDTC that appears to be a wrapper around the CEEDAYS API. The program takes two input parameters: a date string and a date format string. It calls the CEEDAYS API with these inputs and retrieves a result and feedback code. The program then processes the feedback code and returns a message to the caller.
+
+The program has several variables defined, including:
+
+* WS-DATE-TO-TEST: the date string passed to the CEEDAYS API
+* WS-DATE-FORMAT: the date format string passed to the CEEDAYS API
+* OUTPUT-LILLIAN: the output from the CEEDAYS API in Lillian date format
+* WS-MESSAGE: a message returned by the program
+* WS-SEVERITY-N: the severity code of the feedback from the CEEDAYS API
+* WS-MSG-NO-N: the message number of the feedback from the CEEDAYS API
+
+The program uses the CEEDAYS API to convert the input date string to a Lillian date format. The CEEDAYS API returns a feedback code, which is then evaluated to determine the outcome of the conversion. The program then returns a message to the caller based on the outcome.
+
+The program references the CEEDAYS API, which is likely a third-party library or service that provides date and time conversion functionality.
+
+The program has a version number and a date stamp, indicating that it was last modified on July 19, 2022.
+
+The program is written in COBOL and uses the Micro Focus COBOL compiler.

@@ -1,0 +1,252 @@
+       IDENTIFICATION DIVISION.                                                 
+       PROGRAM-ID.   DNWMX007.                                                  
+       AUTHOR.       CGI.                                                       
+       DATE-WRITTEN. 14-FEB-2003.                                               
+      **REMARKS.                                                                
+      ******************************************************************        
+      * PURPOSE : THIS PROGRAM DOES THE CURRENCY CONVERSION FOR THE    *        
+      *           FREIGHT AMOUNT PASSED FROM DNWMX830 AND RETURNS BACK *        
+      *           THE CONVERTED FREIGHT AMOUNT.                        *        
+      * DESCRIPTION : THIS PROGRAM GETS THE BILL-TO BUSINESS CURRENCY  *        
+      *           FACTOR FOR THE PASSED SHIP-TO AND CONVERTS THE       *        
+      *           FREIGHT AMOUNT BASED ON THAT.                        *        
+      *                                                                *        
+      ******************************************************************        
+      *            RECORD NAME         RECD EXTN   RETRIEVAL / UPDATE  *        
+      *            -----------         ---------   ------------------  *        
+      * RECORDS :  LOAD                            RETRIEVAL           *        
+      *            BUSINESS                        RETRIEVAL           *        
+      *            CUSTOMER                        RETRIEVAL           *        
+      *            CURRENCY-CONV                   RETRIEVAL           *        
+      *            CURRENCY-FACTOR                 RETRIEVAL           *        
+      ******************************************************************        
+      *                                                                         
+      *-----------------------------------------------------------------        
+      *                         HISTORY LOG                                     
+      *          RELEASE/                                                       
+      *   DATE   TIVOLI #  PGMR  EXPLANATION                                    
+      * -------  --------  ----  ---------------------------------------        
+      * 18FEB03  3LO041    CGI   NEW                                            
+      *-----------------------------------------------------------------        
+       EJECT                                                                    
+       ENVIRONMENT DIVISION.                                                    
+      ***********************                                                   
+                                                                                
+       IDMS-CONTROL SECTION.                                                    
+      *=====================                                                    
+       PROTOCOL.      MODE IS IDMS-DC DEBUG                                     
+                      IDMS-RECORDS MANUAL.                                      
+                                                                                
+       EJECT                                                                    
+       DATA DIVISION.                                                           
+      ***************                                                           
+                                                                                
+       SCHEMA SECTION.                                                          
+      *===============                                                          
+       DB CPRS3POS WITHIN CASSCHEM.                                             
+                                                                                
+       WORKING-STORAGE SECTION.                                                 
+      *========================                                                 
+                                                                                
+       01  WS-VARIABLES.                                                02060000
+           05  WS-EFF-DATE                  PIC X(08) VALUE SPACES.     02060000
+           05  WS-CURRENCY-CONV-FACTOR      PIC S9(07)V9(08) COMP-3     02060000
+                                                      VALUE ZEROES.             
+                                                                                
+       01  WS-SWITCHES.                                                         
+           05  SW-CONV-FACTOR-FOUND         PIC X(01).                          
+               88  CONV-FACTOR-FOUND                  VALUE 'Y'.                
+                                                                                
+       EJECT                                                                    
+       COPY IDMS CURRENCY-FACTOR.                                               
+       EJECT                                                                    
+       COPY IDMS CURRENCY-CONV.                                                 
+       EJECT                                                                    
+       COPY IDMS SUBSCHEMA-NAMES.                                               
+                                                                                
+       LINKAGE SECTION.                                                         
+      *================                                                         
+                                                                                
+       COPY IDMS SUBSCHEMA-CTRL.                                                
+       EJECT                                                                    
+       COPY IDMS LOAD.                                                          
+       EJECT                                                                    
+       COPY IDMS BUSINESS.                                                      
+       EJECT                                                                    
+       COPY IDMS CUSTOMER.                                                      
+       EJECT                                                                    
+       01  AOWMW007.                                                            
+           05  LK-LOAD-NUMBER               PIC X(06).                          
+           05  LK-FREIGHT-CHARGE-AMT        PIC S9(11)V99  COMP-3.              
+           05  LK-OCEAN-FREIGHT-AMT         PIC S9(11)V99  COMP-3.              
+           05  LK-INSURED-AMT               PIC S9(13)V99  COMP-3.              
+           05  LK-ORDER-TYPE                PIC X(01).                          
+           05  LK-CUSTOMER-NUMBER           PIC X(07).                          
+           05  LK-ERROR-MSG                 PIC X(40).                          
+           05  FILLER                       PIC X(04).                          
+                                                                                
+       EJECT                                                                    
+                                                                                
+       PROCEDURE DIVISION USING SUBSCHEMA-CTRL                                  
+                                LOAD                                            
+                                BUSINESS                                        
+                                CUSTOMER                                        
+                                AOWMW007.                                       
+                                                                                
+      ******************************************************************        
+      *                     MAIN PROCESSING LOGIC                      *        
+      ******************************************************************        
+       0000-MAIN-PARA.                                                          
+                                                                                
+           MOVE FUNCTION CURRENT-DATE(1:8)  TO WS-EFF-DATE.                     
+                                                                                
+           PERFORM 1300-BIND-READY-DB       THRU 1300-EXIT.                     
+                                                                                
+           PERFORM 2000-PROCESS-PARA        THRU 2000-EXIT.                     
+                                                                                
+           GOBACK.                                                              
+                                                                                
+       0000-EXIT.                                                               
+           EXIT.                                                                
+       EJECT                                                                    
+                                                                                
+      *****************************************************************         
+      * THIS PARA BINDS AND READIES THE REQUIRED AREAS.               *         
+      *****************************************************************         
+       1300-BIND-READY-DB.                                                      
+                                                                                
+           BIND CURRENCY-FACTOR.                                                
+           BIND CURRENCY-CONV.                                                  
+                                                                                
+      *    READY CAS-SYS-AREA    USAGE-MODE IS RETRIEVAL.                       
+                                                                                
+       1300-EXIT.                                                               
+           EXIT.                                                                
+       EJECT                                                                    
+                                                                                
+      *****************************************************************         
+      * THIS PARA DOES THE CURRENCY CONVERSION FOR THE FREIGHT AMT    *         
+      * PASSED FROM DNWMX830 BASED ON THE ORDER TYPE.                 *         
+      *****************************************************************         
+       2000-PROCESS-PARA.                                                       
+                                                                                
+           MOVE LK-LOAD-NUMBER              TO LOAD-NUMBER-8009.                
+           FIND CALC LOAD                                                       
+           ON DB-REC-NOT-FOUND                                                  
+              MOVE 'LOAD NOT FOUND'         TO LK-ERROR-MSG                     
+              GO TO 2000-EXIT                                                   
+           END-IF.                                                              
+                                                                                
+           IF LK-ORDER-TYPE = 'A' OR                                            
+              LK-ORDER-TYPE = '3'                                               
+              PERFORM 3000-GET-CURRENCY-CODE                                    
+                                            THRU 3000-EXIT                      
+              IF CURRENCY-CODE-3501 > SPACES                                    
+                 PERFORM 3100-GET-CURRENCY-FACTOR                               
+                                            THRU 3100-EXIT                      
+                 COMPUTE LK-FREIGHT-CHARGE-AMT =                                
+                   LK-FREIGHT-CHARGE-AMT / WS-CURRENCY-CONV-FACTOR              
+                 COMPUTE LK-INSURED-AMT =                                       
+                   LK-INSURED-AMT  / WS-CURRENCY-CONV-FACTOR                    
+                 IF LK-OCEAN-FREIGHT-AMT IS NUMERIC AND                         
+                    LK-OCEAN-FREIGHT-AMT > ZEROES                               
+                    COMPUTE LK-OCEAN-FREIGHT-AMT =                              
+                    LK-OCEAN-FREIGHT-AMT / WS-CURRENCY-CONV-FACTOR              
+                    COMPUTE LK-FREIGHT-CHARGE-AMT =                             
+                    LK-FREIGHT-CHARGE-AMT + LK-OCEAN-FREIGHT-AMT                
+                 END-IF                                                         
+              END-IF                                                            
+           END-IF.                                                              
+                                                                                
+       2000-EXIT.                                                               
+           EXIT.                                                                
+       EJECT                                                                    
+                                                                                
+      *****************************************************************         
+      * THIS PARA GETS THE CURRENCY CODE FOR THE BILL-TO BUSINESS.    *         
+      *****************************************************************         
+       3000-GET-CURRENCY-CODE.                                                  
+                                                                                
+           MOVE LK-CUSTOMER-NUMBER          TO BUSINESS-NUMBER-5050.            
+           FIND CALC BUSINESS                                                   
+           ON DB-REC-NOT-FOUND                                                  
+              MOVE 'XBRD SHIP-TO BUSINESS NOT FOUND'                            
+                                            TO LK-ERROR-MSG                     
+              GO TO 3000-EXIT                                                   
+           END-IF.                                                              
+                                                                                
+           OBTAIN NEXT CUSTOMER WITHIN BUS-ROLE                                 
+           ON DB-END-OF-SET                                                     
+              MOVE 'XBRD CUSTOMER NOT FOUND'                                    
+                                            TO LK-ERROR-MSG                     
+           END-IF.                                                              
+                                                                                
+           MOVE BILL-TO-BUSINESS-3501       TO BUSINESS-NUMBER-5050.            
+           FIND CALC BUSINESS                                                   
+           ON DB-REC-NOT-FOUND                                                  
+              MOVE 'XBRD BILL-TO BUSINESS NOT FOUND'                            
+                                            TO LK-ERROR-MSG                     
+              GO TO 3000-EXIT                                                   
+           END-IF.                                                              
+                                                                                
+           OBTAIN NEXT CUSTOMER WITHIN BUS-ROLE                                 
+           ON DB-END-OF-SET                                                     
+              MOVE 'XBRD CUSTOMER NOT FOUND'                                    
+                                            TO LK-ERROR-MSG                     
+           END-IF.                                                              
+                                                                                
+       3000-EXIT.                                                               
+           EXIT.                                                                
+       EJECT                                                                    
+                                                                                
+      *****************************************************************         
+      * THIS PARA GETS THE CURRENCY-CONV RECORD FOR THE BILL-TO       *         
+      * BUSINESS AND THEN PROCEED TO GET THE CURRENCY-FACTOR RECORD   *         
+      * WHICH HAS AN EFFECTIVE DATE LESS THAN OR EQUAL TO THE CURRENT *         
+      * DATE.                                                         *         
+      *****************************************************************         
+       3100-GET-CURRENCY-FACTOR.                                                
+                                                                                
+           MOVE CURRENCY-CODE-3501          TO CURRENCY-CODE-4770.              
+                                                                                
+           FIND CALC CURRENCY-CONV                                              
+           ON DB-REC-NOT-FOUND                                                  
+              GO TO 3100-EXIT                                                   
+           END-IF.                                                              
+                                                                                
+           PERFORM 3200-PROCESS-CONV-FACTOR THRU 3200-EXIT                      
+             UNTIL DB-END-OF-SET                                                
+                OR CONV-FACTOR-FOUND.                                           
+                                                                                
+           IF NOT DB-END-OF-SET                                                 
+              MOVE CURRENCY-CONV-FACTOR-4771                                    
+                                            TO WS-CURRENCY-CONV-FACTOR          
+           END-IF.                                                              
+                                                                                
+       3100-EXIT.                                                               
+           EXIT.                                                                
+       EJECT                                                                    
+                                                                                
+      *****************************************************************         
+      * THIS PARA GETS THE CURRENCY FACTOR FROM THE RECORD WHICH HAS  *         
+      * AN EFFECTIVE DATE LESS THAN OR EQUAL TO THE CURRENT DATE.     *         
+      *****************************************************************         
+       3200-PROCESS-CONV-FACTOR.                                                
+                                                                                
+           OBTAIN NEXT CURRENCY-FACTOR WITHIN CURRCODE-FACTOR                   
+           ON DB-REC-NOT-FOUND                                                  
+              GO TO 3200-EXIT                                                   
+           END-IF.                                                              
+                                                                                
+           IF WS-EFF-DATE >= EFF-DATE-4771                                      
+              MOVE 'Y'                      TO SW-CONV-FACTOR-FOUND             
+           END-IF.                                                              
+                                                                                
+       3200-EXIT.                                                               
+           EXIT.                                                                
+       EJECT                                                                    
+                                                                                
+           COPY IDMS IDMS-STATUS.                                               
+                                                                                
+       IDMS-ABORT SECTION.                                                      
+       EJECT                                                                    

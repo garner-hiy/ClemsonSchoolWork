@@ -1,0 +1,25 @@
+Here is a breakdown of the COBOL file into sections and what each section accomplishes:
+
+1. **Identification Division**: This section contains information about the program, including its name, author, and copyright information. It does not contain any executable code.
+
+2. **Environment Division**: This section defines the environment in which the program will run. It includes the input/output section, which defines the files and data sets that the program will use, and the file control section, which specifies the characteristics of the files and data sets.
+
+   * **Input-Output Section**: This section defines the files and data sets that the program will use. It includes the file CUSTFILE-FILE, which is a sequential file with an index.
+   * **File Control**: This section specifies the characteristics of the file CUSTFILE-FILE, including its organization, access mode, and record key.
+
+3. **Data Division**: This section defines the data structures used by the program. It includes the file section, which defines the structure of the file CUSTFILE-FILE, and the working-storage section, which defines the data structures used by the program.
+
+   * **File Section**: This section defines the structure of the file CUSTFILE-FILE, including the record layout and the fields within the record.
+   * **Working-Storage Section**: This section defines the data structures used by the program, including variables and constants.
+
+4. **Procedure Division**: This section contains the executable code of the program. It includes several procedures, which are routines that perform specific tasks.
+
+   * **0000-CUSTFILE-OPEN**: This procedure opens the file CUSTFILE-FILE for input.
+   * **1000-CUSTFILE-GET-NEXT**: This procedure reads the next record from the file CUSTFILE-FILE and displays the record if it is not the end of the file.
+   * **9000-CUSTFILE-CLOSE**: This procedure closes the file CUSTFILE-FILE.
+   * **Z-ABEND-PROGRAM**: This procedure is called when an error occurs and the program needs to abend (abnormally terminate).
+   * **Z-DISPLAY-IO-STATUS**: This procedure displays the status of the file operations.
+
+5. **Copy Section**: This section includes a copy of another file, CVCUS01Y, which is not shown in the provided code.
+
+6. **End of the Program**: The program ends with a GOBACK statement,

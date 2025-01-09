@@ -1,0 +1,19 @@
+The code appears to be a COBOL program written in the IDMS (Integrated Database Management System) language. It is designed to process and store shipment data received from WICS (Warehouse Information and Control System) and create various database records in the IDMS database. The program consists of several sections and modules, including the identification division, environment division, data division, working-storage section, and procedure division. 
+
+The program starts by initializing various variables and performing error handling checks. It then enters a loop to process each shipment confirmation transaction set received from WICS. Within the loop, it performs various tasks such as storing the load record, bill of lading record, shipment header record, and shipment line records. It also checks for errors and performs error handling as needed. 
+
+The program uses various IDMS database records, including the WICS-LOADS table, which stores information about the shipments, and the AR-INVOICE-HDR record, which stores information about the invoices. It also uses various COBOL data types, including PIC 9(02) for numeric data and PIC X for character data. 
+
+Some of the key sections and modules in the program include:
+
+* 0000000-MAINLINE: The main entry point of the program.
+* 1000000-BIND-READY-DB: A section that binds the IDMS database records used by the program.
+* 1100000-PROCESS: A loop that processes each shipment confirmation transaction set received from WICS.
+* 1130000-PROCESS-SHIP-HDR: A section that processes the shipment header record.
+* 1140000-PROCESS-LINE: A section that processes each shipment line record.
+* 1146000-BACK-OUT-HDR: A section that backs out a shipment header record that has a zero shipped quantity.
+* 1147000-TRACK-ID: A section that stores a carrier track ID for an invoice.
+
+The program uses various COBOL statements, including MOVE, ADD, IF, ELSE, END-IF, PERFORM, and CALL. It also uses IDMS database operations, including STORE, MODIFY, and FIND. 
+
+Overall, the program appears to be a complex and detailed piece of code that is designed to process and store shipment data in an IDMS database.

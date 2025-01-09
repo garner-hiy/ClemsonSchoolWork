@@ -1,0 +1,32 @@
+The COBOL file is a program named COACTVWC that appears to be designed to accept and process an Account View request. It is written in COBOL and uses CICS (Customer Information Control System) commands.
+
+The program reads input from the user and performs various checks and validations on the input data. It then reads data from two files, ACCTDAT and CARDDAT, which contain account and card data, respectively. The program also reads data from a cross-reference file, CXACAIX, which contains a link between account and card numbers.
+
+The program uses various working storage variables to store and manipulate data, including a COMMAREA, which is a data structure that can be used to pass data between programs.
+
+The program performs several tasks, including:
+
+1. Checking the AID (Application Identifier) to determine whether it is valid.
+2. Processing the input data and performing various checks and validations.
+3. Reading data from the ACCTDAT and CARDDAT files.
+4. Reading data from the CXACAIX cross-reference file.
+5. Displaying messages to the user based on the results of the processing.
+
+The program uses several error handling mechanisms, including a RESP (Response) code and a RESP2 (Response 2) code, which are used to return error messages to the user.
+
+The program also uses a number of copybooks, which are reusable blocks of code that can be used in multiple programs. These copybooks include:
+
+* CVCRD01Y: contains common code for card processing
+* COCOM01Y: contains common code for communication
+* DFHBMSCA: contains IBM-supplied code for CICS
+* DFHAID: contains IBM-supplied code for CICS
+* COTTL01Y: contains common code for screen titles
+* COACTVW: contains BMS (Business Macro System) code for the Account View screen
+* CSDAT01Y: contains common code for date and time
+* CSMSG01Y: contains common code for messages
+* CSMSG02Y: contains common code for abend messages
+* CSUSR01Y: contains common code for signed-on user data
+* CVACT01Y: contains the layout of the account record
+* CVACT02Y: contains the layout of the customer record
+* CVACT03Y: contains the layout of the card cross-reference record
+* CVCUS01Y: contains the layout of the customer record

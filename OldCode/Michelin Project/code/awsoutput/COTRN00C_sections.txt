@@ -1,0 +1,30 @@
+Here is a breakdown of the COBOL file into sections and what each section accomplishes:
+
+1. **Identification Section**: This section provides metadata about the program, including its name, application, type, and function.
+2. **Environment Section**: This section defines the configuration settings for the program, including the COBOL compiler options and the operating system.
+3. **Data Division**: This section defines the data structures used by the program, including the working storage section, which contains variables and data items used by the program.
+4. **Working Storage Section**: This section defines the variables and data items used by the program, including:
+	* `WS-PGMNAME`: The name of the program.
+	* `WS-TRANID`: The transaction ID.
+	* `WS-MESSAGE`: A message buffer.
+	* `WS-TRANSACT-FILE`: The name of the file to be accessed.
+	* `WS-ERR-FLG`: A flag indicating whether an error has occurred.
+	* `WS-TRANSACT-EOF`: A flag indicating whether the end of the file has been reached.
+	* `WS-SEND-ERASE-FLG`: A flag indicating whether to erase the screen.
+	* `WS-RESP-CD`: The response code.
+	* `WS-REAS-CD`: The reason code.
+	* `WS-REC-COUNT`: The record count.
+	* `WS-IDX`: The index.
+	* `WS-PAGE-NUM`: The page number.
+	* `WS-TRAN-AMT`: The transaction amount.
+	* `WS-TRAN-DATE`: The transaction date.
+5. **Copy Files**: This section includes copies of other COBOL files that are included in the program.
+6. **Linkage Section**: This section defines the linkage between the program and the COBOL runtime environment.
+7. **Procedure Division**: This section contains the program logic, including:
+	* `MAIN-PARA`: The main program loop.
+	* `PROCESS-ENTER-KEY`: Processes the Enter key press.
+	* `PROCESS-PF7-KEY`: Processes the PF7 key press.
+	* `PROCESS-PF8-KEY`: Processes the PF8 key press.
+	* `PROCESS-PAGE-FORWARD`: Processes the page forward key press.
+	* `PROCESS-PAGE-BACKWARD`: Processes the page backward key press.
+	* `POPULATE-

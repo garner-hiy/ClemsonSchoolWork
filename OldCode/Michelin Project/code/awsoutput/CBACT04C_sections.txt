@@ -1,0 +1,26 @@
+**Section 1: Identification Division**
+         This section provides metadata about the COBOL program, including its name, application, type, and function.
+
+         **Section 2: Environment Division**
+         This section defines the environment in which the program will run, including file control statements that specify the files to be accessed and their access modes.
+
+         **Section 3: Data Division**
+         This section defines the data structures used in the program, including file records and working storage variables.
+
+         **Section 4: Working-Storage Section**
+         This section defines the working storage variables used in the program, including variables for storing interest rates, transaction IDs, and other temporary data.
+
+         **Section 5: Procedure Division**
+         This section contains the main logic of the program, including the steps to be performed when the program is executed.
+
+         **Section 6: Program Execution**
+         This section contains the program's main execution logic, which includes opening files, reading and processing transactions, computing interest and fees, and writing transaction records to the output file.
+
+         **Section 7: Error Handling**
+         This section contains routines for handling errors that may occur during file operations, such as file not found or file status errors.
+
+         **Section 8: Utility Routines**
+         This section contains utility routines for displaying file status, getting the current date and time, and converting the timestamp to a DB2-compatible format.
+
+         **Section 9: Abend Routine**
+         This section contains a routine that is called when the program encounters an error and must be terminated.

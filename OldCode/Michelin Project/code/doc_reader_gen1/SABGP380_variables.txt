@@ -1,0 +1,36 @@
+This is a PostgreSQL database script, written in SQL, which appears to be part of a larger system for managing wheel positions and tires. Here's a breakdown of the code:
+
+**Initialization**
+
+The script starts by checking if the `DB-STATUS-OK` flag indicates that the database status is okay (i.e., not an error). If so, it moves some spaces to create a blank line in the output.
+
+**Aborting the program**
+
+If the database status is not okay, the script checks for errors and finds the first error record. It then writes a log message with the error details using PostgreSQL's built-in logging mechanism (`LOG MESSAGE`).
+
+The log message includes various fields such as the error code, sequence number, set name, record name, area name, and more.
+
+**Error handling**
+
+After writing the log message, the script continues executing the next section of the program (if any). The `EJECT` statement at the end of the script marks the end of the execution block.
+
+**Aborting on bad error status**
+
+Finally, the script checks for a bad error status and aborts the program if found. It also sets specific fields in the database:
+
+* `WK-ERROR-STATUS(2:)`: Error code
+* `WK-ERROR-REC(2:)`: Record number
+* `WK-ERROR-AREA(2:)`: Area name
+* `WK-ERROR-SET-NAME(2:)`: Set name
+* `WK-ERROR-DML-SEQ(2:)`: DML sequence number
+
+All these fields are set to the corresponding values from a pre-defined table (`WK-ERROR-SET-NAME`).
+
+The script ends by printing a message indicating that it has aborted on bad error status.
+
+**Notes**
+
+* The script uses PostgreSQL-specific functions and operators, such as `IDMS-STATUS`, `LOG MESSAGE`, and `EJECT`.
+* The script appears to be designed for use with an IDMS (Institute of Distribution Management Systems) database.
+* The script may require additional configuration or setup to work properly in a specific environment.
+

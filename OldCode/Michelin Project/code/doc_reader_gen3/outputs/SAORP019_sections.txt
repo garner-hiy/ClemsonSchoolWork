@@ -1,0 +1,32 @@
+PROGRAM-ID.  SAORP019.                                                   
+       AUTHOR.  TERRY DEVITA.                                                   
+       DATE-WRITTEN. MAY 1994.                                                  
+       DATE-COMPILED.TODAY.                                                     
+      ******************************************************************        
+      *****************   THIS IS A DC PROGRAM                         *        
+      ******************************************************************        
+      *  REMARKS:                                                      *        
+      *                                                                *        
+      *  THIS PROGRAM LINKED TO BY OTHER ONLINE PROGRAMS.  IT WILL     *        
+      *  PASS BACK ALL OF THE FOLLOWING DETAILS: SHIPMENT-LEAD-TIME,   *        
+      *  SHIP-PLANT-CODE, AND CARRIER FOR THE SHIP-TO CUSTOMER PASSED. *        
+      *  BELOW IS AN OVERVIEW OF HOW THE HOW THE PROGRAM FLOWS.        *        
+      *                                                                *        
+      *  THIS IS A LINKED TO ROUTINE FROM OTHER ONLINE PROGRAMS. THE   *        
+      *  RUN-UNIT IS EXTENDED.  THIS ROUTINE DOES NOT READY ANY AREAS  *        
+      *  BUT BINDS RECORDS.  LISTED BELOW ARE THE AREAS THAT MUST BE   *        
+      *  READIED BEFORE THIS ROUTINE IS CALLED.  THEY NEED ONLY TO BE  *        
+      *  IN RETRIEVAL MODE.                                            *        
+      *                                                                *        
+      *  RECORDS USED IN THIS PROGRAM ARE:  ZIP-PLT-HDR, ZIP-PLT-DTL,  *        
+      *                               BUSINESS, ADDRSS-ID, AND ADDRSS  *        
+      *                                                                *        
+      *  AREAS USED IN THIS PROGRAM ARE:  MICH-ZIPPLT-AREA, CAS-BUS-   *        
+      *                                   AREA.                        *        
+      *                                                                *        
+      *  AFTER THE INITIALIZATION. THE ZIP CODE IS GOT FOR THE SHIP-TO *        
+      *  CUSTOMER PASSED THRU THE WORK RECORD ZIP-DEFAULT-DATA. ONCE   *        
+      *  THE ZIP CODE IS GOT THEN THE TABLE IS ACCESSED AS FOLLOWS:    *        
+      *  THE ZIP-PLT-HDR IS CALC'D TO USING...                         *        
+      *  1. FIRST 5-DIGIT ZIP CODE (US) / 7-DIGIT POSTAL CODE (CAN) &  *        
+      *

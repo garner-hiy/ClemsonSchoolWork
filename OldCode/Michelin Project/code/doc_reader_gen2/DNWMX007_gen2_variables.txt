@@ -1,0 +1,30 @@
+Here are the sections of the COBOL code with their descriptions:
+
+1. IDENTIFICATION DIVISION: 
+   This section contains metadata about the program, such as its name, author, date written, and purpose.
+
+2. ENVIRONMENT DIVISION: 
+   This section specifies the environment in which the program will run, including the IDMS protocol and record manual.
+
+3. DATA DIVISION: 
+   This section defines the data structures used by the program, including variables and records.
+
+4. SCHEMA SECTION: 
+   This section defines the database schema used by the program, including the data types and record names.
+
+5. WORKING-STORAGE SECTION: 
+   This section defines variables used by the program, including the effective date and currency conversion factor.
+
+6. LINKAGE SECTION: 
+   This section defines variables passed from the outside world to the program, including the load number, freight charge amount, ocean freight amount, insured amount, order type, customer number, and error message.
+
+7. PROCEDURE DIVISION: 
+   This section contains the program logic, including the main processing loop, data retrieval and processing, and error handling.
+
+8. IDMS-CONTROL SECTION: 
+   This section is used by IDMS to control the program's behavior, including the protocol and record manual.
+
+9. IDMS-ABORT SECTION: 
+   This section is used by IDMS to abort the program if an error occurs.
+
+The purpose of the file is to perform currency conversion for freight amounts passed from DNWMX830 and return the converted freight amount. The program retrieves the bill-to business currency factor and currency conversion factor records from IDMS, and uses the order type to determine which currency conversion factor to use. It then performs the currency conversion and returns the converted freight amount.

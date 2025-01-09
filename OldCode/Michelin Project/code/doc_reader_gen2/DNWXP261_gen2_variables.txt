@@ -1,0 +1,59 @@
+Section Name, Description, File Description
+
+1. IDENTIFICATION DIVISION
+   Description: This section contains metadata about the program, such as the program name, author, and date written.
+   File Description: This section contains information about the COBOL program, including its name, author, and date written.
+
+2. ENVIRONMENT DIVISION
+   Description: This section defines the environment in which the program will run, including the IDMS protocol and configuration.
+   File Description: This section specifies the environment in which the program will run, including the IDMS protocol and configuration.
+
+3. DATA DIVISION
+   Description: This section defines the data structures used by the program, including the schema and working storage.
+   File Description: This section defines the data structures used by the program, including the schema and working storage.
+
+4. PROCEDURE DIVISION
+   Description: This section contains the program logic, which includes input/output operations and data processing.
+   File Description: This section contains the program logic, which includes input/output operations and data processing.
+
+5. COPY IDMS SUBSCHEMA-NAMES
+   Description: This section copies the IDMS subschema names into the program.
+   File Description: This section copies the IDMS subschema names into the program.
+
+6. COPY IDMS WICSTRAN-FUNCTION-VALUES
+   Description: This section copies IDMS translate function values into the program.
+   File Description: This section copies IDMS translate function values into the program.
+
+7. COPY IDMS WICSRECV-HEADER
+   Description: This section copies the IDMS receive header into the program.
+   File Description: This section copies the IDMS receive header into the program.
+
+8. COPY IDMS WICSRECV-DETAIL
+   Description: This section copies the IDMS receive detail into the program.
+   File Description: This section copies the IDMS receive detail into the program.
+
+9. COPY IDMS WICS-SOURCE
+   Description: This section copies the IDMS source into the program.
+   File Description: This section copies the IDMS source into the program.
+
+10. COPY IDMS EAIRECV-HEADER
+    Description: This section copies the IDMS EAI receive header into the program.
+    File Description: This section copies the IDMS EAI receive header into the program.
+
+11. COPY IDMS EAIRECV-DETAIL
+    Description: This section copies the IDMS EAI receive detail into the section.
+    File Description: This section copies the IDMS EAI receive detail into the section.
+
+12. COPY IDMS EAI-SOURCE
+    Description: This section copies the IDMS EAI source into the program.
+    File Description: This section copies the IDMS EAI source into the program.
+
+13. LINKAGE SECTION
+    Description: This section defines the linkage between the program and the operating system.
+    File Description: This section defines the linkage between the program and the operating system.
+
+14. WICSTRAN-ABORT SECTION
+    Description: This section contains error handling logic for the program.
+    File Description: This section contains error handling logic for the program.
+
+The purpose of this file is to provide a COBOL program that interacts with an IDMS database, retrieving data and performing various operations such as binding, unbinding, and aborting. The program uses IDMS subschema names, translate function values, and source code to perform its operations. The program is designed to work with IDMS version 2.0 and is written in COBOL. The file is used to provide a snapshot of the program's state, including the IDMS-STATUS and IDMS-ERROR flags, and to roll back the program if an error occurs.

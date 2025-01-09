@@ -1,0 +1,11 @@
+This COBOL file is a CICS (Customer Information Control System) program written in COBOL, designed to serve as a signon screen for the CardDemo application. 
+
+The program checks for the presence of the ENTER key press, PF3 key press, and other special keys, and responds accordingly. When the ENTER key is pressed, it reads the user's ID and password from the screen, checks them against a user security file, and if valid, it sends a message to a new program (COADM01C or COMEN01C) based on the user's type. 
+
+The program uses several include files (COCOM01Y, COSGN00, COTTL01Y, CSDAT01Y, CSMSG01Y, CSUSR01Y, DFHAID, DFHBMSCA, and DFHATTR) for common data definitions, header information, and other utility functions. 
+
+The program communicates with the CICS system using EXEC CICS statements, which allow it to perform tasks such as sending and receiving messages, reading and writing files, and assigning and releasing resources. 
+
+The program also uses some COBOL intrinsic functions, such as FUNCTION UPPER-CASE, to convert the user's ID and password to uppercase. 
+
+Overall, this program is designed to provide a secure signon process for the CardDemo application, allowing authorized users to access the application based on their user ID and password.

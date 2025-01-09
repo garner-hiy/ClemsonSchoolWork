@@ -1,0 +1,7 @@
+Here is a 10 sentence summary of the COBOL file:
+
+The program, CBCUS01C, is a batch COBOL program designed to read and print customer data from a file named CUSTFILE. The program is part of the CardDemo application. It is licensed under the Apache License, Version 2.0. The program opens the CUSTFILE file in sequential access mode and reads the records one by one. If the record is read successfully, it displays the customer data. If an error occurs while reading the file, it displays an error message and abends the program. The program uses a procedure division to perform the necessary actions, including opening and closing the file, reading the records, and displaying the customer data. The program also includes routines to display the I/O status and to abend the program if an error occurs. The program uses a working-storage section to store the file status, I/O status, and other variables. The program is written in a modular style, with separate sections for the identification, environment, data, and procedure divisions. The program includes a comment section at the end that indicates the version and date of the program. 
+
+The file references the following other files: CVCUS01Y, which is a copy file that contains common code used by the program. 
+
+The program appears to be designed to run in a batch environment, and its purpose is to read and process customer data from a file.

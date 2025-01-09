@@ -1,0 +1,25 @@
+This COBOL program appears to be a data retrieval program that retrieves shipment details for a given ship-to customer. Here is a 10 sentence summary of the file:
+
+The program, named SAORP019, is written in COBOL and was created in May 1994. It is designed to be used by other online programs and is linked to by these programs. The program retrieves shipment details, including shipment-lead-time, ship-plant-code, and carrier, for a given ship-to customer. The program uses a table called ZIP-PLT-HDR to find the shipment details based on the ship-to customer's zip code. If the zip code is not found in the table, the program tries to find it using the first 3 digits of the zip code. If the first 3 digits are not found, the program tries to find it using the first 5 digits of the zip code without the ship-to customer number. If the shipment details are not found, the program defaults to a default entry. The program also retrieves details for a product based on the product brand and category. If the product brand is '601', the program retrieves the default product category. The program uses the IDMS database management system and retrieves data from various tables, including ZIP-PLT-HDR, ZIP-PLT-DTL, BUSINESS, ADDRSS-ID, and ADDRSS. The program has undergone several modifications and updates since its creation in 1994.
+
+The program references several other files and tables, including:
+
+* ZIP-PLT-HDR
+* ZIP-PLT-DTL
+* BUSINESS
+* ADDRSS-ID
+* ADDRSS
+* SUBSCHEMA-NAMES
+* ZIP-DEFAULT-DATA
+* SUBSCHEMA-CTRL
+
+The program uses several procedures, including:
+
+* 0500-INITIALIZE: Initializes the program and binds records
+* 1000-GET-ZIP-CODE: Retrieves the zip code for the ship-to customer
+* 1500-GET-HEADER: Retrieves the header information for the shipment
+* 2000-GET-DETAILS: Retrieves the details for the shipment
+* 2250-GET-TUBEDC: Retrieves the product category for a product with a specific general application code
+* 2500-GET-OVRD-DETAILS: Retrieves the shipment details for a specific ship-plant code
+
+Overall, the program appears to be a complex data retrieval program that uses a

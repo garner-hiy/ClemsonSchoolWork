@@ -1,0 +1,15 @@
+1. The file is a COBOL source code file for a program named DNWMX830.
+         2. The program is designed to process shipment confirmations from WICS (Warehouse Inventory Control System) and update the database accordingly.
+         3. The program uses various database records, including LOAD, BILL-OF-LADING, SHIPMENT-HEADER, AR-INVOICE-HDR, and LS-INV-TRANS.
+         4. The program checks for various conditions, such as whether the shipment is a domestic transfer, cross-border transfer, or consignment sale, and updates the database accordingly.
+         5. The program also updates the customer record if the shipment is a consignment sale.
+         6. The program uses various flags and indicators, such as PAPER-WHSE-REQD and MEXICAN-XBRD-FLAG, to determine the type of shipment and update the database accordingly.
+         7. The program also stores the load number in the WICS-LOADS table and the bill of lading number in the WICS-LOADS table.
+         8. The program uses the WICS-LOADS table to store information about the shipment, including the load number, bill of lading number, and shipment date.
+         9. The program uses the AR-INVOICE-HDR record to store information about the invoice, including the invoice number, customer number, and shipment date.
+         10. The program uses the LS-INV-TRANS record to store information about the inventory transfer, including the order number, shipment date, and quantity shipped.
+         11. The program also stores the carrier track ID in the SHIP-TRACK-ID record.
+         12. The program uses the TMS-SHPCAN-HDR and TMS-SHPCAN-LINE records to store information about the shipment, including the order number, shipment date, and quantity shipped.
+         13. The program uses the IDMS (Integrated Database Management System) to perform various database operations, such as storing and retrieving records.
+         14. The program uses various error handling mechanisms, such as the WCR-ERROR-CODE and WCR-ERROR-TEXT variables, to handle errors and exceptions.
+         15. The program also uses various flags and indicators, such as the SW-NEW-XBRD-SHIPMENT and SW-MR-XB-SHIPMENT flags, to determine the type of

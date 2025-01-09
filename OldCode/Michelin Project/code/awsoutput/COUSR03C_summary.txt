@@ -1,0 +1,17 @@
+This COBOL program is designed to delete a user from a USRSEC file in a CICS (Customer Information Control System) environment. 
+
+The program, COUSR03C, appears to be a part of a larger application called CardDemo. It is meant to be run from a CICS screen and allows users to select a user ID to delete. 
+
+The program uses various CICS commands, such as EXEC CICS READ and EXEC CICS DELETE, to interact with the USRSEC file. It also uses a COMMAREA to pass data between the program and the CICS screen.
+
+The program has several procedures, including PROCESS-ENTER-KEY, DELETE-USER-INFO, RETURN-TO-PREV-SCREEN, SEND-USRDEL-SCREEN, RECEIVE-USRDEL-SCREEN, POPULATE-HEADER-INFO, READ-USER-SEC-FILE, and DELETE-USER-SEC-FILE.
+
+The program references several other files, including COCOM01Y, COUSR03, COTTL01Y, CSDAT01Y, CSMSG01Y, CSUSR01Y, DFHAID, and DFHBMSCA. These files are likely include files that contain common code or data used by the program.
+
+The program uses various data structures, such as WORKING-STORAGE SECTION and LINKAGE SECTION, to store data and pass it between procedures.
+
+The program appears to be written in a modular style, with each procedure having a specific purpose and function. This makes it easier to read and maintain.
+
+The program also includes error handling, with checks for errors in the CICS commands and data validation. This helps to prevent errors and make the program more robust.
+
+Overall, this program is designed to provide a user interface for deleting users from a USRSEC file in a CICS environment. It uses CICS commands and a COMMAREA to interact with the file and pass data between procedures.

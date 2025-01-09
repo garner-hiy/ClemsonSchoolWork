@@ -1,0 +1,19 @@
+The COBOL program is designed to process IDMS (Integrated Database Management System) transactions. The program appears to be a part of a larger system that handles Electronic Data Interchange (EDI) transactions, specifically EAI (Electronic Data Interchange) transactions.
+
+The program, named DNWXP261, is written in COBOL and is designed to work with IDMS, a database management system developed by CA Technologies. The program is intended to be used in a mainframe environment, likely on an IBM-370 system.
+
+The program's primary function is to retrieve and process EAI transactions from the IDMS database. It appears to be a requestor program that interacts with the IDMS database to retrieve EAI transactions, which are stored in the WICS-RECV-DATA and EAI-RECV-DATA datasets.
+
+The program uses a combination of IDMS calls and COBOL code to perform the following tasks:
+
+1.  It binds to the WICS-SOURCE and WICSRECV-HEADER datasets to retrieve information about the transactions.
+2.  It binds to the WICSRECV-DETAIL dataset to retrieve the transaction details.
+3.  It binds to the EAI-SOURCE and EAIRECV-HEADER datasets to retrieve information about the EAI transactions.
+4.  It binds to the EAIRECV-DETAIL dataset to retrieve the EAI transaction details.
+5.  It processes the transaction details and updates the WRB-RECORD-LENGTH and WRB-DATA-TRUNCATED variables.
+6.  It checks for errors and sets the WRB-IDMS-ERROR flag if any errors occur.
+7.  It takes a snapshot of the SUBSCHEMA-CTRL and WICSTRAN-REQUEST-BLOCK blocks and performs a ROLLBACK if an error occurs.
+
+The program appears to be designed to handle both WICS (Warehouse Interface Control System) and EAI transactions, with separate logic for each type of transaction. The program uses a combination of IDMS calls and COBOL code to perform the necessary operations.
+
+In summary, the program DNWXP261 is a COBOL program that processes EAI transactions from the IDMS database, using a combination of IDMS calls and COBOL code to retrieve and process the transactions.
