@@ -1,0 +1,529 @@
+{\rtf1\ansi\ansicpg1252\cocoartf2820
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fmodern\fcharset0 Courier;\f1\fmodern\fcharset0 Courier-Oblique;}
+{\colortbl;\red255\green255\blue255;\red195\green123\blue90;\red23\green23\blue26;\red174\green176\blue183;
+\red103\green107\blue114;\red185\green101\blue173;\red89\green158\blue96;\red71\green149\blue242;\red38\green157\blue169;
+\red31\green46\blue49;}
+{\*\expandedcolortbl;;\csgenericrgb\c76471\c48235\c35294;\csgenericrgb\c9020\c9020\c10196;\csgenericrgb\c68235\c69020\c71765;
+\csgenericrgb\c40392\c41961\c44706;\csgenericrgb\c72549\c39608\c67843;\csgenericrgb\c34902\c61961\c37647;\csgenericrgb\c27843\c58431\c94902;\csgenericrgb\c14902\c61569\c66275;
+\csgenericrgb\c12157\c18039\c19216;}
+\margl1440\margr1440\vieww12440\viewh7520\viewkind0
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
+
+\f0\fs26 \cf2 \cb3 package \cf4 cpsc4620;\
+\
+\cf2 import \cf4 java.io.IOException;\
+\cf2 import \cf4 java.sql.*;\
+\cf2 import \cf4 java.util.*;\
+\
+\cf5 /*\
+ * This file is where you will implement the methods needed to support this application.\
+ * You will write the code to retrieve and save information to the database and use that\
+ * information to build the various objects required by the applicaiton.\
+ * \
+ * The class has several hard coded static variables used for the connection, you will need to\
+ * change those to your connection information\
+ * \
+ * This class also has static string variables for pickup, delivery and dine-in. \
+ * DO NOT change these constant values.\
+ * \
+ * You can add any helper methods you need, but you must implement all the methods\
+ * in this class and use them to complete the project.  The autograder will rely on\
+ * these methods being implemented, so do not delete them or alter their method\
+ * signatures.\
+ * \
+ * Make sure you properly open and close your DB connections in any method that\
+ * requires access to the DB.\
+ * Use the connect_to_db below to open your connection in DBConnector.\
+ * What is opened must be closed!\
+ */\
+\
+/*\
+ * A utility class to help add and retrieve information from the database\
+ */\
+\
+\cf2 public final class \cf4 DBNinja \{\
+	\cf2 private static \cf4 Connection 
+\f1\i \cf6 conn
+\f0\i0 \cf4 ;\
+\
+	\cf5 // DO NOT change these variables!\
+	\cf2 public final static \cf4 String 
+\f1\i \cf6 pickup 
+\f0\i0 \cf4 = \cf7 "pickup"\cf4 ;\
+	\cf2 public final static \cf4 String 
+\f1\i \cf6 delivery 
+\f0\i0 \cf4 = \cf7 "delivery"\cf4 ;\
+	\cf2 public final static \cf4 String 
+\f1\i \cf6 dine_in 
+\f0\i0 \cf4 = \cf7 "dinein"\cf4 ;\
+\
+	\cf2 public final static \cf4 String 
+\f1\i \cf6 size_s 
+\f0\i0 \cf4 = \cf7 "Small"\cf4 ;\
+	\cf2 public final static \cf4 String 
+\f1\i \cf6 size_m 
+\f0\i0 \cf4 = \cf7 "Medium"\cf4 ;\
+	\cf2 public final static \cf4 String 
+\f1\i \cf6 size_l 
+\f0\i0 \cf4 = \cf7 "Large"\cf4 ;\
+	\cf2 public final static \cf4 String 
+\f1\i \cf6 size_xl 
+\f0\i0 \cf4 = \cf7 "XLarge"\cf4 ;\
+\
+	\cf2 public final static \cf4 String 
+\f1\i \cf6 crust_thin 
+\f0\i0 \cf4 = \cf7 "Thin"\cf4 ;\
+	\cf2 public final static \cf4 String 
+\f1\i \cf6 crust_orig 
+\f0\i0 \cf4 = \cf7 "Original"\cf4 ;\
+	\cf2 public final static \cf4 String 
+\f1\i \cf6 crust_pan 
+\f0\i0 \cf4 = \cf7 "Pan"\cf4 ;\
+	\cf2 public final static \cf4 String 
+\f1\i \cf6 crust_gf 
+\f0\i0 \cf4 = \cf7 "Gluten-Free"\cf4 ;\
+\
+	\cf2 public enum \cf4 order_state \{\
+		
+\f1\i \cf6 PREPARED
+\f0\i0 \cf4 ,\
+		
+\f1\i \cf6 DELIVERED
+\f0\i0 \cf4 ,\
+		
+\f1\i \cf6 PICKEDUP\
+	
+\f0\i0 \cf4 \}\
+\
+\
+	\cf2 private static boolean \cf8 connect_to_db\cf4 () \cf2 throws \cf4 SQLException, IOException \
+	\{\
+\
+		\cf2 try \cf4 \{\
+			
+\f1\i \cf6 conn 
+\f0\i0 \cf4 = DBConnector.
+\f1\i make_connection
+\f0\i0 ();\
+			\cf2 return true\cf4 ;\
+		\} \cf2 catch \cf4 (SQLException e) \{\
+			\cf2 return false\cf4 ;\
+		\} \cf2 catch \cf4 (IOException e) \{\
+			\cf2 return false\cf4 ;\
+		\}\
+\
+	\}\
+\
+	\cf2 public static void \cf8 addOrder\cf4 (Order o) \cf2 throws \cf4 SQLException, IOException \
+	\{\
+		\cf5 /*\
+		 * add code to add the order to the DB. Remember that we're not just\
+		 * adding the order to the order DB table, but we're also recording\
+		 * the necessary data for the delivery, dinein, pickup, pizzas, toppings\
+		 * on pizzas, order discounts and pizza discounts.\
+		 * \
+		 * This is a KEY method as it must store all the data in the Order object\
+		 * in the database and make sure all the tables are correctly linked.\
+		 * \
+		 * Remember, if the order is for Dine In, there is no customer...\
+		 * so the cusomter id coming from the Order object will be -1.\
+		 * \
+		 */\
+	\cf4 \}\
+	\
+	\cf2 public static int \cf8 addPizza\cf4 (java.util.Date d, \cf2 int \cf4 orderID, Pizza p) \cf2 throws \cf4 SQLException, IOException\
+	\{\
+		\cf5 /*\
+		 * Add the code needed to insert the pizza into into the database.\
+		 * Keep in mind you must also add the pizza discounts and toppings \
+		 * associated with the pizza.\
+		 * \
+		 * NOTE: there is a Date object passed into this method so that the Order\
+		 * and ALL its Pizzas can be assigned the same DTS.\
+		 * \
+		 * This method returns the id of the pizza just added.\
+		 * \
+		 */\
+\
+		\cf2 return \cf4 -\cf9 1\cf4 ;\
+	\}\
+	\
+	\cf2 public static int \cf8 addCustomer\cf4 (Customer c) \cf2 throws \cf4 SQLException, IOException\
+	 \{\
+		\cf5 /*\
+		 * This method adds a new customer to the database.\
+		 * \
+		 */\
+\
+		 \cf2 return \cf4 -\cf9 1\cf4 ;\
+	\}\
+\
+	\cf2 public static void \cf8 completeOrder\cf4 (\cf2 int \cf4 OrderID, order_state newState ) \cf2 throws \cf4 SQLException, IOException\
+	\{\
+		\cf5 /*\
+		 * Mark that order as complete in the database.\
+		 * Note: if an order is complete, this means all the pizzas are complete as well.\
+		 * However, it does not mean that the order has been delivered or picked up!\
+		 *\
+		 * For newState = PREPARED: mark the order and all associated pizza's as completed\
+		 * For newState = DELIVERED: mark the delivery status\
+		 * FOR newState = PICKEDUP: mark the pickup status\
+		 * \
+		 */\
+\
+	\cf4 \}\
+\
+\
+	\cf2 public static \cf4 ArrayList<Order> \cf8 getOrders\cf4 (\cf2 int \cf4 status) \cf2 throws \cf4 SQLException, IOException\
+	 \{\
+	\cf5 /*\
+	 * Return an ArrayList of orders.\
+	 * 	status   == 1 => return a list of open (ie oder is not completed)\
+	 *           == 2 => return a list of completed orders (ie order is complete)\
+	 *           == 3 => return a list of all the orders\
+	 * Remember that in Java, we account for supertypes and subtypes\
+	 * which means that when we create an arrayList of orders, that really\
+	 * means we have an arrayList of dineinOrders, deliveryOrders, and pickupOrders.\
+	 *\
+	 * You must fully populate the Order object, this includes order discounts,\
+	 * and pizzas along with the toppings and discounts associated with them.\
+	 * \
+	 * Don't forget to order the data coming from the database appropriately.\
+	 *\
+	 */\
+		\cf2 return null\cf4 ;\
+	\}\
+	\
+	\cf2 public static \cf4 Order \cf8 getLastOrder\cf4 () \cf2 throws \cf4 SQLException, IOException \
+	\{\
+		\cf5 /*\
+		 * Query the database for the LAST order added\
+		 * then return an Order object for that order.\
+		 * NOTE...there will ALWAYS be a "last order"!\
+		 */\
+		 \cf2 return null\cf4 ;\
+	\}\
+\
+	\cf2 public static \cf4 ArrayList<Order> \cf8 getOrdersByDate\cf4 (String date) \cf2 throws \cf4 SQLException, IOException\
+	 \{\
+		\cf5 /*\
+		 * Query the database for ALL the orders placed on a specific date\
+		 * and return a list of those orders.\
+		 *  \
+		 */\
+		 \cf2 return null\cf4 ;\
+	\}\
+		\
+	\cf2 public static \cf4 ArrayList<Discount> \cf8 getDiscountList\cf4 () \cf2 throws \cf4 SQLException, IOException \
+	\{\
+		\cf5 /* \
+		 * Query the database for all the available discounts and \
+		 * return them in an arrayList of discounts ordered by discount name.\
+		 * \
+		*/\
+		\cf2 return null\cf4 ;\
+	\}\
+\
+	\cf2 public static \cf4 Discount \cf8 findDiscountByName\cf4 (String name) \cf2 throws \cf4 SQLException, IOException \
+	\{\
+		\cf5 /*\
+		 * Query the database for a discount using it's name.\
+		 * If found, then return an OrderDiscount object for the discount.\
+		 * If it's not found....then return null\
+		 *  \
+		 */\
+		 \cf2 return null\cf4 ;\
+	\}\
+\
+\
+	\cf2 public static \cf4 ArrayList<Customer> \cf8 getCustomerList\cf4 () \cf2 throws \cf4 SQLException, IOException \
+	\{\
+		\cf5 /*\
+		 * Query the data for all the customers and return an arrayList of all the customers. \
+		 * Don't forget to order the data coming from the database appropriately.\
+		 * \
+		*/\
+		\cf2 return null\cf4 ;\
+	\}\
+\
+	\cf2 public static \cf4 Customer \cf8 findCustomerByPhone\cf4 (String phoneNumber)  \cf2 throws \cf4 SQLException, IOException \
+	\{\
+		\cf5 /*\
+		 * Query the database for a customer using a phone number.\
+		 * If found, then return a Customer object for the customer.\
+		 * If it's not found....then return null\
+		 *  \
+		 */\
+		 \cf2 return null\cf4 ;\
+	\}\
+\
+	\cf2 public static \cf4 String \cf8 getCustomerName\cf4 (\cf2 int \cf4 CustID) \cf2 throws \cf4 SQLException, IOException \
+	\{\
+		\cf5 /*\
+		 * COMPLETED...WORKING Example!\
+		 * \
+		 * This is a helper method to fetch and format the name of a customer\
+		 * based on a customer ID. This is an example of how to interact with\
+		 * your database from Java.  \
+		 * \
+		 * Notice how the connection to the DB made at the start of the \
+		 *\
+		 */\
+\
+		 
+\f1\i \cf4 connect_to_db
+\f0\i0 ();\
+\
+		\cf5 /* \
+		 * an example query using a constructed string...\
+		 * remember, this style of query construction could be subject to sql injection attacks!\
+		 * \
+		 */\
+		\cf4 String cname1 = \cf7 ""\cf4 ;\
+		String cname2 = \cf7 ""\cf4 ;\
+		String query = \cf7 "\cb10 Select customer_FName, customer_LName From customer WHERE customer_CustID=\cb3 " \cf4 + CustID + \cf7 "\cf6 ;\cf7 "\cf4 ;\
+		Statement stmt = 
+\f1\i \cf6 conn
+\f0\i0 \cf4 .createStatement();\
+		ResultSet rset = stmt.executeQuery(query);\
+		\
+		\cf2 while\cf4 (rset.next())\
+		\{\
+			cname1 = rset.getString(\cf9 1\cf4 ) + \cf7 " " \cf4 + rset.getString(\cf9 2\cf4 ); \
+		\}\
+\
+		\cf5 /* \
+		* an BETTER example of the same query using a prepared statement...\
+		* with exception handling\
+		* \
+		*/\
+		\cf2 try \cf4 \{\
+			PreparedStatement os;\
+			ResultSet rset2;\
+			String query2;\
+			query2 = \cf7 "\cb10 Select customer_FName, customer_LName From customer WHERE customer_CustID=?;\cb3 "\cf4 ;\
+			os = 
+\f1\i \cf6 conn
+\f0\i0 \cf4 .prepareStatement(query2);\
+			os.setInt(\cf9 1\cf4 , CustID);\
+			rset2 = os.executeQuery();\
+			\cf2 while\cf4 (rset2.next())\
+			\{\
+				cname2 = rset2.getString(\cf7 "customer_FName"\cf4 ) + \cf7 " " \cf4 + rset2.getString(\cf7 "customer_LName"\cf4 ); \cf5 // note the use of field names in the getSting methods\
+			\cf4 \}\
+		\} \cf2 catch \cf4 (SQLException e) \{\
+			e.printStackTrace();\
+			\cf5 // process the error or re-raise the exception to a higher level\
+		\cf4 \}\
+\
+		
+\f1\i \cf6 conn
+\f0\i0 \cf4 .close();\
+\
+		\cf2 return \cf4 cname1;\
+		\cf5 // OR\
+		// return cname2;\
+\
+	\cf4 \}\
+\
+\
+	\cf2 public static \cf4 ArrayList<Topping> \cf8 getToppingList\cf4 () \cf2 throws \cf4 SQLException, IOException \
+	\{\
+		\cf5 /*\
+		 * Query the database for the aviable toppings and \
+		 * return an arrayList of all the available toppings. \
+		 * Don't forget to order the data coming from the database appropriately.\
+		 * \
+		 */\
+		\cf2 return null\cf4 ;\
+	\}\
+\
+	\cf2 public static \cf4 Topping \cf8 findToppingByName\cf4 (String name) \cf2 throws \cf4 SQLException, IOException \
+	\{\
+		\cf5 /*\
+		 * Query the database for the topping using it's name.\
+		 * If found, then return a Topping object for the topping.\
+		 * If it's not found....then return null\
+		 *  \
+		 */\
+		 \cf2 return null\cf4 ;\
+	\}\
+\
+	\cf2 public static \cf4 ArrayList<Topping> \cf8 getToppingsOnPizza\cf4 (Pizza p) \cf2 throws \cf4 SQLException, IOException \
+	\{\
+		\cf5 /* \
+		 * This method builds an ArrayList of the toppings ON a pizza.\
+		 * The list can then be added to the Pizza object elsewhere in the\
+		 */\
+\
+		\cf2 return null\cf4 ;	\
+	\}\
+\
+	\cf2 public static void \cf8 addToInventory\cf4 (\cf2 int \cf4 toppingID, \cf2 double \cf4 quantity) \cf2 throws \cf4 SQLException, IOException \
+	\{\
+		\cf5 /*\
+		 * Updates the quantity of the topping in the database by the amount specified.\
+		 * \
+		 * */\
+	\cf4 \}\
+	\
+	\
+	\cf2 public static \cf4 ArrayList<Pizza> \cf8 getPizzas\cf4 (Order o) \cf2 throws \cf4 SQLException, IOException \
+	\{\
+		\cf5 /*\
+		 * Build an ArrayList of all the Pizzas associated with the Order.\
+		 * \
+		 */\
+		\cf2 return null\cf4 ;\
+	\}\
+\
+	\cf2 public static \cf4 ArrayList<Discount> \cf8 getDiscounts\cf4 (Order o) \cf2 throws \cf4 SQLException, IOException \
+	\{\
+		\cf5 /* \
+		 * Build an array list of all the Discounts associted with the Order.\
+		 * \
+		 */\
+\
+		\cf2 return null\cf4 ;\
+	\}\
+\
+	\cf2 public static \cf4 ArrayList<Discount> \cf8 getDiscounts\cf4 (Pizza p) \cf2 throws \cf4 SQLException, IOException \
+	\{\
+		\cf5 /* \
+		 * Build an array list of all the Discounts associted with the Pizza.\
+		 * \
+		 */\
+	\
+		\cf2 return null\cf4 ;\
+	\}\
+\
+	\cf2 public static double \cf8 getBaseCustPrice\cf4 (String size, String crust) \cf2 throws \cf4 SQLException, IOException \
+	\{\
+		\cf5 /* \
+		 * Query the database fro the base customer price for that size and crust pizza.\
+		 * \
+		*/\
+		\cf2 return \cf9 0.0\cf4 ;\
+	\}\
+\
+	\cf2 public static double \cf8 getBaseBusPrice\cf4 (String size, String crust) \cf2 throws \cf4 SQLException, IOException \
+	\{\
+		\cf5 /* \
+		 * Query the database fro the base business price for that size and crust pizza.\
+		 * \
+		*/\
+		\cf2 return \cf9 0.0\cf4 ;\
+	\}\
+\
+	\
+	\cf2 public static void \cf8 printToppingPopReport\cf4 () \cf2 throws \cf4 SQLException, IOException\
+	\{\
+		\cf5 /*\
+		 * Prints the ToppingPopularity view. Remember that this view\
+		 * needs to exist in your DB, so be sure you've run your createViews.sql\
+		 * files on your testing DB if you haven't already.\
+		 * \
+		 * The result should be readable and sorted as indicated in the prompt.\
+		 * \
+		 * HINT: You need to match the expected output EXACTLY....I would suggest\
+		 * you look at the printf method (rather that the simple print of println).\
+		 * It operates the same in Java as it does in C and will make your code\
+		 * better.\
+		 * \
+		 */\
+	\cf4 \}\
+	\
+	\cf2 public static void \cf8 printProfitByPizzaReport\cf4 () \cf2 throws \cf4 SQLException, IOException \
+	\{\
+		\cf5 /*\
+		 * Prints the ProfitByPizza view. Remember that this view\
+		 * needs to exist in your DB, so be sure you've run your createViews.sql\
+		 * files on your testing DB if you haven't already.\
+		 * \
+		 * The result should be readable and sorted as indicated in the prompt.\
+		 * \
+		 * HINT: You need to match the expected output EXACTLY....I would suggest\
+		 * you look at the printf method (rather that the simple print of println).\
+		 * It operates the same in Java as it does in C and will make your code\
+		 * better.\
+		 * \
+		 */\
+	\cf4 \}\
+	\
+	\cf2 public static void \cf8 printProfitByOrderType\cf4 () \cf2 throws \cf4 SQLException, IOException\
+	\{\
+		\cf5 /*\
+		 * Prints the ProfitByOrderType view. Remember that this view\
+		 * needs to exist in your DB, so be sure you've run your createViews.sql\
+		 * files on your testing DB if you haven't already.\
+		 * \
+		 * The result should be readable and sorted as indicated in the prompt.\
+		 *\
+		 * HINT: You need to match the expected output EXACTLY....I would suggest\
+		 * you look at the printf method (rather that the simple print of println).\
+		 * It operates the same in Java as it does in C and will make your code\
+		 * better.\
+		 * \
+		 */\
+	\cf4 \}\
+	\
+	\
+	\
+	\cf5 /*\
+	 * These private methods help get the individual components of an SQL datetime object. \
+	 * You're welcome to keep them or remove them....but they are usefull!\
+	 */\
+	\cf2 private static int \cf8 getYear\cf4 (String date)\cf5 // assumes date format 'YYYY-MM-DD HH:mm:ss'\
+	\cf4 \{\
+		\cf2 return \cf4 Integer.
+\f1\i parseInt
+\f0\i0 (date.substring(\cf9 0\cf4 ,\cf9 4\cf4 ));\
+	\}\
+	\cf2 private static int \cf8 getMonth\cf4 (String date)\cf5 // assumes date format 'YYYY-MM-DD HH:mm:ss'\
+	\cf4 \{\
+		\cf2 return \cf4 Integer.
+\f1\i parseInt
+\f0\i0 (date.substring(\cf9 5\cf4 , \cf9 7\cf4 ));\
+	\}\
+	\cf2 private static int \cf8 getDay\cf4 (String date)\cf5 // assumes date format 'YYYY-MM-DD HH:mm:ss'\
+	\cf4 \{\
+		\cf2 return \cf4 Integer.
+\f1\i parseInt
+\f0\i0 (date.substring(\cf9 8\cf4 , \cf9 10\cf4 ));\
+	\}\
+\
+	\cf2 public static boolean \cf8 checkDate\cf4 (\cf2 int \cf4 year, \cf2 int \cf4 month, \cf2 int \cf4 day, String dateOfOrder)\
+	\{\
+		\cf2 if\cf4 (
+\f1\i getYear
+\f0\i0 (dateOfOrder) > year)\
+			\cf2 return true\cf4 ;\
+		\cf2 else if\cf4 (
+\f1\i getYear
+\f0\i0 (dateOfOrder) < year)\
+			\cf2 return false\cf4 ;\
+		\cf2 else\
+		\cf4 \{\
+			\cf2 if\cf4 (
+\f1\i getMonth
+\f0\i0 (dateOfOrder) > month)\
+				\cf2 return true\cf4 ;\
+			\cf2 else if\cf4 (
+\f1\i getMonth
+\f0\i0 (dateOfOrder) < month)\
+				\cf2 return false\cf4 ;\
+			\cf2 else\
+			\cf4 \{\
+				\cf2 if\cf4 (
+\f1\i getDay
+\f0\i0 (dateOfOrder) >= day)\
+					\cf2 return true\cf4 ;\
+				\cf2 else\
+					return false\cf4 ;\
+			\}\
+		\}\
+	\}\
+\
+\
+\}\
+}

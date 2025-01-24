@@ -1,0 +1,1293 @@
+{\rtf1\ansi\ansicpg1252\cocoartf2820
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fmodern\fcharset0 Courier;\f1\fmodern\fcharset0 Courier-Oblique;}
+{\colortbl;\red255\green255\blue255;\red195\green123\blue90;\red23\green23\blue26;\red174\green176\blue183;
+\red103\green107\blue114;\red185\green101\blue173;\red71\green149\blue242;\red89\green158\blue96;\red38\green157\blue169;
+\red31\green46\blue49;}
+{\*\expandedcolortbl;;\csgenericrgb\c76471\c48235\c35294;\csgenericrgb\c9020\c9020\c10196;\csgenericrgb\c68235\c69020\c71765;
+\csgenericrgb\c40392\c41961\c44706;\csgenericrgb\c72549\c39608\c67843;\csgenericrgb\c27843\c58431\c94902;\csgenericrgb\c34902\c61961\c37647;\csgenericrgb\c14902\c61569\c66275;
+\csgenericrgb\c12157\c18039\c19216;}
+\margl1440\margr1440\vieww11520\viewh8400\viewkind0
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
+
+\f0\fs26 \cf2 \cb3 package \cf4 cpsc4620;\
+\
+\cf2 import \cf4 java.io.BufferedReader;\
+\cf2 import \cf4 java.io.IOException;\
+\cf2 import \cf4 java.io.InputStreamReader;\
+\cf2 import \cf4 java.sql.SQLException;\
+\cf2 import \cf4 java.util.ArrayList;\
+\cf2 import \cf4 java.util.Date;\
+\
+\cf5 /*\
+ * This file is where the front end magic happens.  You should NOT make any changes to this file.\
+ * FYI, a modified version of this progra will be used to test your aplication!\
+ *\
+ * Simply removing menu methods because you don't know how to implement it will result in a major error penalty (akin to your program crashing)\
+ *\
+ * Speaking of crashing. Your program shouldn't do it. Use exceptions, or if statements, or whatever it is you need to do to keep your program from breaking.\
+ *\
+ */\
+\
+\
+\cf2 public class \cf4 Menu \{\
+	\cf2 public static \cf4 BufferedReader 
+\f1\i \cf6 reader 
+\f0\i0 \cf4 = \cf2 new \cf4 BufferedReader(\cf2 new \cf4 InputStreamReader(System.
+\f1\i \cf6 in
+\f0\i0 \cf4 ));\
+\
+	\cf2 public static void \cf7 main\cf4 (String[] args) \cf2 throws \cf4 SQLException, IOException \{\
+\
+		System.
+\f1\i \cf6 out
+\f0\i0 \cf4 .println(\cf8 "Welcome to Pizzas-R-Us!"\cf4 );\
+\
+		\cf2 int \cf4 menu_option = \cf9 0\cf4 ;\
+\
+		\cf5 // present a menu of options and take their selection\
+		
+\f1\i \cf4 PrintMenu
+\f0\i0 ();\
+		String option = 
+\f1\i \cf6 reader
+\f0\i0 \cf4 .readLine();\
+		menu_option = Integer.
+\f1\i parseInt
+\f0\i0 (option);\
+\
+		\cf2 while \cf4 (menu_option != \cf9 9\cf4 ) \{\
+			\cf2 switch \cf4 (menu_option) \{\
+			\cf2 case \cf9 1\cf4 :\cf5 // enter order\
+				
+\f1\i \cf4 EnterOrder
+\f0\i0 ();\
+				\cf2 break\cf4 ;\
+			\cf2 case \cf9 2\cf4 :\cf5 // view customers\
+				
+\f1\i \cf4 viewCustomers
+\f0\i0 ();\
+				\cf2 break\cf4 ;\
+			\cf2 case \cf9 3\cf4 :\cf5 // enter customer\
+				
+\f1\i \cf4 EnterCustomer
+\f0\i0 ();\
+				\cf2 break\cf4 ;\
+			\cf2 case \cf9 4\cf4 :\cf5 // view order\
+				// all/open/closed/date/last\
+				
+\f1\i \cf4 ViewOrders
+\f0\i0 ();\
+				\cf2 break\cf4 ;\
+			\cf2 case \cf9 5\cf4 :\cf5 // mark order as complete\
+				
+\f1\i \cf4 MarkOrderAsComplete
+\f0\i0 ();\
+				\cf2 break\cf4 ;\
+			\cf2 case \cf9 6\cf4 :\cf5 // view inventory levels\
+				
+\f1\i \cf4 ViewInventoryLevels
+\f0\i0 ();\
+				\cf2 break\cf4 ;\
+			\cf2 case \cf9 7\cf4 :\cf5 // add to inventory\
+				
+\f1\i \cf4 AddInventory
+\f0\i0 ();\
+				\cf2 break\cf4 ;\
+			\cf2 case \cf9 8\cf4 :\cf5 // view reports\
+				
+\f1\i \cf4 PrintReports
+\f0\i0 ();\
+				\cf2 break\cf4 ;\
+			\}\
+			
+\f1\i PrintMenu
+\f0\i0 ();\
+			option = 
+\f1\i \cf6 reader
+\f0\i0 \cf4 .readLine();\
+			menu_option = Integer.
+\f1\i parseInt
+\f0\i0 (option);\
+		\}\
+\
+	\}\
+\
+	\cf2 public static \cf4 Integer \cf7 getMyCustomer\cf4 () \cf2 throws \cf4 SQLException, IOException \{\
+		ArrayList<Customer> customerList = DBNinja.
+\f1\i getCustomerList
+\f0\i0 ();\
+		\cf2 int \cf4 customerID = -\cf9 1\cf4 ;\
+\
+		System.
+\f1\i \cf6 out
+\f0\i0 \cf4 .println(\cf8 "Is this order for an existing customer? Answer y/n: "\cf4 );\
+		String yn = 
+\f1\i \cf6 reader
+\f0\i0 \cf4 .readLine();\
+		\cf2 if \cf4 (yn.contains(\cf8 "y"\cf4 )) \{\
+			System.
+\f1\i \cf6 out
+\f0\i0 \cf4 .println(\cf8 "Here's a list of current customers: "\cf4 );\
+			\cf2 for \cf4 (Customer c : customerList) \{\
+				System.
+\f1\i \cf6 out
+\f0\i0 \cf4 .println(c);\
+			\}\
+			System.
+\f1\i \cf6 out
+\f0\i0 \cf4 .println(\cf8 "which customer is this order for? \cf2 \\n\cf8 Enter ID Number"\cf4 );\
+			customerID = Integer.
+\f1\i parseInt
+\f0\i0 (
+\f1\i \cf6 reader
+\f0\i0 \cf4 .readLine());\
+		\}\cf5 //yes existing customer\
+		\cf2 else if \cf4 (yn.contains(\cf8 "n"\cf4 )) \{\
+			customerID = Menu.
+\f1\i EnterCustomer
+\f0\i0 ();\
+		\}\cf5 //no existing customer\
+		\cf2 else \cf4 \{\
+			customerID = -\cf9 1\cf4 ;\
+			System.
+\f1\i \cf6 out
+\f0\i0 \cf4 .println(\cf8 "ERROR: I don't understand your input for: is this order an existing customer?"\cf4 );\
+		\}\
+\
+		\cf2 return \cf4 customerID;\
+	\}\
+\
+		\cf5 // allow for a new order to be placed\
+	\cf2 public static void \cf7 EnterOrder\cf4 () \cf2 throws \cf4 SQLException, IOException \{\
+		\cf5 //BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));\
+		\cf4 String yndiscount = \cf8 ""\cf4 ;\
+		\cf2 double \cf4 custprice = \cf9 0.0\cf4 ;\
+		\cf2 double \cf4 busprice = \cf9 0.0\cf4 ;\
+		\cf2 int \cf4 morePizza = \cf9 0\cf4 ;\
+		\cf2 int \cf4 customerID = -\cf9 1\cf4 ;\
+		\cf2 int \cf4 orderID = -\cf9 1\cf4 ; \cf5 //DBNinja.getNextOrderID();\
+		\cf4 ArrayList<Pizza> tempPizzaList = \cf2 new \cf4 ArrayList<Pizza>();\
+		ArrayList<Discount> discs = DBNinja.
+\f1\i getDiscountList
+\f0\i0 ();\
+\
+		\cf5 //get the time of order creation\
+		\cf4 Date date = \cf2 new \cf4 Date();\
+		Object param =  \cf2 new \cf4 java.sql.Timestamp(date.getTime());\
+\
+		System.
+\f1\i \cf6 out
+\f0\i0 \cf4 .println(\cf8 "Is this order for: \cf2 \\n\cf8 1.) Dine-in\cf2 \\n\cf8 2.) Pick-up\cf2 \\n\cf8 3.) Delivery\cf2 \\n\cf8 Enter the number of your choice:"\cf4 );\
+		\cf2 int \cf4 answer = Integer.
+\f1\i parseInt
+\f0\i0 (
+\f1\i \cf6 reader
+\f0\i0 \cf4 .readLine());\
+\
+		\cf2 switch \cf4 (answer) \{\
+			\cf2 case \cf9 1\cf4 :\
+				System.
+\f1\i \cf6 out
+\f0\i0 \cf4 .println(\cf8 "What is the table number for this order?"\cf4 );\
+				\cf2 int \cf4 tableNum = Integer.
+\f1\i parseInt
+\f0\i0 (
+\f1\i \cf6 reader
+\f0\i0 \cf4 .readLine());\
+\
+				System.
+\f1\i \cf6 out
+\f0\i0 \cf4 .println(\cf8 "Let's build a pizza!"\cf4 );\
+				\cf2 do\
+				\cf4 \{\
+					Pizza builtPizza = 
+\f1\i buildPizza
+\f0\i0 (orderID);\
+					tempPizzaList.add(builtPizza);\
+					System.
+\f1\i \cf6 out
+\f0\i0 \cf4 .println(\cf8 "Enter -1 to stop adding pizzas...Enter anything else to continue adding more pizzas to the order."\cf4 );\
+					morePizza = Integer.
+\f1\i parseInt
+\f0\i0 (
+\f1\i \cf6 reader
+\f0\i0 \cf4 .readLine());\
+				\}\cf2 while\cf4 (morePizza != -\cf9 1\cf4 );\
+\
+				\cf5 //calculate prices\
+				\cf2 for\cf4 (Pizza p : tempPizzaList)\
+				\{\
+					custprice += p.getCustPrice();\
+					busprice += p.getBusPrice();\cf5 //both of these already have the calculated total price (base + toppings + pizza discounts)\
+				\cf4 \}\
+\
+				\cf5 //create order\
+				\cf4 DineinOrder myDineInOrder = \cf2 new \cf4 DineinOrder(orderID, -\cf9 1\cf4 , param.toString(), custprice, busprice, \cf2 false\cf4 , tableNum);\
+				myDineInOrder.setPizzaList(tempPizzaList);\
+\
+				\cf5 //check for order discounts\
+				\cf4 System.
+\f1\i \cf6 out
+\f0\i0 \cf4 .println(\cf8 "Do you want to add discounts to this order? Enter y/n?"\cf4 );\
+				yndiscount = 
+\f1\i \cf6 reader
+\f0\i0 \cf4 .readLine();\
+				\cf2 while\cf4 (yndiscount.equals(\cf8 "y"\cf4 ))\
+				\{\
+\cf5 //					// System.out.println("Getting discount list...");\
+//					for(Discount d : discs)\
+//					\{\
+//						System.out.println(d);\
+//					\}\
+					
+\f1\i \cf4 printDiscounts
+\f0\i0 (discs);\
+					System.
+\f1\i \cf6 out
+\f0\i0 \cf4 .println(\cf8 "Which Order Discount do you want to add? \cf2 \\n\cf8 Enter the Discount ID. Enter -1 to stop adding Discounts: "\cf4 );\
+					\cf2 int \cf4 DiscountID = Integer.
+\f1\i parseInt
+\f0\i0 (
+\f1\i \cf6 reader
+\f0\i0 \cf4 .readLine());\
+					\cf2 while\cf4 (DiscountID != -\cf9 1\cf4 )\
+					\{\
+						Discount temp = discs.get(DiscountID-\cf9 1\cf4 );\cf5 //same deal as above\
+						\cf4 myDineInOrder.addDiscount(temp);\cf5 //this not only adds it to the order, but also modifies the two prices as needed.\
+//						for(Discount d : discs)\
+//						\{\
+//							System.out.println(d);\
+//						\}\
+						
+\f1\i \cf4 printDiscounts
+\f0\i0 (discs);\
+						System.
+\f1\i \cf6 out
+\f0\i0 \cf4 .println(\cf8 "Which Order Discount do you want to add? \cf2 \\n\cf8 Enter the Discount ID. Enter -1 to stop adding Discounts: "\cf4 );\
+						DiscountID = Integer.
+\f1\i parseInt
+\f0\i0 (
+\f1\i \cf6 reader
+\f0\i0 \cf4 .readLine());\
+					\}\
+					yndiscount = \cf8 "n"\cf4 ;\
+					\cf5 //System.out.println("Do you want to add more discounts to this order? Enter y/n?");\
+					//yndiscount = reader.readLine();\
+				\cf4 \}\
+				\cf5 //add order\
+				\cf4 DBNinja.
+\f1\i addOrder
+\f0\i0 (myDineInOrder);\
+\cf5 //				for(Discount d : myDineInOrder.getDiscountList())\
+//				\{\
+//					DBNinja.useOrderDiscount(myDineInOrder, d);\
+//				\}\
+\
+				\cf2 break\cf4 ;\
+			\cf2 case \cf9 2\cf4 :\
+				\cf5 //We need to know if this customer already exists\
+				\cf4 customerID = 
+\f1\i getMyCustomer
+\f0\i0 ();\
+				\cf2 if \cf4 (customerID == -\cf9 1\cf4 )\{\
+					\cf2 return\cf4 ;\
+				\}\
+\
+				System.
+\f1\i \cf6 out
+\f0\i0 \cf4 .println(\cf8 "Let's build a pizza!"\cf4 );\
+				\cf2 do\
+				\cf4 \{\
+					Pizza builtPizza = 
+\f1\i buildPizza
+\f0\i0 (orderID);\
+					tempPizzaList.add(builtPizza);\
+					System.
+\f1\i \cf6 out
+\f0\i0 \cf4 .println(\cf8 "Enter -1 to stop adding pizzas...Enter anything else to continue adding more pizzas to the order."\cf4 );\
+					morePizza = Integer.
+\f1\i parseInt
+\f0\i0 (
+\f1\i \cf6 reader
+\f0\i0 \cf4 .readLine());\
+				\}\cf2 while\cf4 (morePizza != -\cf9 1\cf4 );\
+\
+				\cf5 //calculate prices\
+				\cf2 for\cf4 (Pizza p : tempPizzaList)\
+				\{\
+					custprice += p.getCustPrice();\
+					busprice += p.getBusPrice();\cf5 //both of these already have the calculated total price (base + toppings + pizza discounts)\
+				\cf4 \}\
+\
+\
+				\cf5 //create order\
+				\cf4 PickupOrder myPickupOrder = \cf2 new \cf4 PickupOrder(orderID, customerID, param.toString(), custprice, busprice, \cf2 false\cf4 , \cf2 false\cf4 );\
+				myPickupOrder.setPizzaList(tempPizzaList);\
+\
+				\cf5 //check for order discounts\
+				//ArrayList<Discount> discs = DBNinja.getDiscountList();\
+				\cf4 System.
+\f1\i \cf6 out
+\f0\i0 \cf4 .println(\cf8 "Do you want to add discounts to this order? Enter y/n?"\cf4 );\
+				yndiscount = 
+\f1\i \cf6 reader
+\f0\i0 \cf4 .readLine();\
+				\cf2 while\cf4 (yndiscount.equals(\cf8 "y"\cf4 ))\
+				\{\
+					\cf5 // System.out.println("Getting discount list...");\
+//					for(Discount d : discs)\
+//					\{\
+//						System.out.println(d);\
+//					\}\
+					
+\f1\i \cf4 printDiscounts
+\f0\i0 (discs);\
+					System.
+\f1\i \cf6 out
+\f0\i0 \cf4 .println(\cf8 "Which Order Discount do you want to add? \cf2 \\n\cf8 Enter the Discount ID. Enter -1 to stop adding Discounts: "\cf4 );\
+					\cf2 int \cf4 DiscountID = Integer.
+\f1\i parseInt
+\f0\i0 (
+\f1\i \cf6 reader
+\f0\i0 \cf4 .readLine());\
+					\cf2 while\cf4 (DiscountID != -\cf9 1\cf4 )\
+					\{\
+						Discount temp = discs.get(DiscountID-\cf9 1\cf4 );\cf5 //same deal as above\
+						\cf4 myPickupOrder.addDiscount(temp);\cf5 //this not only adds it to the order, but also modifies the two prices as needed.\
+//						for(Discount d : discs)\
+//						\{\
+//							System.out.println(d);\
+//						\}\
+						
+\f1\i \cf4 printDiscounts
+\f0\i0 (discs);\
+						System.
+\f1\i \cf6 out
+\f0\i0 \cf4 .println(\cf8 "Which Order Discount do you want to add? \cf2 \\n\cf8 Enter the Discount ID. Enter -1 to stop adding Discounts: "\cf4 );\
+						DiscountID = Integer.
+\f1\i parseInt
+\f0\i0 (
+\f1\i \cf6 reader
+\f0\i0 \cf4 .readLine());\
+					\}\
+					yndiscount = \cf8 "n"\cf4 ;\
+				\}\
+				\cf5 //add order\
+				\cf4 DBNinja.
+\f1\i addOrder
+\f0\i0 (myPickupOrder);\
+\
+				\cf2 break\cf4 ;\
+			\cf2 case \cf9 3\cf4 :\
+				\cf5 //We need to know if this customer already exists\
+				\cf4 customerID = 
+\f1\i getMyCustomer
+\f0\i0 ();\
+				\cf2 if \cf4 (customerID == -\cf9 1\cf4 )\{\
+					\cf2 return\cf4 ;\
+				\}\
+\
+				\cf5 //We need the address first\
+				\cf4 System.
+\f1\i \cf6 out
+\f0\i0 \cf4 .println(\cf8 "What is the House Number for this order? (i.e., 111)"\cf4 );\
+				String houseNum = 
+\f1\i \cf6 reader
+\f0\i0 \cf4 .readLine();\
+				System.
+\f1\i \cf6 out
+\f0\i0 \cf4 .println(\cf8 "What is the Street for this order? (i.e., smilestreet)"\cf4 );\
+				String street = 
+\f1\i \cf6 reader
+\f0\i0 \cf4 .readLine();\
+				System.
+\f1\i \cf6 out
+\f0\i0 \cf4 .println(\cf8 "What is the City for this order? (i.e., greenville)"\cf4 );\
+				String city = 
+\f1\i \cf6 reader
+\f0\i0 \cf4 .readLine();\
+				System.
+\f1\i \cf6 out
+\f0\i0 \cf4 .println(\cf8 "What is the State Abbreviation for this order? (i.e., SC)"\cf4 );\
+				String state = 
+\f1\i \cf6 reader
+\f0\i0 \cf4 .readLine();\
+				System.
+\f1\i \cf6 out
+\f0\i0 \cf4 .println(\cf8 "What is the Zip Code for this order? (i.e., 20605)"\cf4 );\
+				String zip = 
+\f1\i \cf6 reader
+\f0\i0 \cf4 .readLine();\
+				String address = houseNum + \cf8 "\cf2 \\t\cf8 " \cf4 + street + \cf8 "\cf2 \\t\cf8 " \cf4 + city + \cf8 "\cf2 \\t\cf8 " \cf4 + state + \cf8 "\cf2 \\t\cf8 " \cf4 + zip;\
+\
+				System.
+\f1\i \cf6 out
+\f0\i0 \cf4 .println(\cf8 "Let's build a pizza!"\cf4 );\
+				\cf2 do\
+				\cf4 \{\
+					Pizza builtPizza = 
+\f1\i buildPizza
+\f0\i0 (orderID);\
+					tempPizzaList.add(builtPizza);\
+					System.
+\f1\i \cf6 out
+\f0\i0 \cf4 .println(\cf8 "Enter -1 to stop adding pizzas...Enter anything else to continue adding more pizzas to the order."\cf4 );\
+					morePizza = Integer.
+\f1\i parseInt
+\f0\i0 (
+\f1\i \cf6 reader
+\f0\i0 \cf4 .readLine());\
+				\}\cf2 while\cf4 (morePizza != -\cf9 1\cf4 );\
+\
+				\cf5 //calculate prices\
+				\cf2 for\cf4 (Pizza p : tempPizzaList)\
+				\{\
+					custprice += p.getCustPrice();\
+					busprice += p.getBusPrice();\cf5 //both of these already have the calculated total price (base + toppings + pizza discounts)\
+				\cf4 \}\
+\
+				\cf5 //create order\
+				\cf4 DeliveryOrder myDeliveryOrder = \cf2 new \cf4 DeliveryOrder(orderID, customerID, param.toString(), custprice, busprice, \cf2 false\cf4 , address);\
+				myDeliveryOrder.setPizzaList(tempPizzaList);\
+\
+				\cf5 //check for order discounts\
+				\cf4 System.
+\f1\i \cf6 out
+\f0\i0 \cf4 .println(\cf8 "Do you want to add discounts to this order? Enter y/n?"\cf4 );\
+				yndiscount = 
+\f1\i \cf6 reader
+\f0\i0 \cf4 .readLine();\
+				\cf2 while\cf4 (yndiscount.equals(\cf8 "y"\cf4 ))\
+				\{\
+					\cf5 //ArrayList<Discount> discs = DBNinja.getDiscountList();\
+					// System.out.println("Getting discount list...");\
+					\cf2 for\cf4 (Discount d : discs)\
+					\{\
+						System.
+\f1\i \cf6 out
+\f0\i0 \cf4 .println(d);\
+					\}\
+					System.
+\f1\i \cf6 out
+\f0\i0 \cf4 .println(\cf8 "Which Order Discount do you want to add? \cf2 \\n\cf8 Enter the Discount ID. Enter -1 to stop adding Discounts: "\cf4 );\
+					\cf2 int \cf4 DiscountID = Integer.
+\f1\i parseInt
+\f0\i0 (
+\f1\i \cf6 reader
+\f0\i0 \cf4 .readLine());\
+					\cf2 while\cf4 (DiscountID != -\cf9 1\cf4 )\
+					\{\
+						Discount temp = discs.get(DiscountID-\cf9 1\cf4 );\cf5 //same deal as above\
+						\cf4 myDeliveryOrder.addDiscount(temp);\cf5 //this not only adds it to the order, but also modifies the two prices as needed.\
+//						for(Discount d : discs)\
+//						\{\
+//							System.out.println(d);\
+//						\}\
+						
+\f1\i \cf4 printDiscounts
+\f0\i0 (discs);\
+						System.
+\f1\i \cf6 out
+\f0\i0 \cf4 .println(\cf8 "Which Order Discount do you want to add? \cf2 \\n\cf8 Enter the Discount ID. Enter -1 to stop adding Discounts: "\cf4 );\
+						DiscountID = Integer.
+\f1\i parseInt
+\f0\i0 (
+\f1\i \cf6 reader
+\f0\i0 \cf4 .readLine());\
+					\}\
+					yndiscount = \cf8 "n"\cf4 ;\
+				\}\
+\
+				\cf5 //add order\
+				\cf4 DBNinja.
+\f1\i addOrder
+\f0\i0 (myDeliveryOrder);\
+\
+				\cf2 break\cf4 ;\
+			\cf2 default\cf4 :\
+				System.
+\f1\i \cf6 out
+\f0\i0 \cf4 .println(\cf8 "ERROR: I do not understand that order option..."\cf4 );\
+				\cf2 return\cf4 ;\
+		\}\
+		\
+		System.
+\f1\i \cf6 out
+\f0\i0 \cf4 .println(\cf8 "Finished adding order...Returning to menu..."\cf4 );\
+	\}\
+	\
+	\cf2 public static void \cf7 viewCustomers\cf4 ()\
+	\{\
+		\cf2 try \
+		\cf4 \{\
+			ArrayList<Customer> custs = DBNinja.
+\f1\i getCustomerList
+\f0\i0 ();\
+			\cf2 for\cf4 (Customer c : custs)\
+			\{\
+				System.
+\f1\i \cf6 out
+\f0\i0 \cf4 .println(c);\
+			\}\
+		\}\
+		\cf2 catch \cf4 (SQLException | IOException e) \
+		\{\
+			e.printStackTrace();\
+		\}\
+		\
+	\}\
+\
+	\cf5 // Enter a new customer in the database\
+	\cf2 public static int \cf7 EnterCustomer\cf4 () \cf2 throws \cf4 SQLException, IOException \{\
+		\cf2 int \cf4 cid = -\cf9 1\cf4 ;\
+\
+		System.
+\f1\i \cf6 out
+\f0\i0 \cf4 .println(\cf8 "Please Enter the Customer name (First Name <space> Last Name): "\cf4 );\
+		String name = 
+\f1\i \cf6 reader
+\f0\i0 \cf4 .readLine();\
+		String fName = name.split(\cf8 "\cb10  \cb3 "\cf4 )[\cf9 0\cf4 ];\
+		String lName = name.split(\cf8 "\cb10  \cb3 "\cf4 )[\cf9 1\cf4 ];\
+\
+		System.
+\f1\i \cf6 out
+\f0\i0 \cf4 .println(\cf8 "What is this customer's phone number (##########) (No dash/space):"\cf4 );\
+		String phone = 
+\f1\i \cf6 reader
+\f0\i0 \cf4 .readLine();\
+		\
+		ArrayList<Customer> tempList = DBNinja.
+\f1\i getCustomerList
+\f0\i0 ();\
+		\cf2 int \cf4 customerID = tempList.get(tempList.size()-\cf9 1\cf4 ).getCustID() + \cf9 1\cf4 ;\
+\
+		Customer new_cust = \cf2 new \cf4 Customer(customerID, fName, lName, phone);\
+\
+		cid = DBNinja.
+\f1\i addCustomer
+\f0\i0 (new_cust);\
+\
+		\cf2 return \cf4 cid;\
+	\}\
+\
+	\cf5 // View any orders that are not marked as completed\
+	\cf2 public static void \cf7 ViewOrders\cf4 () \cf2 throws \cf4 SQLException, IOException \{\
+		\cf2 int \cf4 count = \cf9 0\cf4 ;\
+		Order currOrder = \cf2 null\cf4 ;\
+		ArrayList<Order> currOrders = \cf2 null\cf4 ;\
+		System.
+\f1\i \cf6 out
+\f0\i0 \cf4 .println(\cf8 "Would you like to:\cf2 \\n\cf8 (a) display all orders [open or closed]\cf2 \\n\cf8 (b) display all open orders\cf2 \\n\cf8 (c) display all completed orders\cf2 \\n\cf8 (d) display orders on a specific date\cf2 \\n\cf8 (e) display last order"\cf4 );\
+		String ans = 
+\f1\i \cf6 reader
+\f0\i0 \cf4 .readLine();\
+\
+		\cf2 switch \cf4 (ans) \{\
+			\cf2 case \cf8 "a"\cf4 : \cf5 //all\
+				\cf4 currOrders = DBNinja.
+\f1\i getOrders
+\f0\i0 (\cf9 3\cf4 );\
+				\cf2 for \cf4 (Order o : currOrders) \{\
+					System.
+\f1\i \cf6 out
+\f0\i0 \cf4 .println(o);\
+				\}\
+				count = currOrders.size();\
+				\cf2 break\cf4 ;\
+			\cf2 case \cf8 "b"\cf4 : \cf5 //open\
+				\cf4 currOrders = DBNinja.
+\f1\i getOrders
+\f0\i0 (\cf9 1\cf4 );\
+				\cf2 for \cf4 (Order o : currOrders) \{\
+					System.
+\f1\i \cf6 out
+\f0\i0 \cf4 .println(o);\
+				\}\
+				count = currOrders.size();\
+				\cf2 break\cf4 ;\
+			\cf2 case \cf8 "c"\cf4 : \cf5 //closed\
+				\cf4 currOrders = DBNinja.
+\f1\i getOrders
+\f0\i0 (\cf9 2\cf4 );\
+				\cf2 for \cf4 (Order o : currOrders) \{\
+					System.
+\f1\i \cf6 out
+\f0\i0 \cf4 .println(o);\
+				\}\
+				count = currOrders.size();\
+				\cf2 break\cf4 ;\
+			\cf2 case \cf8 "d"\cf4 : \cf5 //by date\
+				\cf4 System.
+\f1\i \cf6 out
+\f0\i0 \cf4 .println(\cf8 "What is the date you want to restrict by? (FORMAT= YYYY-MM-DD)"\cf4 );\
+				String date = 
+\f1\i \cf6 reader
+\f0\i0 \cf4 .readLine();\
+				String[] splitDate = date.split(\cf8 "\cb10 -\cb3 "\cf4 );\
+				\cf5 // Print off high level information about the order\
+				\cf4 currOrders = DBNinja.
+\f1\i getOrdersByDate
+\f0\i0 (date);\
+				\cf2 for \cf4 (Order o : currOrders) \{\
+					System.
+\f1\i \cf6 out
+\f0\i0 \cf4 .println(o.toSimplePrint());\
+				\}\
+				count = currOrders.size();\
+				\cf2 break\cf4 ;\
+			\cf2 case \cf8 "e"\cf4 : \cf5 //lastorder\
+				\cf4 currOrder = DBNinja.
+\f1\i getLastOrder
+\f0\i0 ();\
+				\cf5 //System.out.println(currOrder.toSimplePrint());\
+				
+\f1\i \cf4 printOrderDetails
+\f0\i0 (currOrder);\
+				\cf2 return\cf4 ;\
+\
+			\cf2 default\cf4 :\
+				System.
+\f1\i \cf6 out
+\f0\i0 \cf4 .println(\cf8 "I don't understand that input, returning to menu"\cf4 );\
+				\cf2 return\cf4 ;\
+		\}\
+\
+		\cf2 if \cf4 (count > \cf9 0\cf4 ) \{\
+\
+			System.
+\f1\i \cf6 out
+\f0\i0 \cf4 .println(\cf8 "Which order would you like to see in detail? Enter the number (-1 to exit): "\cf4 );\
+			\cf2 int \cf4 chosen_order = Integer.
+\f1\i parseInt
+\f0\i0 (
+\f1\i \cf6 reader
+\f0\i0 \cf4 .readLine());\
+			\cf2 if \cf4 (chosen_order == -\cf9 1\cf4 ) \{ \cf2 return\cf4 ; \}\
+			Order tempO = \cf2 null\cf4 ;\
+			\cf2 for \cf4 (Order o : currOrders) \{\
+				\cf2 if \cf4 (o.getOrderID() == chosen_order) \{\
+					tempO = o;\
+				\}\
+			\}\
+\
+			\cf2 if \cf4 (tempO != \cf2 null\cf4 ) \{\
+				
+\f1\i printOrderDetails
+\f0\i0 (tempO);\
+			\} \cf2 else \cf4 \{\
+				System.
+\f1\i \cf6 out
+\f0\i0 \cf4 .println(\cf8 "Incorrect entry, returning to menu."\cf4 );\
+				\cf2 return\cf4 ;\
+				\}\
+		\} \cf2 else \cf4 \{\
+			System.
+\f1\i \cf6 out
+\f0\i0 \cf4 .println(\cf8 "No orders to display, returning to menu."\cf4 );\
+			\cf2 return\cf4 ;\
+		\}\
+\
+		\}\
+\
+	\cf5 // When an order is completed, we need to make sure it is marked as complete\
+	\cf2 public static void \cf7 MarkOrderAsComplete\cf4 () \cf2 throws \cf4 SQLException, IOException \{\
+		ArrayList<Order> currOrders = DBNinja.
+\f1\i getOrders
+\f0\i0 (\cf9 1\cf4 );\
+		\cf5 // see all open orders\
+		\cf2 if\cf4 (currOrders.size() == \cf9 0\cf4 )\cf5 //this means that within all the current orders, none of them are incomplete\
+		\cf4 \{\
+			System.
+\f1\i \cf6 out
+\f0\i0 \cf4 .println(\cf8 "There are no open orders currently... returning to menu..."\cf4 );\
+			\cf2 return\cf4 ;\
+		\}\
+		\
+		\cf2 for \cf4 (Order o : currOrders) \
+		\{\
+				System.
+\f1\i \cf6 out
+\f0\i0 \cf4 .println(o);\
+		\}\
+\
+		\cf5 // pick the order to mark as completed\
+		\cf4 System.
+\f1\i \cf6 out
+\f0\i0 \cf4 .println(\cf8 "Which order would you like mark as complete? Enter the OrderID: "\cf4 );\
+		\cf2 int \cf4 chosen_order = Integer.
+\f1\i parseInt
+\f0\i0 (
+\f1\i \cf6 reader
+\f0\i0 \cf4 .readLine());\
+\
+		\cf2 if \cf4 (chosen_order == -\cf9 1\cf4 ) \{ \cf2 return\cf4 ; \}\
+		Order tempO = \cf2 null\cf4 ;\
+		\cf2 for \cf4 (Order o : currOrders) \{\
+			\cf2 if \cf4 (o.getOrderID() == chosen_order) \{\
+				tempO = o;\
+			\}\
+		\}\
+\
+		\cf2 if \cf4 (tempO != \cf2 null\cf4 ) \{\
+			DBNinja.
+\f1\i completeOrder
+\f0\i0 (tempO.getOrderID(), DBNinja.order_state.
+\f1\i \cf6 PREPARED
+\f0\i0 \cf4 );\
+		\} \cf2 else \cf4 \{\
+			System.
+\f1\i \cf6 out
+\f0\i0 \cf4 .println(\cf8 "No such order."\cf4 );\
+		\}\
+\
+	\}\
+\
+	\cf5 // See the list of inventory and it's current level\
+	\cf2 public static void \cf7 ViewInventoryLevels\cf4 () \cf2 throws \cf4 SQLException, IOException \
+	\{\
+		ArrayList<Topping> curInventory = DBNinja.
+\f1\i getToppingList
+\f0\i0 ();\
+		
+\f1\i printInventory
+\f0\i0 (curInventory);\
+	\}\
+\
+	\cf5 // Select an inventory item and add more to the inventory level to re-stock the\
+	// inventory\
+	\cf2 public static void \cf7 AddInventory\cf4 () \cf2 throws \cf4 SQLException, IOException \{\
+		ArrayList<Topping> curInventory = DBNinja.
+\f1\i getToppingList
+\f0\i0 ();\
+		
+\f1\i printInventory
+\f0\i0 (curInventory);\
+		\cf5 //DBNinja.printInventory();\
+		// select a topping to add inventory to\
+\
+		\cf4 System.
+\f1\i \cf6 out
+\f0\i0 \cf4 .println(\cf8 "Which topping do you want to add inventory to? Enter the number: "\cf4 );\
+		\cf2 int \cf4 chosen_t = Integer.
+\f1\i parseInt
+\f0\i0 (
+\f1\i \cf6 reader
+\f0\i0 \cf4 .readLine());\
+		\cf2 if \cf4 (chosen_t <= curInventory.size()) \
+		\{\
+			System.
+\f1\i \cf6 out
+\f0\i0 \cf4 .println(\cf8 "How many units would you like to add? "\cf4 );\
+			\cf2 double \cf4 add = Double.
+\f1\i parseDouble
+\f0\i0 (
+\f1\i \cf6 reader
+\f0\i0 \cf4 .readLine());\
+			DBNinja.
+\f1\i addToInventory
+\f0\i0 (chosen_t, add);\
+		\} \
+		\cf2 else \
+		\cf4 \{\
+			System.
+\f1\i \cf6 out
+\f0\i0 \cf4 .println(\cf8 "Incorrect entry, not an option"\cf4 );\
+		\}\
+	\}\
+\
+	\cf5 // A function that builds a pizza. Used in our add new order function\
+	\cf2 public static \cf4 Pizza \cf7 buildPizza\cf4 (\cf2 int \cf4 orderID) \cf2 throws \cf4 SQLException, IOException \{\
+\
+		\cf5 // select size\
+		\cf4 System.
+\f1\i \cf6 out
+\f0\i0 \cf4 .println(\cf8 "What size is the pizza?"\cf4 );\
+		System.
+\f1\i \cf6 out
+\f0\i0 \cf4 .println(\cf8 "1."\cf4 +DBNinja.
+\f1\i \cf6 size_s
+\f0\i0 \cf4 );\
+		System.
+\f1\i \cf6 out
+\f0\i0 \cf4 .println(\cf8 "2."\cf4 +DBNinja.
+\f1\i \cf6 size_m
+\f0\i0 \cf4 );\
+		System.
+\f1\i \cf6 out
+\f0\i0 \cf4 .println(\cf8 "3."\cf4 +DBNinja.
+\f1\i \cf6 size_l
+\f0\i0 \cf4 );\
+		System.
+\f1\i \cf6 out
+\f0\i0 \cf4 .println(\cf8 "4."\cf4 +DBNinja.
+\f1\i \cf6 size_xl
+\f0\i0 \cf4 );\
+		System.
+\f1\i \cf6 out
+\f0\i0 \cf4 .println(\cf8 "Enter the corresponding number: "\cf4 );\
+		\cf2 int \cf4 size_option = Integer.
+\f1\i parseInt
+\f0\i0 (
+\f1\i \cf6 reader
+\f0\i0 \cf4 .readLine());\
+		String size = \cf8 ""\cf4 ;\
+		\cf2 if \cf4 (size_option == \cf9 1\cf4 ) \{\
+			size = DBNinja.
+\f1\i \cf6 size_s
+\f0\i0 \cf4 ;\
+		\} \cf2 else if \cf4 (size_option == \cf9 2\cf4 ) \{\
+			size = DBNinja.
+\f1\i \cf6 size_m
+\f0\i0 \cf4 ;\
+		\} \cf2 else if \cf4 (size_option == \cf9 3\cf4 ) \{\
+			size = DBNinja.
+\f1\i \cf6 size_l
+\f0\i0 \cf4 ;\
+		\} \cf2 else \cf4 \{\
+			size = DBNinja.
+\f1\i \cf6 size_xl
+\f0\i0 \cf4 ;\
+		\}\
+\
+		\cf5 // select crust\
+		\cf4 System.
+\f1\i \cf6 out
+\f0\i0 \cf4 .println(\cf8 "What crust for this pizza?"\cf4 );\
+		System.
+\f1\i \cf6 out
+\f0\i0 \cf4 .println(\cf8 "1."\cf4 +DBNinja.
+\f1\i \cf6 crust_thin
+\f0\i0 \cf4 );\
+		System.
+\f1\i \cf6 out
+\f0\i0 \cf4 .println(\cf8 "2."\cf4 +DBNinja.
+\f1\i \cf6 crust_orig
+\f0\i0 \cf4 );\
+		System.
+\f1\i \cf6 out
+\f0\i0 \cf4 .println(\cf8 "3."\cf4 +DBNinja.
+\f1\i \cf6 crust_pan
+\f0\i0 \cf4 );\
+		System.
+\f1\i \cf6 out
+\f0\i0 \cf4 .println(\cf8 "4."\cf4 +DBNinja.
+\f1\i \cf6 crust_gf
+\f0\i0 \cf4 );\
+		System.
+\f1\i \cf6 out
+\f0\i0 \cf4 .println(\cf8 "Enter the corresponding number: "\cf4 );\
+		\cf2 int \cf4 c_option = Integer.
+\f1\i parseInt
+\f0\i0 (
+\f1\i \cf6 reader
+\f0\i0 \cf4 .readLine());\
+		String crust = \cf8 ""\cf4 ;\
+		\cf2 if \cf4 (c_option == \cf9 1\cf4 ) \{\
+			crust = DBNinja.
+\f1\i \cf6 crust_thin
+\f0\i0 \cf4 ;\
+		\} \cf2 else if \cf4 (c_option == \cf9 2\cf4 ) \{\
+			crust = DBNinja.
+\f1\i \cf6 crust_orig
+\f0\i0 \cf4 ;\
+		\} \cf2 else if \cf4 (c_option == \cf9 3\cf4 ) \{\
+			crust = DBNinja.
+\f1\i \cf6 crust_pan
+\f0\i0 \cf4 ;\
+		\} \cf2 else \cf4 \{\
+			crust = DBNinja.
+\f1\i \cf6 crust_gf
+\f0\i0 \cf4 ;\
+		\}\
+\
+		\cf5 // get the base prices\
+		\cf2 double \cf4 base_CustPrice = DBNinja.
+\f1\i getBaseCustPrice
+\f0\i0 (size, crust);\
+		\cf2 double \cf4 base_BusPrice = DBNinja.
+\f1\i getBaseBusPrice
+\f0\i0 (size, crust);\
+		Date date = \cf2 new \cf4 Date();\
+		Object param =  \cf2 new \cf4 java.sql.Timestamp(date.getTime());\
+		\
+		\cf2 int \cf4 pizzaID = -\cf9 1\cf4 ; \cf5 //DBNinja.getNextPizzaID();\
+\
+		\cf4 Pizza newPizza = \cf2 new \cf4 Pizza(pizzaID, size, crust, orderID, \cf8 "In Progress"\cf4 , param.toString(), base_CustPrice, base_BusPrice);\
+\
+		\cf5 // add toppings to the pizza\
+		\cf2 int \cf4 TopID = \cf9 0\cf4 ;\
+		\cf5 //DBNinja.printInventory();\
+		\cf4 ArrayList<Topping> tops = DBNinja.
+\f1\i getToppingList
+\f0\i0 ();\
+		Topping myTop = \cf2 null\cf4 ;\
+		
+\f1\i printInventory
+\f0\i0 (tops);\
+		System.
+\f1\i \cf6 out
+\f0\i0 \cf4 .println(\cf8 "Which topping do you want to add? Enter the TopID. Enter -1 to stop adding toppings: "\cf4 );\
+		TopID = Integer.
+\f1\i parseInt
+\f0\i0 (
+\f1\i \cf6 reader
+\f0\i0 \cf4 .readLine());\
+		\cf2 while\cf4 (TopID != -\cf9 1\cf4 )\
+		\{\
+			\cf2 for\cf4 (Topping t : tops)\
+			\{\
+				\cf2 if \cf4 (t.getTopID() == TopID) \{\
+					myTop = t;\
+					\cf2 break\cf4 ;\
+				\}\
+			\}\
+\
+			\cf5 //do we have enough toppings?\
+			\cf2 if\cf4 (myTop.getCurINVT() > myTop.getMinINVT())\cf5 //we use -1 because the DB starts at index 1 and java starts at index 0\
+			\cf4 \{\
+				\cf2 boolean \cf4 isExtra = \cf2 false\cf4 ;\
+				System.
+\f1\i \cf6 out
+\f0\i0 \cf4 .println(\cf8 "Do you want to add extra topping? Enter y/n"\cf4 );\
+				String yn = 
+\f1\i \cf6 reader
+\f0\i0 \cf4 .readLine();\
+				\cf2 if\cf4 (yn.contains(\cf8 "y"\cf4 ))\
+				\{\
+					isExtra = \cf2 true\cf4 ;\
+					myTop.setDoubled(\cf2 true\cf4 );\
+				\}\
+				newPizza.addToppings(myTop, isExtra);\cf5 //adds the topping to the pizza and increases the two prices\
+				//newPizza.modifyDoubledArray(TopID-1, isExtra);\
+			\cf4 \}\
+			\cf2 else\
+			\cf4 \{\
+				System.
+\f1\i \cf6 out
+\f0\i0 \cf4 .println(\cf8 "We don't have enough of that topping to add it..."\cf4 );\
+			\}\
+			System.
+\f1\i \cf6 out
+\f0\i0 \cf4 .println(\cf8 "Available Toppings:"\cf4 );\
+			
+\f1\i printInventory
+\f0\i0 (tops);\
+			System.
+\f1\i \cf6 out
+\f0\i0 \cf4 .println(\cf8 "Which topping do you want to add? Enter the TopID. Enter -1 to stop adding toppings: "\cf4 );\
+			TopID = Integer.
+\f1\i parseInt
+\f0\i0 (
+\f1\i \cf6 reader
+\f0\i0 \cf4 .readLine());\
+		\}	\
+		\
+		\cf5 // add discounts that apply to the pizza\
+		\cf4 System.
+\f1\i \cf6 out
+\f0\i0 \cf4 .println(\cf8 "Do you want to add discounts to this Pizza? Enter y/n?"\cf4 );\
+		String yndiscount = 
+\f1\i \cf6 reader
+\f0\i0 \cf4 .readLine();\
+		\cf2 while\cf4 (yndiscount.equals(\cf8 "y"\cf4 ))\
+		\{\
+			ArrayList<Discount> discs = DBNinja.
+\f1\i getDiscountList
+\f0\i0 ();\
+\cf5 //			for(Discount d : discs)\
+//			\{\
+//				System.out.println(d);\
+//			\}\
+			
+\f1\i \cf4 printDiscounts
+\f0\i0 (discs);\
+			System.
+\f1\i \cf6 out
+\f0\i0 \cf4 .println(\cf8 "Which Pizza Discount do you want to add? \cf2 \\n\cf8 Enter the Discount ID. Enter -1 to stop adding Discounts: "\cf4 );\
+			\cf2 int \cf4 DiscountID = Integer.
+\f1\i parseInt
+\f0\i0 (
+\f1\i \cf6 reader
+\f0\i0 \cf4 .readLine());\
+			\cf2 while\cf4 (DiscountID != -\cf9 1\cf4 )\
+			\{\
+				Discount temp = discs.get(DiscountID-\cf9 1\cf4 );\cf5 //same deal as above\
+				\cf4 newPizza.addDiscounts(temp);\cf5 //this not only adds it to the pizza, but also modifies the two prices as needed.\
+//				for(Discount d : discs)\
+//				\{\
+//					System.out.println(d);\
+//				\}\
+				
+\f1\i \cf4 printDiscounts
+\f0\i0 (discs);\
+				System.
+\f1\i \cf6 out
+\f0\i0 \cf4 .println(\cf8 "Which Pizza Discount do you want to add? \cf2 \\n\cf8 Enter the Discount ID. Enter -1 to stop adding Discounts: "\cf4 );\
+				DiscountID = Integer.
+\f1\i parseInt
+\f0\i0 (
+\f1\i \cf6 reader
+\f0\i0 \cf4 .readLine());\
+			\}\
+			yndiscount = \cf8 "n"\cf4 ;\
+		\}\
+		\cf5 //pizza is complete, return it\
+		\cf2 return \cf4 newPizza;\
+	\}\
+\
+	\cf2 private static void \cf7 printInventory \cf4 (ArrayList<Topping> tops )\{\
+		System.
+\f1\i \cf6 out
+\f0\i0 \cf4 .printf(\cf8 "%-5s%-20s%-20s\cf2 \\n\cf8 "\cf4 ,\cf8 "ID"\cf4 ,\cf8 "Topping Name"\cf4 ,\cf8 "Inventory"\cf4 );\
+		System.
+\f1\i \cf6 out
+\f0\i0 \cf4 .printf(\cf8 "%-5s%-20s%-20s\cf2 \\n\cf8 "\cf4 ,\cf8 "--"\cf4 ,\cf8 "------------"\cf4 ,\cf8 "---------"\cf4 );\
+		\cf2 for\cf4 (Topping t : tops)\
+		\{\
+			\cf5 //System.out.println(t);\
+			\cf4 System.
+\f1\i \cf6 out
+\f0\i0 \cf4 .printf(\cf8 "%-5s%-20s%-20s\cf2 \\n\cf8 "\cf4 ,t.getTopID(), t.getTopName(), t.getCurINVT());\
+		\}\
+	\}\
+\
+	\cf2 private static void \cf7 printDiscounts \cf4 (ArrayList<Discount> discs )\{\
+		System.
+\f1\i \cf6 out
+\f0\i0 \cf4 .printf(\cf8 "%-5s%-25s%-20s\cf2 \\n\cf8 "\cf4 ,\cf8 "ID"\cf4 ,\cf8 "Discount Name"\cf4 ,\cf8 "Amount"\cf4 );\
+		System.
+\f1\i \cf6 out
+\f0\i0 \cf4 .printf(\cf8 "%-5s%-25s%-20s\cf2 \\n\cf8 "\cf4 ,\cf8 "--"\cf4 ,\cf8 "------------"\cf4 ,\cf8 "-------"\cf4 );\
+		\cf2 for\cf4 (Discount d : discs)\
+		\{\
+			\cf5 //System.out.println(t);\
+			\cf4 System.
+\f1\i \cf6 out
+\f0\i0 \cf4 .printf(\cf8 "%-5s%-25s%-20s\cf2 \\n\cf8 "\cf4 ,d.getDiscountID(), d.getDiscountName(), ((d.isPercent())?\cf8 ""\cf4 :\cf8 "$"\cf4 )+d.getAmount()+((d.isPercent())?\cf8 "%"\cf4 :\cf8 ""\cf4 ));\
+		\}\
+	\}\
+\
+	\cf2 public static void \cf7 PrintReports\cf4 () \cf2 throws \cf4 SQLException, NumberFormatException, IOException\
+	\{\
+		System.
+\f1\i \cf6 out
+\f0\i0 \cf4 .println(\cf8 "Which report do you wish to print? \cf2 \\n\cf8 (a) ToppingPopularity\cf2 \\n\cf8 (b) ProfitByPizza\cf2 \\n\cf8 (c) ProfitByOrderType:"\cf4 );\
+		String ans = 
+\f1\i \cf6 reader
+\f0\i0 \cf4 .readLine();\
+		\cf2 if\cf4 (ans.equals(\cf8 "a"\cf4 ))\
+			DBNinja.
+\f1\i printToppingPopReport
+\f0\i0 ();\
+		\cf2 else if\cf4 (ans.equals(\cf8 "b"\cf4 ))\
+			DBNinja.
+\f1\i printProfitByPizzaReport
+\f0\i0 ();\
+		\cf2 else if\cf4 (ans.equals(\cf8 "c"\cf4 ))\
+			DBNinja.
+\f1\i printProfitByOrderType
+\f0\i0 ();\
+		\cf2 else\
+		\cf4 \{\
+			System.
+\f1\i \cf6 out
+\f0\i0 \cf4 .println(\cf8 "I don't understand that input... returning to menu..."\cf4 );\
+			\cf2 return\cf4 ;\
+		\}\
+		System.
+\f1\i \cf6 out
+\f0\i0 \cf4 .println(\cf8 "\cf2 \\n\cf8 "\cf4 );\
+	\}\
+\
+	\cf2 public static void \cf7 printOrderDetails \cf4 (Order o)  \{\
+		Order tempO = \cf2 null\cf4 ;\
+		tempO = o;\
+\
+		\cf2 if \cf4 (tempO \cf2 instanceof \cf4 DeliveryOrder) \{\
+			DeliveryOrder temp = (DeliveryOrder) tempO;\
+			System.
+\f1\i \cf6 out
+\f0\i0 \cf4 .println(temp);\
+		\} \cf2 else if \cf4 (tempO \cf2 instanceof \cf4 DineinOrder) \{\
+			DineinOrder temp = (DineinOrder) tempO;\
+			System.
+\f1\i \cf6 out
+\f0\i0 \cf4 .println(temp);\
+		\} \cf2 else if \cf4 (tempO \cf2 instanceof \cf4 PickupOrder) \{\
+			PickupOrder temp = (PickupOrder) tempO;\
+			System.
+\f1\i \cf6 out
+\f0\i0 \cf4 .println(temp);\
+		\}\
+\
+		Discount.
+\f1\i printDiscounts
+\f0\i0 (o.getDiscountList());\
+		\cf2 for \cf4 (Pizza pizza : o.getPizzaList())\
+		\{\
+			System.
+\f1\i \cf6 out
+\f0\i0 \cf4 .println(pizza.toString());\
+			Discount.
+\f1\i printDiscounts
+\f0\i0 (pizza.getDiscounts());\
+			Topping.
+\f1\i printToppings
+\f0\i0 (pizza.getToppings());\
+\cf5 //			\}\
+		\cf4 \}\
+	\}\
+\
+\
+\
+	\cf5 //Prompt - NO CODE SHOULD TAKE PLACE BELOW THIS LINE\
+	// DO NOT EDIT ANYTHING BELOW HERE, THIS IS NEEDED TESTING.\
+	// IF YOU EDIT SOMETHING BELOW, IT BREAKS THE AUTOGRADER WHICH MEANS YOUR GRADE WILL BE A 0 (zero)!!\
+\
+	\cf2 public static void \cf7 PrintMenu\cf4 () \{\
+		System.
+\f1\i \cf6 out
+\f0\i0 \cf4 .println(\cf8 "\cf2 \\n\\n\cf8 Please enter a menu option:"\cf4 );\
+		System.
+\f1\i \cf6 out
+\f0\i0 \cf4 .println(\cf8 "1. Enter a new order"\cf4 );\
+		System.
+\f1\i \cf6 out
+\f0\i0 \cf4 .println(\cf8 "2. View Customers "\cf4 );\
+		System.
+\f1\i \cf6 out
+\f0\i0 \cf4 .println(\cf8 "3. Enter a new Customer "\cf4 );\
+		System.
+\f1\i \cf6 out
+\f0\i0 \cf4 .println(\cf8 "4. View orders"\cf4 );\
+		System.
+\f1\i \cf6 out
+\f0\i0 \cf4 .println(\cf8 "5. Mark an order as completed"\cf4 );\
+		System.
+\f1\i \cf6 out
+\f0\i0 \cf4 .println(\cf8 "6. View Inventory Levels"\cf4 );\
+		System.
+\f1\i \cf6 out
+\f0\i0 \cf4 .println(\cf8 "7. Add Inventory"\cf4 );\
+		System.
+\f1\i \cf6 out
+\f0\i0 \cf4 .println(\cf8 "8. View Reports"\cf4 );\
+		System.
+\f1\i \cf6 out
+\f0\i0 \cf4 .println(\cf8 "9. Exit\cf2 \\n\\n\cf8 "\cf4 );\
+		System.
+\f1\i \cf6 out
+\f0\i0 \cf4 .println(\cf8 "Enter your option: "\cf4 );\
+	\}\
+\
+	\cf5 /*\
+	 * autograder controls....do not modiify!\
+	 */\
+\
+	\cf2 public final static \cf4 String 
+\f1\i \cf6 autograder_seed 
+\f0\i0 \cf4 = \cf8 "6f1b7ea9aac470402d48f7916ea6a010"\cf4 ;\
+\
+	\cf2 private static void \cf7 autograder_compilation_check\cf4 () \{\
+\
+		\cf2 try \cf4 \{\
+			Order o = \cf2 null\cf4 ;\
+			Pizza p = \cf2 null\cf4 ;\
+			Topping t = \cf2 null\cf4 ;\
+			Discount d = \cf2 null\cf4 ;\
+			Customer c = \cf2 null\cf4 ;\
+			ArrayList<Order> alo = \cf2 null\cf4 ;\
+			ArrayList<Discount> ald = \cf2 null\cf4 ;\
+			ArrayList<Customer> alc = \cf2 null\cf4 ;\
+			ArrayList<Topping> alt = \cf2 null\cf4 ;\
+			ArrayList<Pizza> alp = \cf2 null\cf4 ;\
+			\cf2 double \cf4 v = \cf9 0.0\cf4 ;\
+			String s = \cf8 ""\cf4 ;\
+			\cf2 int \cf4 id = -\cf9 1\cf4 ;\
+			Date dts = \cf2 new \cf4 Date();\
+\
+			DBNinja.
+\f1\i addOrder
+\f0\i0 (o);\
+			DBNinja.
+\f1\i addPizza
+\f0\i0 (dts, id, p);\
+			\cf5 //DBNinja.useOrderDiscount(o, d);\
+			\cf4 id = DBNinja.
+\f1\i addCustomer
+\f0\i0 (c);\
+			DBNinja.
+\f1\i completeOrder
+\f0\i0 (o.getOrderID(), DBNinja.order_state.
+\f1\i \cf6 PREPARED
+\f0\i0 \cf4 );\
+			alo = DBNinja.
+\f1\i getOrders
+\f0\i0 (\cf9 1\cf4 );\
+			o = DBNinja.
+\f1\i getLastOrder
+\f0\i0 ();\
+			alo = DBNinja.
+\f1\i getOrdersByDate
+\f0\i0 (\cf8 "01/01/1999"\cf4 );\
+			ald = DBNinja.
+\f1\i getDiscountList
+\f0\i0 ();\
+			d = DBNinja.
+\f1\i findDiscountByName
+\f0\i0 (\cf8 "Discount"\cf4 );\
+			alc = DBNinja.
+\f1\i getCustomerList
+\f0\i0 ();\
+			c = DBNinja.
+\f1\i findCustomerByPhone
+\f0\i0 (\cf8 "0000000000"\cf4 );\
+			s = DBNinja.
+\f1\i getCustomerName
+\f0\i0 (\cf9 0\cf4 );\
+			alt = DBNinja.
+\f1\i getToppingList
+\f0\i0 ();\
+			t = DBNinja.
+\f1\i findToppingByName
+\f0\i0 (\cf8 "Topping"\cf4 );\
+			alt = DBNinja.
+\f1\i getToppingsOnPizza
+\f0\i0 (p);\
+			DBNinja.
+\f1\i addToInventory
+\f0\i0 (id, \cf9 1000.0\cf4 );\
+			alp = DBNinja.
+\f1\i getPizzas
+\f0\i0 (o);\
+			ald = DBNinja.
+\f1\i getDiscounts
+\f0\i0 (o);\
+			ald = DBNinja.
+\f1\i getDiscounts
+\f0\i0 (p);\
+			v = DBNinja.
+\f1\i getBaseCustPrice
+\f0\i0 (\cf8 "size"\cf4 , \cf8 "crust"\cf4 );\
+			v = DBNinja.
+\f1\i getBaseBusPrice
+\f0\i0 (\cf8 "size"\cf4 , \cf8 "crust"\cf4 );\
+			DBNinja.
+\f1\i printToppingPopReport
+\f0\i0 ();\
+			DBNinja.
+\f1\i printProfitByPizzaReport
+\f0\i0 ();\
+			DBNinja.
+\f1\i printProfitByOrderType
+\f0\i0 ();\
+		\} \cf2 catch \cf4 (SQLException | IOException e) \{\
+			e.printStackTrace();\
+		\}\
+	\}\
+\
+\
+\}\
+\
+}

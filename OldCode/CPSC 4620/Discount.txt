@@ -1,0 +1,87 @@
+{\rtf1\ansi\ansicpg1252\cocoartf2820
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fmodern\fcharset0 Courier;\f1\fmodern\fcharset0 Courier-Oblique;}
+{\colortbl;\red255\green255\blue255;\red195\green123\blue90;\red23\green23\blue26;\red174\green176\blue183;
+\red185\green101\blue173;\red71\green149\blue242;\red89\green158\blue96;\red164\green160\blue78;}
+{\*\expandedcolortbl;;\csgenericrgb\c76471\c48235\c35294;\csgenericrgb\c9020\c9020\c10196;\csgenericrgb\c68235\c69020\c71765;
+\csgenericrgb\c72549\c39608\c67843;\csgenericrgb\c27843\c58431\c94902;\csgenericrgb\c34902\c61961\c37647;\csgenericrgb\c64314\c62745\c30588;}
+\margl1440\margr1440\vieww11520\viewh8400\viewkind0
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
+
+\f0\fs26 \cf2 \cb3 package \cf4 cpsc4620;\
+\
+\cf2 import \cf4 java.util.ArrayList;\
+\
+\cf2 public class \cf4 Discount\
+\{\
+	\cf2 private int \cf5 DiscountID\cf4 ;\
+	\cf2 private \cf4 String \cf5 DiscountName\cf4 ;\
+	\cf2 private double \cf5 Amount\cf4 ;\
+	\cf2 private boolean \cf5 isPercent\cf4 ;\
+	\
+	\cf2 public \cf6 Discount\cf4 (\cf2 int \cf4 discountID, String discountName, \cf2 double \cf4 amount, \cf2 boolean \cf4 isPercent) \{\
+		\cf5 DiscountID \cf4 = discountID;\
+		\cf5 DiscountName \cf4 = discountName;\
+		\cf5 Amount \cf4 = amount;\
+		\cf2 this\cf4 .\cf5 isPercent \cf4 = isPercent;\
+	\}\
+\
+	\cf2 public int \cf6 getDiscountID\cf4 () \{\
+		\cf2 return \cf5 DiscountID\cf4 ;\
+	\}\
+\
+	\cf2 public \cf4 String \cf6 getDiscountName\cf4 () \{\
+		\cf2 return \cf5 DiscountName\cf4 ;\
+	\}\
+\
+	\cf2 public double \cf6 getAmount\cf4 () \{\
+		\cf2 return \cf5 Amount\cf4 ;\
+	\}\
+\
+	\cf2 public boolean \cf6 isPercent\cf4 () \{\
+		\cf2 return \cf5 isPercent\cf4 ;\
+	\}\
+\
+	\cf2 public void \cf6 setDiscountID\cf4 (\cf2 int \cf4 discountID) \{\
+		\cf5 DiscountID \cf4 = discountID;\
+	\}\
+\
+	\cf2 public void \cf6 setDiscountName\cf4 (String discountName) \{\
+		\cf5 DiscountName \cf4 = discountName;\
+	\}\
+\
+	\cf2 public void \cf6 setAmount\cf4 (\cf2 double \cf4 amount) \{\
+		\cf5 Amount \cf4 = amount;\
+	\}\
+\
+	\cf2 public void \cf6 setPercent\cf4 (\cf2 boolean \cf4 isPercent) \{\
+		\cf2 this\cf4 .\cf5 isPercent \cf4 = isPercent;\
+	\}\
+\
+	\cf2 public static void \cf6 printDiscounts \cf4 (ArrayList<Discount> myDiscounts) \{\
+		\cf2 if \cf4 (myDiscounts.isEmpty()) \{\
+			System.
+\f1\i \cf5 out
+\f0\i0 \cf4 .println(\cf7 "NO DISCOUNTS"\cf4 );\
+		\} \cf2 else \cf4 \{\
+			System.
+\f1\i \cf5 out
+\f0\i0 \cf4 .print(\cf7 "DISCOUNTS: "\cf4 );\
+			\cf2 for \cf4 (Discount d : myDiscounts) \{\
+				System.
+\f1\i \cf5 out
+\f0\i0 \cf4 .print(d.getDiscountName()+\cf7 " "\cf4 );\
+			\}\
+			System.
+\f1\i \cf5 out
+\f0\i0 \cf4 .println();\
+		\}\
+	\}\
+\
+	\cf8 @Override\
+	\cf2 public \cf4 String \cf6 toString\cf4 () \{\
+		\cf2 return \cf7 "Discount ID: "\cf4 + \cf5 DiscountID \cf4 + \cf7 " Discount Name: " \cf4 + \cf5 DiscountName \cf4 + \cf7 ", Amount: " \cf4 + ((\cf5 isPercent\cf4 )?\cf7 ""\cf4 :\cf7 "$"\cf4 )+\cf5 Amount\cf4 +((\cf5 isPercent\cf4 )?\cf7 "%"\cf4 :\cf7 ""\cf4 );\
+	\}\
+	\
+\}\
+\
+}

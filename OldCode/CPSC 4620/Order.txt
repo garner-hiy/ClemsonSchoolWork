@@ -1,0 +1,189 @@
+{\rtf1\ansi\ansicpg1252\cocoartf2820
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fmodern\fcharset0 Courier;\f1\fmodern\fcharset0 Courier-Oblique;}
+{\colortbl;\red255\green255\blue255;\red195\green123\blue90;\red23\green23\blue26;\red174\green176\blue183;
+\red185\green101\blue173;\red71\green149\blue242;\red103\green107\blue114;\red38\green157\blue169;\red164\green160\blue78;
+\red89\green158\blue96;}
+{\*\expandedcolortbl;;\csgenericrgb\c76471\c48235\c35294;\csgenericrgb\c9020\c9020\c10196;\csgenericrgb\c68235\c69020\c71765;
+\csgenericrgb\c72549\c39608\c67843;\csgenericrgb\c27843\c58431\c94902;\csgenericrgb\c40392\c41961\c44706;\csgenericrgb\c14902\c61569\c66275;\csgenericrgb\c64314\c62745\c30588;
+\csgenericrgb\c34902\c61961\c37647;}
+\margl1440\margr1440\vieww11520\viewh8400\viewkind0
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
+
+\f0\fs26 \cf2 \cb3 package \cf4 cpsc4620;\
+\cf2 import \cf4 java.io.IOException;\
+\cf2 import \cf4 java.sql.SQLException;\
+\cf2 import \cf4 java.util.ArrayList;\
+\
+\cf2 public class \cf4 Order \
+\{\
+	\cf2 private int \cf5 OrderID\cf4 ;\
+	\cf2 private int \cf5 CustID\cf4 ;\
+	\cf2 private \cf4 String \cf5 OrderType\cf4 ;\
+	\cf2 private \cf4 String \cf5 Date\cf4 ;\
+	\cf2 private double \cf5 CustPrice\cf4 ;\
+	\cf2 private double \cf5 BusPrice\cf4 ;\
+	\cf2 private boolean \cf5 isComplete\cf4 ;\
+	\cf2 private \cf4 ArrayList<Pizza> \cf5 PizzaList\cf4 ;\
+	\cf2 private \cf4 ArrayList<Discount> \cf5 DiscountList\cf4 ;\
+\
+	\cf2 public \cf6 Order\cf4 (\cf2 int \cf4 orderID, \cf2 int \cf4 custID, String orderType, String date, \cf2 double \cf4 custPrice, \cf2 double \cf4 busPrice, \cf2 boolean \cf4 iscomplete) \{\
+		\cf5 OrderID \cf4 = orderID;\
+		\cf5 CustID \cf4 = custID;\
+		\cf5 OrderType \cf4 = orderType;\
+		\cf5 Date \cf4 = date;\
+		\cf5 CustPrice \cf4 = custPrice;\
+		\cf5 BusPrice \cf4 = busPrice;\
+		\cf2 this\cf4 .\cf5 isComplete \cf4 = iscomplete;\
+		\cf5 PizzaList \cf4 = \cf2 new \cf4 ArrayList<Pizza>();\
+		\cf5 DiscountList \cf4 = \cf2 new \cf4 ArrayList<Discount>();\
+	\}\
+	\
+	\cf2 public void \cf6 addPizza\cf4 (Pizza p)\
+	\{\
+		\cf5 PizzaList\cf4 .add(p);\
+	\}\
+	\cf2 public void \cf6 addDiscount\cf4 (Discount d)\
+	\{\
+		\cf5 DiscountList\cf4 .add(d);\
+		\cf2 if\cf4 (d.isPercent())\
+		\{\
+			\cf7 //this.BusPrice = (this.BusPrice*(1-d.getAmount()));\
+			\cf2 this\cf4 .\cf5 CustPrice \cf4 = (\cf2 this\cf4 .\cf5 CustPrice\cf4 *(\cf8 1\cf4 -d.getAmount()/\cf8 100.0\cf4 ));\
+		\}\
+		\cf2 else\
+		\cf4 \{\
+			\cf7 //this.BusPrice -= d.getAmount();\
+			\cf2 this\cf4 .\cf5 CustPrice \cf4 -= d.getAmount();\
+		\}\
+	\}\
+\
+	\cf2 public int \cf6 getOrderID\cf4 () \{\
+		\cf2 return \cf5 OrderID\cf4 ;\
+	\}\
+\
+	\cf2 public int \cf6 getCustID\cf4 () \{\
+		\cf2 return \cf5 CustID\cf4 ;\
+	\}\
+\
+	\cf2 public \cf4 String \cf6 getOrderType\cf4 () \{\
+		\cf2 return \cf5 OrderType\cf4 ;\
+	\}\
+\
+	\cf2 public \cf4 String \cf6 getDate\cf4 () \{\
+		\cf2 return \cf5 Date\cf4 ;\
+	\}\
+\
+	\cf2 public double \cf6 getCustPrice\cf4 () \{\
+		\cf2 return \cf5 CustPrice\cf4 ;\
+	\}\
+\
+	\cf2 public double \cf6 getBusPrice\cf4 () \{\
+		\cf2 return \cf5 BusPrice\cf4 ;\
+	\}\
+	\
+	\cf2 public boolean \cf6 getIsComplete\cf4 () \{\
+		\cf2 return \cf5 isComplete\cf4 ;\
+	\}\
+\
+	\cf2 public \cf4 ArrayList<Pizza> \cf6 getPizzaList\cf4 () \{\
+		\cf2 return \cf5 PizzaList\cf4 ;\
+	\}\
+\
+	\cf2 public \cf4 ArrayList<Discount> \cf6 getDiscountList\cf4 () \{\
+		\cf2 return \cf5 DiscountList\cf4 ;\
+	\}\
+\
+	\cf2 public void \cf6 setOrderID\cf4 (\cf2 int \cf4 orderID) \{\
+		\cf5 OrderID \cf4 = orderID;\
+	\}\
+\
+	\cf2 public void \cf6 setCustID\cf4 (\cf2 int \cf4 custID) \{\
+		\cf5 CustID \cf4 = custID;\
+	\}\
+\
+	\cf2 public void \cf6 setOrderType\cf4 (String orderType) \{\
+		\cf5 OrderType \cf4 = orderType;\
+	\}\
+\
+	\cf2 public void \cf6 setDate\cf4 (String date) \{\
+		\cf5 Date \cf4 = date;\
+	\}\
+\
+	\cf2 public void \cf6 setCustPrice\cf4 (\cf2 double \cf4 custPrice) \{\
+		\cf5 CustPrice \cf4 = custPrice;\
+	\}\
+\
+	\cf2 public void \cf6 setBusPrice\cf4 (\cf2 double \cf4 busPrice) \{\
+		\cf5 BusPrice \cf4 = busPrice;\
+	\}\
+\
+	\cf2 public void \cf6 setIsComplete\cf4 (\cf2 boolean \cf4 iscomplete) \{\
+		\cf2 this\cf4 .\cf5 isComplete \cf4 = iscomplete;\
+	\}\
+	\cf2 public void \cf6 setPizzaList\cf4 (ArrayList<Pizza> pizzaList) \{\
+		\cf5 PizzaList \cf4 = pizzaList;\
+	\}\
+\
+	\cf2 public void \cf6 setDiscountList\cf4 (ArrayList<Discount> discountList) \{\
+		\cf5 DiscountList \cf4 = discountList;\
+	\}\
+\
+	\cf9 @Override\
+	\cf2 public \cf4 String \cf6 toString\cf4 () \{\
+		\cf2 try \
+		\cf4 \{\
+			String name = DBNinja.
+\f1\i getCustomerName
+\f0\i0 (\cf5 CustID\cf4 );\
+			name = (name != \cf10 ""\cf4 )?name:\cf10 "IN STORE"\cf4 ;\
+			\cf2 return \cf10 "OrderID=" \cf4 + \cf5 OrderID \cf4 + \cf10 " | Customer name= " \cf4 + name + \cf10 ", OrderType= " \cf4 + \cf5 OrderType \cf4 + \cf10 ", IsComplete= " \cf4 + ((\cf5 isComplete\cf4 )?\cf10 "Yes"\cf4 :\cf10 "No"\cf4 );\
+		\} \
+		\cf2 catch \cf4 (SQLException | IOException e)\
+		\{\
+			e.printStackTrace();\
+			\cf2 return \cf10 "ERROR IN PRINT ORDER"\cf4 ;\
+		\}\
+	\}\
+\
+	\cf2 public \cf4 String \cf6 toSimplePrint\cf4 () \
+	\{\
+		\cf2 try \
+		\cf4 \{\
+			\cf2 return \cf10 "OrderID=" \cf4 + \cf5 OrderID \cf4 + \cf10 " | Customer name= " \cf4 + DBNinja.
+\f1\i getCustomerName
+\f0\i0 (\cf5 CustID\cf4 ) + \cf10 ", OrderType= " \cf4 + \cf5 OrderType \cf4 + \cf10 ", IsComplete= " \cf4 + ((\cf5 isComplete\cf4 )?\cf10 "Yes"\cf4 :\cf10 "No"\cf4 );\
+		\} \
+		\cf2 catch \cf4 (SQLException e) \{\
+			e.printStackTrace();\
+			\cf2 return \cf10 "ERROR IN ORDER PRINT"\cf4 ;\
+		\} \
+		\cf2 catch \cf4 (IOException e) \{\
+			e.printStackTrace();\
+			\cf2 return \cf10 "ERROR IN ORDER PRINT"\cf4 ;\
+		\}\
+	\}\
+\
+	\cf2 public \cf4 String \cf6 toFullPrint\cf4 ()\
+	\{\
+		String orderSummary;\
+		String pizzaSummary;\
+		\cf2 try\
+		\cf4 \{\
+			orderSummary = \cf10 "OrderID=" \cf4 + \cf5 OrderID \cf4 + \cf10 " | For customer: " \cf4 + DBNinja.
+\f1\i getCustomerName
+\f0\i0 (\cf5 CustID\cf4 ) + \cf10 " | OrderType= " \cf4 + \cf5 OrderType \cf4 + \cf10 ", Placed on: " \cf4 + \cf5 Date\
+					\cf4 + \cf10 " | CustPrice= " \cf4 + \cf5 CustPrice \cf4 + \cf10 ", BusPrice= " \cf4 + \cf5 BusPrice\cf4 ;\
+			\cf2 return \cf4 orderSummary;\
+		\}\
+		\cf2 catch \cf4 (SQLException e) \{\
+			e.printStackTrace();\
+			\cf2 return \cf10 "ERROR IN ORDER PRINT"\cf4 ;\
+		\}\
+		\cf2 catch \cf4 (IOException e) \{\
+			e.printStackTrace();\
+			\cf2 return \cf10 "ERROR IN ORDER PRINT"\cf4 ;\
+		\}\
+	\}\
+\}\
+\
+}

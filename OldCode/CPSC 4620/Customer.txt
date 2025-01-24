@@ -1,0 +1,73 @@
+{\rtf1\ansi\ansicpg1252\cocoartf2820
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fmodern\fcharset0 Courier;}
+{\colortbl;\red255\green255\blue255;\red195\green123\blue90;\red23\green23\blue26;\red174\green176\blue183;
+\red185\green101\blue173;\red71\green149\blue242;\red89\green158\blue96;\red164\green160\blue78;}
+{\*\expandedcolortbl;;\csgenericrgb\c76471\c48235\c35294;\csgenericrgb\c9020\c9020\c10196;\csgenericrgb\c68235\c69020\c71765;
+\csgenericrgb\c72549\c39608\c67843;\csgenericrgb\c27843\c58431\c94902;\csgenericrgb\c34902\c61961\c37647;\csgenericrgb\c64314\c62745\c30588;}
+\margl1440\margr1440\vieww11520\viewh8400\viewkind0
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
+
+\f0\fs26 \cf2 \cb3 package \cf4 cpsc4620;\
+\
+\cf2 public class \cf4 Customer \
+\{\
+	\cf2 private int \cf5 CustID\cf4 ;\
+	\cf2 private \cf4 String \cf5 FName\cf4 ;\
+	\cf2 private \cf4 String \cf5 LName\cf4 ;\
+	\cf2 private \cf4 String \cf5 Phone\cf4 ;\
+	\cf2 private \cf4 String \cf5 Address\cf4 ;\
+\
+	\cf2 public \cf6 Customer\cf4 (\cf2 int \cf4 custID, String fName, String lName, String phone) \{\
+		\cf5 CustID \cf4 = custID;\
+		\cf5 FName \cf4 = fName;\
+		\cf5 LName \cf4 = lName;\
+		\cf5 Phone \cf4 = phone;\
+	\}\
+\
+	\cf2 public int \cf6 getCustID\cf4 () \{\
+		\cf2 return \cf5 CustID\cf4 ;\
+	\}\
+\
+	\cf2 public \cf4 String \cf6 getFName\cf4 () \{\
+		\cf2 return \cf5 FName\cf4 ;\
+	\}\
+\
+	\cf2 public \cf4 String \cf6 getLName\cf4 () \{\
+		\cf2 return \cf5 LName\cf4 ;\
+	\}\
+\
+	\cf2 public \cf4 String \cf6 getPhone\cf4 () \{\
+		\cf2 return \cf5 Phone\cf4 ;\
+	\}\
+\
+	\cf2 public \cf4 String \cf6 getAddress\cf4 () \{ \cf2 return \cf5 Address\cf4 ; \}\
+\
+	\cf2 public void \cf6 setCustID\cf4 (\cf2 int \cf4 custID) \{\
+		\cf5 CustID \cf4 = custID;\
+	\}\
+\
+	\cf2 public void \cf6 setFName\cf4 (String fName) \{\
+		\cf5 FName \cf4 = fName;\
+	\}\
+\
+	\cf2 public void \cf6 setLName\cf4 (String lName) \{\
+		\cf5 LName \cf4 = lName;\
+	\}\
+\
+	\cf2 public void \cf6 setPhone\cf4 (String phone) \{\
+		\cf5 Phone \cf4 = phone;\
+	\}\
+\
+	\cf2 public void \cf6 setAddress \cf4 (String street, String city, String state, String zip) \{\
+		\cf5 Address \cf4 = street + \cf7 "/n" \cf4 + city + \cf7 "/n" \cf4 + state + \cf7 "/n" \cf4 + zip;\
+	\}\
+\
+	\cf8 @Override\
+	\cf2 public \cf4 String \cf6 toString\cf4 () \{\
+		\cf2 return \cf7 "CustID=" \cf4 + \cf5 CustID \cf4 + \cf7 " | Name= " \cf4 + \cf5 FName \cf4 +  \cf7 " " \cf4 + \cf5 LName \cf4 + \cf7 ", Phone= " \cf4 + \cf5 Phone\cf4 ;\
+	\}\
+	\
+	\
+\}\
+\
+}
